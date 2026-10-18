@@ -132,4 +132,6 @@ dotnet publish src/RoCloudBuff.csproj `
 
 ## 라이선스
 
-프로젝트 자체의 라이선스는 아직 지정하지 않았습니다. 외부 구성요소의 안내는 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)를 참고해주세요.
+이 프로젝트는 [MIT 라이선스](LICENSE)로 배포됩니다. 저작권 및 라이선스 고지를 유지하면 사용·수정·재배포·상업적 이용이 가능합니다.
+
+외부 구성요소에는 각각의 라이선스가 적용됩니다. [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)를 참고해주세요.
