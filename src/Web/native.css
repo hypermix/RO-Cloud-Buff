@@ -1,0 +1,120 @@
+#ro-buff-design .rb-crosshair-feedback{font-size:12px;line-height:1.6;color:#aaa0bf;padding:9px 0;min-height:36px;white-space:pre-line}
+#ro-buff-design .rb-crosshair-active,#ro-buff-design .rb-crosshair-active *{cursor:crosshair!important}
+#ro-buff-design .rb-crosshair-active .rb-crosshair{background:#65527f;outline:2px solid #c9b3ee}
+#ro-buff-design .rb-crosshair-active .rb-crosshair-feedback{color:#e2cef9;background:#3e334e;padding:10px;border-radius:7px}
+#ro-buff-design .rb-capture-diagnostics{font-size:12px;line-height:1.6;padding:7px 12px;flex-shrink:0;background:#27242f;color:#b7accb;max-height:200px;overflow:auto;border-bottom:1px solid #443d50}
+#ro-buff-design .rb-capture-diagnostics>span{display:block}
+#ro-buff-design .rb-capture-diagnostics p{font-size:12px;margin:6px 0}
+#ro-buff-design .rb-actor-candidates{display:flex;flex-direction:column;gap:4px;margin:6px 0}
+#ro-buff-design .rb-app .rb-actor-candidates button{font-size:12px;justify-content:flex-start;padding:5px 7px;border:1px solid #544760;background:#38303f}
+#ro-buff-design .rb-app .rb-actor-candidates button[aria-pressed=true]{background:#615071;border-color:#bea1de}
+#ro-buff-design .rb-character:has(>.rb-live-status)>.rb-card-controls,#ro-buff-design .rb-character:has(>.rb-live-status)>.rb-buffs{display:none}
+#ro-buff-design .rb-character:has(>.rb-setup)>.rb-card-controls,#ro-buff-design .rb-character:has(>.rb-setup)>.rb-buffs,#ro-buff-design .rb-character:has(>.rb-setup)>.rb-card-foot{display:none!important}
+#ro-buff-design .rb-setup{padding:16px;background:#292630;border-bottom:1px solid #403a4a;flex-shrink:0;max-height:350px;overflow:auto}
+#ro-buff-design .rb-setup-step{font-size:11px;color:#b9a2df;letter-spacing:.04em}
+#ro-buff-design .rb-setup h4{font-size:15px;font-weight:600;color:#eee9f5;margin:7px 0}
+#ro-buff-design .rb-setup p{font-size:12px;line-height:1.65;color:#b5adbf;margin:6px 0 12px}
+#ro-buff-design .rb-setup-wait{font-size:12px;color:#c4b3dd;padding:10px 0}
+#ro-buff-design .rb-setup-candidate{display:flex;align-items:center;gap:12px;padding:11px;background:#35303f;border:1px solid #50465f;border-radius:8px}
+#ro-buff-design .rb-setup-candidate>span{min-width:0;flex:1}
+#ro-buff-design .rb-setup-candidate strong{font-size:13px;font-weight:600;overflow-wrap:anywhere}
+#ro-buff-design .rb-setup-candidate small{display:block;margin-top:4px;color:#b5adbf;font-size:12px}
+#ro-buff-design .rb-setup-candidate button{flex-shrink:0;font-size:12px;white-space:nowrap}
+#ro-buff-design .rb-app .rb-setup-candidate button.rb-primary{color:#f4edfF;background:#695582;border:1px solid #8b71aa;padding:8px 10px;justify-content:center}
+#ro-buff-design .rb-setup-details{font-size:11px;color:#898191;margin-top:14px}
+#ro-buff-design .rb-setup-details summary{cursor:pointer}
+#ro-buff-design .rb-setup-details span{display:block;margin-top:5px}
+#ro-buff-design .rb-discovery-id{display:inline-block;margin-left:5px;padding:2px 6px;border-radius:4px;background:#40364f;color:#dac7f3;font-size:12px;font-weight:600;white-space:nowrap}
+/* Cards keep usable buff space; overflow belongs to the board, never compressed rows. */
+#ro-buff-design .rb-cards[data-arrangement="vertical"]>.rb-character:not(.rb-collapsed){flex:1 0 420px;min-height:420px}
+#ro-buff-design .rb-cards .rb-character[data-buff-layout="grid"]>.rb-buffs{grid-auto-rows:max-content;align-content:start;align-items:start}
+#ro-buff-design .rb-app .rb-character[data-buff-layout="grid"] .rb-buff{align-self:start;min-height:96px}
+#ro-buff-design .rb-character[data-buff-layout="grid"] .rb-group-label{grid-column:1/-1;min-height:24px;align-self:start}
+#ro-buff-design .rb-cards[data-arrangement="vertical"]>.rb-character:has(>.rb-live-status){flex:0 0 auto;min-height:0}
+#ro-buff-design .rb-character:has(>.rb-live-status)>.rb-buffs,#ro-buff-design .rb-character:has(>.rb-live-status)>.rb-card-controls,#ro-buff-design .rb-character:has(>.rb-live-status)>.rb-card-foot{display:none!important}
+/* Hand vertical scrolling back to the board at an inner buff list boundary. */
+#ro-buff-design .rb-buffs{overscroll-behavior-y:auto}
+#ro-buff-design .rb-dialog{overscroll-behavior:contain}
+#ro-buff-design .rb-manage-filters,#ro-buff-design .rb-manage-toolbar,#ro-buff-design .rb-managed-summary,#ro-buff-design .rb-managed-actions,#ro-buff-design .rb-manage-feedback{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#ro-buff-design .rb-manage-filters{margin:10px 0;color:#b9b1c7;font-size:12px;justify-content:space-between}
+#ro-buff-design .rb-manage-filters label,#ro-buff-design .rb-manage-toolbar label{display:flex;align-items:center;gap:6px}
+#ro-buff-design .rb-manage-filters label{white-space:nowrap;flex-shrink:0}
+#ro-buff-design .rb-manage-filters select{font:inherit;color:#ded4ed;background:#302b3b;border:1px solid #51495f;border-radius:6px;padding:7px;width:auto}
+#ro-buff-design .rb-manage-toolbar{padding:8px 0;border-bottom:1px solid #45404e;justify-content:space-between;font-size:12px}
+#ro-buff-design .rb-manage-toolbar button,#ro-buff-design .rb-managed-actions button{font-size:12px}
+#ro-buff-design .rb-managed-entry{display:block;padding:13px 12px}
+#ro-buff-design .rb-managed-summary .rb-discover-info{flex:1;min-width:140px}
+#ro-buff-design .rb-managed-summary .rb-discover-info small{display:block;line-height:1.7}
+#ro-buff-design .rb-discovery-details{font-size:12px;color:#b2a8c0;margin-top:5px}
+#ro-buff-design .rb-discovery-details span{display:block;margin-top:5px}
+#ro-buff-design .rb-inline-register,#ro-buff-design .rb-delete-confirm{padding:14px;margin-top:12px;background:#302b3b;border:1px solid #574765;border-radius:7px}
+#ro-buff-design .rb-inline-register>div:last-child{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
+#ro-buff-design .rb-delete-confirm p{font-size:12px;color:#bdb3c9;line-height:1.7;margin:10px 0}
+#ro-buff-design .rb-manage-feedback{padding:10px;margin:8px 0;background:#393044;border-radius:6px;font-size:12px;justify-content:space-between}
+#ro-buff-design .rb-managed-dictionary{grid-template-columns:16px 26px minmax(0,1fr) auto 26px 26px;gap:7px}
+#ro-buff-design .rb-delete-confirm{position:fixed;left:18px;right:18px;bottom:20px;z-index:40;max-width:500px;margin:0 auto;box-shadow:0 8px 30px #0008}
+@media(max-width:430px){#ro-buff-design .rb-managed-actions{width:100%;justify-content:flex-end}#ro-buff-design .rb-managed-dictionary .rb-dict-duration{display:none}#ro-buff-design .rb-managed-dictionary{grid-template-columns:16px 24px minmax(0,1fr) 26px 26px}}
+@media(max-width:600px){#ro-buff-design .rb-managed-actions{width:100%;justify-content:flex-end}}
+/* Management surfaces own their layout rather than inheriting legacy catalogue grids. */
+#ro-buff-design .rb-managed-entry,#ro-buff-design .rb-managed-dictionary{user-select:none;-webkit-user-select:none}
+#ro-buff-design .rb-inline-register input,#ro-buff-design .rb-inline-register select{user-select:text;-webkit-user-select:text}
+#ro-buff-design .rb-discovery-details{user-select:none;-webkit-user-select:none}
+#ro-buff-design .rb-manage-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:12px 0}
+#ro-buff-design .rb-manage-tabs{display:inline-flex;gap:3px;padding:3px;border:1px solid #45404e;background:#27252e;border-radius:7px}
+#ro-buff-design .rb-app .rb-manage-tabs button{padding:7px 10px;font-size:12px;min-height:32px;background:transparent;color:#b8b0c4;border:1px solid transparent;border-radius:5px;white-space:nowrap}
+#ro-buff-design .rb-app .rb-manage-tabs button[aria-selected=true]{background:#43394f;color:#e9dcfb;border-color:#5a4b6b}
+#ro-buff-design .rb-manage-tabs button span{font-size:11px;opacity:.75;margin-left:4px;font-variant-numeric:tabular-nums}
+#ro-buff-design .rb-manage-sort{display:flex;align-items:center;gap:8px;font-size:12px;color:#b8b0c4;white-space:nowrap}
+#ro-buff-design .rb-sort-control{position:relative;display:flex;align-items:center}
+#ro-buff-design .rb-app .rb-manage-sort select{appearance:none;background:#2e2b35;border:1px solid #51495b;border-radius:6px;color:#dfd7eb;font:inherit;padding:8px 30px 8px 11px;width:136px;min-height:34px;line-height:1.4}
+#ro-buff-design .rb-sort-control svg{position:absolute;right:9px;width:13px;height:13px;pointer-events:none;color:#b6aac5}
+#ro-buff-design .rb-manage-toolbar{height:44px;min-height:44px;flex-wrap:nowrap;box-sizing:border-box;margin-bottom:8px}
+#ro-buff-design [data-manage-selection-label]{display:inline-block;min-width:65px;white-space:nowrap;font-variant-numeric:tabular-nums}
+#ro-buff-design .rb-managed-summary{display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:11px;align-items:start}
+#ro-buff-design .rb-managed-summary>.rb-discover-info{min-width:0}
+#ro-buff-design .rb-managed-summary>.rb-managed-actions{align-self:start;white-space:nowrap;width:auto}
+#ro-buff-design .rb-managed-summary>.rb-discover-info strong{line-height:1.65;font-size:13px}
+#ro-buff-design .rb-app input[data-manage-select],#ro-buff-design .rb-app input[data-manage-all]{appearance:none;-webkit-appearance:none;display:inline-grid;place-content:center;box-sizing:border-box;width:16px;height:16px;min-width:16px;min-height:16px;padding:0;margin:3px 0 0;border:1px solid #6b6278;border-radius:4px;background:#2a2731;vertical-align:middle;flex-shrink:0}
+#ro-buff-design .rb-app input[data-manage-select]:checked,#ro-buff-design .rb-app input[data-manage-all]:checked,#ro-buff-design .rb-app input[data-manage-all]:indeterminate{background:#bca6e7;border-color:#bca6e7}
+#ro-buff-design .rb-app input[data-manage-select]:checked::after,#ro-buff-design .rb-app input[data-manage-all]:checked::after{content:'';width:4px;height:8px;border:solid #2c2338;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
+#ro-buff-design .rb-app input[data-manage-all]:indeterminate::after{content:'';width:8px;height:2px;background:#2c2338;transform:none;border:0}
+#ro-buff-design .rb-managed-entry.rb-is-selected{background:#302b3a;box-shadow:inset 0 0 0 1px #665278}
+#ro-buff-design .rb-inline-register{background:#28252f;border:1px solid #4f465b;padding:14px;border-radius:7px;margin:14px 0 0 29px}
+#ro-buff-design .rb-register-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+#ro-buff-design .rb-register-heading strong{font-size:13px;font-weight:600;color:#e6ddef}
+#ro-buff-design .rb-register-heading span{font-size:11px;color:#a99cb8;font-variant-numeric:tabular-nums}
+#ro-buff-design .rb-register-fields{display:grid;grid-template-columns:minmax(0,1fr) 110px;gap:12px}
+#ro-buff-design .rb-inline-register .rb-field{font-size:12px;gap:6px;margin:0;color:#b9aec6}
+#ro-buff-design .rb-inline-register .rb-register-fields>.rb-field{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start}
+#ro-buff-design .rb-app .rb-inline-register input:not([type=checkbox]),#ro-buff-design .rb-app .rb-inline-register select{width:100%;height:36px;min-height:36px;padding:7px 10px;border:1px solid #504759;border-radius:5px;background:#211f27;color:#ece4f5;font-size:13px;line-height:1.4}
+#ro-buff-design .rb-inline-register>.rb-register-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;flex-wrap:wrap}
+#ro-buff-design .rb-register-footer>.rb-check{font-size:12px;margin:0;gap:7px;color:#b9aec6}
+#ro-buff-design .rb-register-footer>div{display:flex;gap:7px}
+#ro-buff-design .rb-inline-register>div.rb-register-footer:last-child{justify-content:space-between;gap:12px}
+#ro-buff-design .rb-register-footer button{font-size:12px;min-width:54px;min-height:32px}
+#ro-buff-design .rb-catalog .rb-dict-row.rb-managed-dictionary{display:grid;grid-template-columns:16px 28px minmax(0,1fr) 48px 28px 28px;gap:9px;align-items:center;min-height:68px;height:auto;padding:12px 0;box-sizing:border-box}
+#ro-buff-design .rb-catalog .rb-managed-dictionary>*{grid-column:auto;grid-row:auto;min-width:0}
+#ro-buff-design .rb-catalog .rb-managed-dictionary .rb-dict-name{font-size:13px;line-height:1.5}
+#ro-buff-design .rb-catalog .rb-managed-dictionary .rb-dict-meta{font-size:11px;line-height:1.5}
+#ro-buff-design .rb-catalog .rb-managed-dictionary .rb-dict-duration{display:block;font-size:12px}
+#ro-buff-design .rb-catalog .rb-managed-dictionary button.rb-icon-button{width:28px;height:30px;min-width:28px;min-height:30px;padding:5px;border-radius:5px;color:#b7a9c8}
+#ro-buff-design .rb-catalog .rb-managed-dictionary.rb-is-selected{background:#35303f}
+@media(max-width:600px){#ro-buff-design .rb-managed-summary>.rb-managed-actions{grid-column:2/-1;justify-content:flex-end;width:auto}#ro-buff-design .rb-managed-summary{grid-template-columns:18px minmax(0,1fr)}#ro-buff-design .rb-catalog .rb-dict-row.rb-managed-dictionary{grid-template-columns:16px 26px minmax(0,1fr) 28px 28px;gap:8px}#ro-buff-design .rb-catalog .rb-managed-dictionary .rb-dict-duration{display:none}}
+@media(max-width:380px){#ro-buff-design .rb-register-fields{grid-template-columns:minmax(0,1fr)}#ro-buff-design .rb-inline-register{margin-left:0}#ro-buff-design .rb-manage-sort{width:100%;justify-content:space-between}#ro-buff-design .rb-sort-control,#ro-buff-design .rb-app .rb-manage-sort select{width:100%}}
+
+/* Discovery registration: dedicated controls avoid inherited editor layout rules. */
+#ro-buff-design .rb-app .rb-inline-register { margin:16px 0 0; padding:16px; border-radius:6px; background:#25232c; border-color:#45404f; }
+#ro-buff-design .rb-app .rb-register-heading { margin:0 0 16px; gap:12px; }
+#ro-buff-design .rb-app .rb-register-heading strong { font-size:13px; line-height:20px; }
+#ro-buff-design .rb-app .rb-register-heading>span { white-space:nowrap; font-size:11px; color:#a59aaf; }
+#ro-buff-design .rb-app .rb-register-fields { display:grid; grid-template-columns:minmax(0,1fr) 104px; gap:12px; align-items:start; }
+#ro-buff-design .rb-app .rb-register-field { display:flex; flex-direction:column; align-items:stretch; gap:7px; min-width:0; margin:0; }
+#ro-buff-design .rb-app .rb-register-field>span { font-size:12px; line-height:18px; color:#bfb5ca; }
+#ro-buff-design .rb-app .rb-register-field input,#ro-buff-design .rb-app .rb-register-field select { box-sizing:border-box; width:100%; height:38px; min-height:38px; margin:0; padding:8px 10px; border:1px solid #494250; border-radius:5px; background:#1e1d24; color:#eee8f4; font:inherit; font-size:13px; line-height:20px; }
+#ro-buff-design .rb-app .rb-register-field input::placeholder { color:#82798d; }
+#ro-buff-design .rb-app .rb-inline-register>.rb-register-footer:last-child { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid #3b3643; }
+#ro-buff-design .rb-app .rb-register-option { display:inline-flex; align-items:center; gap:8px; margin:0; min-height:34px; color:#c0b7ca; font-size:12px; line-height:18px; cursor:pointer; }
+#ro-buff-design .rb-app .rb-register-option input { flex:0 0 16px; width:16px; height:16px; margin:0; }
+#ro-buff-design .rb-app .rb-register-footer>div { display:flex; align-items:center; gap:8px; margin-left:auto; }
+#ro-buff-design .rb-app .rb-register-footer button { min-width:60px; min-height:34px; padding:7px 14px; font-size:12px; line-height:18px; border-radius:5px; }
+@media(max-width:380px) { #ro-buff-design .rb-app .rb-inline-register { padding:12px; } #ro-buff-design .rb-app .rb-register-fields { grid-template-columns:minmax(0,1fr); } #ro-buff-design .rb-app .rb-register-footer>div { width:100%; justify-content:flex-end; } }

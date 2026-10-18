@@ -1,0 +1,1003 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'"><title>RO CLOUD BUFF</title><script src="lucide.js"></script><script src="native.js"></script></head><body><div id="ro-buff-design" aria-label="RO CLOUD BUFF 카드 보드와 클라이언트 집중 모드">
+  <div class="rb-app" data-layout="board" data-view="board" aria-label="RO CLOUD BUFF 카드 보드"></div>
+</div>
+<style>
+#ro-buff-design {color-scheme:dark;max-width:100%}
+#ro-buff-design * {box-sizing:border-box}
+#ro-buff-design .rb-app {
+ --rb-bg:#202126;--rb-surface:#28292f;--rb-raised:#33353e;--rb-line:#3a3b45;
+ --rb-text:#eeeef4;--rb-muted:#a4a5b5;--rb-mint:#b3aff1;--rb-mint-soft:#373449;
+ --rb-warn:#efc58e;--rb-warn-soft:#3a3028;--rb-radius:12px;--rb-gap:12px;
+ --rb-small:12px;--rb-base:14px;--rb-title:18px;--rb-numeric:16px;
+ background:var(--rb-bg);color:var(--rb-text);font:400 var(--rb-base)/1.45 system-ui,'Segoe UI','Malgun Gothic',sans-serif;
+ width:1008px;max-width:100%;min-width:280px;height:700px;min-height:400px;
+ display:grid;grid-template-rows:36px minmax(0,1fr) 28px;position:relative;isolation:isolate;
+ border:1px solid #354256;border-radius:12px;overflow:hidden;container:rbwindow / size;
+ box-shadow:0 20px 60px #060b1633,0 2px 8px #060b1626;-webkit-font-smoothing:antialiased;
+}
+#ro-buff-design .rb-app button,#ro-buff-design .rb-app input,#ro-buff-design .rb-app select {font:inherit;color:inherit}
+#ro-buff-design .rb-app button {display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid transparent;border-radius:7px;padding:7px 10px;background:transparent;text-align:left;transition:background .12s,border-color .12s,color .12s;white-space:normal;font-weight:500;cursor:pointer;line-height:1.35}
+#ro-buff-design .rb-app button:hover {background:var(--rb-raised)}
+#ro-buff-design .rb-app button:disabled {opacity:.45;cursor:default}
+#ro-buff-design .rb-app button:focus-visible,#ro-buff-design .rb-app input:focus-visible,#ro-buff-design .rb-app select:focus-visible {outline:2px solid var(--rb-mint);outline-offset:2px}
+#ro-buff-design .rb-app .rb-primary {background:var(--rb-mint);color:#142b27;border-color:var(--rb-mint);font-weight:600;box-shadow:0 1px 2px #0002,inset 0 1px 0 #ffffff30}
+#ro-buff-design .rb-app .rb-primary:hover {background:#b4efdd}
+#ro-buff-design .rb-app .rb-secondary {background:#2c2d35;border-color:#344358;box-shadow:inset 0 1px 0 #ffffff05}
+#ro-buff-design .rb-app .rb-icon-button {padding:7px;flex-shrink:0}
+#ro-buff-design .rb-app svg {width:16px;height:16px;stroke-width:1.7;flex-shrink:0}
+#ro-buff-design .rb-titlebar {display:flex;align-items:center;gap:8px;padding:0 14px;border-bottom:1px solid var(--rb-line);font-size:var(--rb-small);color:#b7c6d8;min-width:0;background:#25262d;user-select:none}
+#ro-buff-design .rb-brand-mark {width:14px;height:14px;border:1.5px solid var(--rb-mint);border-radius:4px;transform:rotate(-12deg);display:inline-block;position:relative;flex-shrink:0}
+#ro-buff-design .rb-brand-mark:after {content:'';position:absolute;inset:4px;background:var(--rb-mint);border-radius:1px}
+#ro-buff-design .rb-preview {font-size:var(--rb-small);color:var(--rb-muted);margin-left:4px}
+#ro-buff-design .rb-window-dots {margin-left:auto;display:flex;gap:15px;color:var(--rb-muted);padding-right:94px}
+#ro-buff-design .rb-body {display:grid;grid-template-columns:160px minmax(0,1fr);min-height:0;min-width:0;overflow:hidden}
+#ro-buff-design .rb-sidebar {padding:18px 8px 12px;border-right:1px solid var(--rb-line);display:flex;flex-direction:column;gap:4px;background:#23242b;min-height:0;overflow:auto}
+#ro-buff-design .rb-sidebar-label {font-size:var(--rb-small);color:var(--rb-muted);margin:0 10px 10px;font-weight:500}
+#ro-buff-design .rb-app .rb-nav {justify-content:flex-start;gap:8px;width:100%;padding:9px 10px;color:var(--rb-muted);font-size:var(--rb-base);min-height:38px}
+#ro-buff-design .rb-app .rb-nav[aria-current="page"] {background:var(--rb-mint-soft);color:var(--rb-mint);border-color:#33504b;box-shadow:inset 2px 0 0 var(--rb-mint)}
+#ro-buff-design .rb-nav-count {margin-left:auto;font-size:var(--rb-small);background:var(--rb-raised);border-radius:4px;padding:0 5px;color:var(--rb-text)}
+#ro-buff-design .rb-sidebar-bottom {margin-top:auto;padding:20px 8px 0;color:var(--rb-muted);font-size:var(--rb-small)}
+#ro-buff-design .rb-online {display:inline-flex;align-items:center;gap:6px}
+#ro-buff-design .rb-dot {width:6px;height:6px;display:inline-block;background:var(--rb-mint);border-radius:50%;flex-shrink:0}
+#ro-buff-design .rb-main {min-width:0;min-height:0;overflow:hidden}
+#ro-buff-design .rb-page-scroll {height:100%;min-height:0;padding:20px;overflow:auto;overscroll-behavior:contain}
+#ro-buff-design .rb-heading {display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+#ro-buff-design .rb-eyebrow {display:none}
+#ro-buff-design .rb-heading h2 {font-size:var(--rb-title);line-height:1.4;font-weight:600;letter-spacing:-.25px;margin:0 0 4px;color:var(--rb-text)}
+#ro-buff-design .rb-sub {font-size:var(--rb-small);color:var(--rb-muted)}
+#ro-buff-design .rb-header-actions {display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+#ro-buff-design .rb-app .rb-header-actions button {font-size:var(--rb-small);min-height:34px}
+#ro-buff-design .rb-toolbar {display:flex;align-items:center;gap:8px;justify-content:space-between;margin-bottom:12px;color:var(--rb-muted);font-size:var(--rb-small)}
+#ro-buff-design .rb-chip {display:inline-flex;align-items:center;gap:5px;border-radius:4px;padding:2px 6px;background:var(--rb-raised);font-size:var(--rb-small);color:var(--rb-muted);font-weight:400}
+#ro-buff-design .rb-chip.rb-mint {background:var(--rb-mint-soft);color:var(--rb-mint)}
+#ro-buff-design .rb-chip.rb-warning {background:var(--rb-warn-soft);color:var(--rb-warn)}
+#ro-buff-design .rb-cards {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,264px),1fr));grid-auto-rows:minmax(240px,1fr);gap:var(--rb-gap);align-items:stretch;align-content:stretch;flex:1;min-height:0;min-width:0;overflow:auto;overscroll-behavior:contain;padding:1px}
+#ro-buff-design .rb-character {display:flex;flex-direction:column;background:var(--rb-surface);border:1px solid #41424e;border-radius:var(--rb-radius);min-width:0;min-height:0;height:100%;overflow:hidden;box-shadow:0 3px 10px #050b161a,inset 0 1px 0 #ffffff04}
+#ro-buff-design .rb-card-head {padding:14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--rb-line);position:relative;flex-shrink:0;min-height:66px;background:#2c2d35}
+#ro-buff-design .rb-avatar {height:34px;width:34px;border-radius:10px;background:var(--rb-mint-soft);color:var(--rb-mint);display:grid;place-items:center;flex-shrink:0;box-shadow:inset 0 0 0 1px #b3aff114}
+#ro-buff-design .rb-character-name {font-size:var(--rb-base);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#ro-buff-design .rb-character-meta {font-size:var(--rb-small);color:var(--rb-muted);margin-top:2px}
+#ro-buff-design .rb-card-head>div:nth-child(2) {min-width:0}
+#ro-buff-design .rb-card-actions {margin-left:auto;display:flex;align-items:center;gap:2px;flex-shrink:0}
+#ro-buff-design .rb-app .rb-focus-button {font-size:var(--rb-small);color:var(--rb-mint);padding:6px 7px;background:#373449;border-color:#4a465f}
+#ro-buff-design .rb-app .rb-focus-button:hover {background:#2b4640}
+#ro-buff-design .rb-mode-bar {padding:9px 14px;border-bottom:1px solid var(--rb-line);display:flex;align-items:center;gap:10px;flex-shrink:0;background:#282930}
+#ro-buff-design .rb-mode-bar label {font-size:var(--rb-small);color:var(--rb-muted);flex-shrink:0}
+#ro-buff-design .rb-app .rb-mode-select {margin:0;padding:5px 7px;font-size:var(--rb-small);flex:1;min-width:0;width:0;background:#121b28}
+#ro-buff-design .rb-mode-hint {display:none}
+#ro-buff-design .rb-buffs {padding:3px 14px;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-gutter:stable;overscroll-behavior:contain}
+#ro-buff-design .rb-app .rb-buff {display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;min-height:56px;padding:11px 0;border-radius:0;border-bottom:1px solid #ffffff0a;text-align:left}
+#ro-buff-design .rb-app .rb-buff:last-child {border-bottom:0}
+#ro-buff-design .rb-app .rb-buff:hover {background:#2c2d35}
+#ro-buff-design .rb-buff-symbol {height:28px;width:28px;border-radius:7px;display:grid;place-items:center;background:#3b3c4a;color:#d1cfec;font-size:var(--rb-small);font-weight:400}
+#ro-buff-design .rb-buff.rb-potion .rb-buff-symbol {color:var(--rb-mint);background:var(--rb-mint-soft)}
+#ro-buff-design .rb-buff.rb-ending .rb-buff-symbol {color:var(--rb-warn);background:var(--rb-warn-soft)}
+#ro-buff-design .rb-buff-name {font-size:var(--rb-base);display:block;overflow-wrap:anywhere;font-weight:400}
+#ro-buff-design .rb-track {display:block;background:#2c394c;height:3px;margin-top:7px;border-radius:3px;overflow:hidden}
+#ro-buff-design .rb-track>span {display:block;height:100%;background:var(--rb-mint);border-radius:3px}
+#ro-buff-design .rb-ending .rb-track>span {background:var(--rb-warn)}
+#ro-buff-design .rb-time {font-size:var(--rb-numeric);font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:normal;padding-left:2px;white-space:nowrap}
+#ro-buff-design .rb-time small {display:block;font-size:var(--rb-small);text-align:right;color:var(--rb-warn);font-weight:400;margin-top:1px}
+#ro-buff-design .rb-card-foot {padding:7px 14px;background:#282930;border-top:1px solid var(--rb-line);color:var(--rb-muted);display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:var(--rb-small);flex-shrink:0;min-height:34px}
+#ro-buff-design .rb-card-foot>span {min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#ro-buff-design .rb-app .rb-card-foot button {font-size:var(--rb-small);padding:2px;color:var(--rb-muted)}
+#ro-buff-design .rb-group-label {font-size:var(--rb-small);color:var(--rb-mint);display:flex;align-items:center;gap:6px;padding:9px 0 3px;grid-column:1/-1}
+#ro-buff-design .rb-group-label.rb-other {color:var(--rb-muted);border-top:1px solid var(--rb-line);margin-top:4px}
+#ro-buff-design .rb-app .rb-buff.rb-missing {background:#382a31;margin:6px -5px;padding:11px 5px;width:calc(100% + 10px);border:1px solid #75444e80;border-left:2px solid #e49da6;border-radius:7px}
+#ro-buff-design .rb-missing .rb-buff-symbol {background:#58353c;color:#ffb6b5}
+#ro-buff-design .rb-missing .rb-time,#ro-buff-design .rb-missing .rb-time small {color:#ffb6b5}
+#ro-buff-design .rb-missing .rb-track {display:none}
+#ro-buff-design .rb-app .rb-buff.rb-required:not(.rb-missing) .rb-buff-name:after {content:'필수';font-size:var(--rb-small);color:var(--rb-mint);margin-left:6px;padding:1px 4px;background:var(--rb-mint-soft);border-radius:3px;white-space:nowrap}
+#ro-buff-design .rb-missing-summary {color:#ffb6b5}
+#ro-buff-design .rb-discovery-callout {margin-top:12px;display:flex;align-items:center;gap:10px;padding:10px 12px;background:#282930;border:1px solid var(--rb-line);border-radius:9px}
+#ro-buff-design .rb-discovery-callout>.rb-avatar {width:28px;height:28px;border-radius:7px;background:var(--rb-raised);color:var(--rb-muted)}
+#ro-buff-design .rb-discovery-callout strong {font-size:var(--rb-base);font-weight:400;display:block}
+#ro-buff-design .rb-discovery-callout small {font-size:var(--rb-small);color:var(--rb-muted)}
+#ro-buff-design .rb-discovery-callout button {margin-left:auto;font-size:var(--rb-small);flex-shrink:0}
+#ro-buff-design .rb-app-footer {padding:0 32px 0 12px;border-top:1px solid var(--rb-line);display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:var(--rb-small);color:var(--rb-muted);min-width:0;overflow:hidden;background:#24252b}
+#ro-buff-design .rb-app-footer span {overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+#ro-buff-design .rb-app .rb-resize-handle {position:absolute;right:0;bottom:0;width:27px;height:27px;padding:5px;border-radius:0;cursor:nwse-resize;z-index:10;color:var(--rb-muted);touch-action:none}
+#ro-buff-design .rb-menu {position:absolute;right:8px;top:48px;min-width:160px;border:1px solid var(--rb-line);background:var(--rb-raised);padding:4px;border-radius:8px;box-shadow:0 10px 25px #080e1970;z-index:2}
+#ro-buff-design .rb-app .rb-menu button {width:100%;justify-content:flex-start;font-size:var(--rb-small)}
+#ro-buff-design .rb-dictionary {border-top:1px solid var(--rb-line)}
+#ro-buff-design .rb-dict-row {display:grid;grid-template-columns:28px minmax(110px,1fr) 58px 88px 30px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--rb-line)}
+#ro-buff-design .rb-dict-name {font-size:var(--rb-base)}
+#ro-buff-design .rb-dict-id,#ro-buff-design .rb-dict-time {font-size:var(--rb-small);color:var(--rb-muted);margin-top:3px;font-variant-numeric:tabular-nums}
+#ro-buff-design .rb-discover-list {display:grid;gap:10px}
+#ro-buff-design .rb-discover {border:1px solid var(--rb-line);background:var(--rb-surface);border-radius:9px;padding:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+#ro-buff-design .rb-discover-info {flex:1;min-width:130px}
+#ro-buff-design .rb-discover-info strong {font-size:var(--rb-base);font-weight:500;display:block}
+#ro-buff-design .rb-discover-info small {font-size:var(--rb-small);color:var(--rb-muted)}
+#ro-buff-design .rb-app .rb-discover button {font-size:var(--rb-small)}
+#ro-buff-design .rb-overlay {position:absolute;inset:0;z-index:5;background:#080d18c9;display:flex;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(4px);overflow:hidden}
+#ro-buff-design .rb-dialog {width:100%;max-width:520px;max-height:100%;overflow-y:auto;overflow-x:hidden;background:var(--rb-surface);border:1px solid #40526b;border-radius:14px;box-shadow:0 24px 72px #05091199,inset 0 1px 0 #ffffff08;padding:22px;scrollbar-gutter:stable}
+#ro-buff-design .rb-dialog-top {display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:12px}
+#ro-buff-design .rb-dialog h3 {margin:0;font-size:var(--rb-title);font-weight:600;line-height:1.4}
+#ro-buff-design .rb-dialog p {margin:4px 0 0;font-size:var(--rb-small);color:var(--rb-muted)}
+#ro-buff-design .rb-dialog .rb-close {padding:3px;color:var(--rb-muted)}
+#ro-buff-design .rb-target-launch {display:flex;gap:12px;align-items:center;padding:12px 0}
+#ro-buff-design .rb-app .rb-crosshair {height:48px;width:48px;flex-shrink:0;color:var(--rb-mint);background:var(--rb-mint-soft);border:1px solid #3b675e;border-radius:11px;touch-action:none;cursor:grab}
+#ro-buff-design .rb-app .rb-crosshair svg {width:24px;height:24px}
+#ro-buff-design .rb-crosshair:active {cursor:grabbing}
+#ro-buff-design .rb-pick-area {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px;background:#101722;border:1px solid var(--rb-line);border-radius:9px}
+#ro-buff-design .rb-app .rb-window-target {display:block;border:1px solid #354357;background:#1e2a3a;padding:0;border-radius:7px;overflow:hidden;min-height:92px;text-align:center;touch-action:none}
+#ro-buff-design .rb-window-target .rb-mini-title {display:block;font-size:var(--rb-small);color:var(--rb-muted);padding:5px 3px;background:#33353e;overflow-wrap:anywhere}
+#ro-buff-design .rb-window-target .rb-window-symbol {display:grid;place-items:center;height:34px;color:#b5c9df}
+#ro-buff-design .rb-window-target>span:last-child {display:block;font-size:var(--rb-small);padding:0 4px 8px}
+#ro-buff-design .rb-app .rb-window-target.rb-target-selected {border-color:var(--rb-mint);background:var(--rb-mint-soft);box-shadow:0 0 0 1px var(--rb-mint)}
+#ro-buff-design .rb-pick-hint {margin-top:8px;font-size:var(--rb-small);color:var(--rb-muted)}
+#ro-buff-design .rb-field {display:block;margin-top:14px;font-size:var(--rb-base);color:var(--rb-muted)}
+#ro-buff-design .rb-app input[type="text"],#ro-buff-design .rb-app input[type="number"],#ro-buff-design .rb-app select {display:block;width:100%;margin-top:7px;padding:9px 11px;background:#111a27;border:1px solid #3a4a60;border-radius:7px;color:var(--rb-text);min-width:0;box-shadow:inset 0 1px 2px #050b1626;transition:border-color .12s,background .12s}
+#ro-buff-design .rb-app input[type="checkbox"] {accent-color:var(--rb-mint);width:16px;height:16px;margin:0;flex-shrink:0}
+#ro-buff-design .rb-check {display:flex;align-items:center;gap:10px;padding:11px 0;font-size:var(--rb-base);border-bottom:1px solid var(--rb-line)}
+#ro-buff-design .rb-check small {display:block;color:var(--rb-muted);font-size:var(--rb-small);margin-top:2px}
+#ro-buff-design .rb-dialog-actions {display:flex;justify-content:flex-end;gap:8px;margin-top:16px;flex-wrap:wrap}
+#ro-buff-design .rb-dialog-actions button {font-size:var(--rb-base)}
+#ro-buff-design .rb-inline-message {font-size:var(--rb-small);color:var(--rb-mint);margin-top:10px;min-height:17px}
+#ro-buff-design .rb-bottom-status {position:absolute;bottom:38px;left:50%;transform:translateX(-50%);background:#26384a;color:var(--rb-text);border:1px solid #405369;border-radius:8px;padding:9px 12px;max-width:90%;font-size:var(--rb-small);z-index:8;box-shadow:0 8px 25px #080d1870;pointer-events:none}
+#ro-buff-design .rb-empty {padding:28px 8px;text-align:center;color:var(--rb-muted);font-size:var(--rb-base)}
+#ro-buff-design .rb-volume {margin:14px 0 8px;padding:14px;background:#111a26;border:1px solid var(--rb-line);border-radius:9px}
+#ro-buff-design .rb-volume-header {display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:var(--rb-base);margin-bottom:12px}
+#ro-buff-design .rb-volume-value {color:var(--rb-mint);font-variant-numeric:tabular-nums;font-size:var(--rb-numeric)}
+#ro-buff-design .rb-volume-range {display:block;width:100%;accent-color:var(--rb-mint);height:26px;margin:0;touch-action:none}
+#ro-buff-design .rb-volume-scale {display:flex;justify-content:space-between;color:var(--rb-muted);font-size:var(--rb-small);margin-top:6px}
+#ro-buff-design .rb-volume-note {font-size:var(--rb-small);color:var(--rb-muted);margin-top:10px}
+#ro-buff-design .rb-replay-actions {display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+#ro-buff-design .rb-replay-actions button {font-size:var(--rb-small);color:var(--rb-muted);border-color:var(--rb-line)}
+#ro-buff-design .rb-app .rb-back-board {justify-content:flex-start;color:var(--rb-muted);font-size:var(--rb-small);padding:0 0 10px;border-radius:0;align-self:flex-start}
+#ro-buff-design .rb-app .rb-back-board:hover {background:transparent;color:var(--rb-mint)}
+#ro-buff-design .rb-app[data-view="focus"] .rb-page-scroll,#ro-buff-design .rb-page-scroll:has(>.rb-cards),#ro-buff-design .rb-board-page {display:flex;flex-direction:column;overflow:hidden}
+#ro-buff-design .rb-app[data-view="focus"] .rb-page-scroll>.rb-heading,#ro-buff-design .rb-app[data-view="focus"] .rb-page-scroll>.rb-toolbar {flex-shrink:0}
+#ro-buff-design .rb-focused-cards {display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);flex:1;min-height:0;min-width:0}
+#ro-buff-design .rb-focus-toolbar {display:flex;align-items:center;justify-content:space-between;gap:8px;flex-shrink:0;margin-bottom:10px;flex-wrap:wrap}
+#ro-buff-design .rb-app .rb-focus-toolbar .rb-back-board {padding:4px 0;margin:0}
+#ro-buff-design .rb-focus-toolbar .rb-header-actions {width:auto}
+#ro-buff-design .rb-focus-title {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;font-size:var(--rb-title);font-weight:500;margin:0}
+#ro-buff-design .rb-focused-cards .rb-character {height:100%;min-height:0}
+#ro-buff-design .rb-app[data-view="focus"] .rb-buffs {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));align-content:start;column-gap:20px}
+#ro-buff-design .rb-background-tracking {display:flex;align-items:center;justify-content:center;gap:7px;color:var(--rb-muted);font-size:var(--rb-small);padding-top:10px;flex-shrink:0;flex-wrap:wrap}
+#ro-buff-design .rb-setting-section {padding:16px;border:1px solid var(--rb-line);background:var(--rb-surface);border-radius:var(--rb-radius);width:100%}
+#ro-buff-design .rb-setting-section h3 {font-size:var(--rb-base);font-weight:500;margin:0 0 6px}
+#ro-buff-design .rb-app [style*="font-size"] {font-size:var(--rb-small)!important}
+#ro-buff-design .rb-app ::-webkit-scrollbar {width:7px;height:7px}
+#ro-buff-design .rb-app ::-webkit-scrollbar-thumb {background:#405067;border-radius:7px}
+#ro-buff-design .rb-app ::-webkit-scrollbar-track {background:transparent}
+/* The board owns the remaining window height; only its grid and buff lists scroll. */
+#ro-buff-design .rb-page-scroll:has(>.rb-cards)>:not(.rb-cards),#ro-buff-design .rb-board-page>:not(.rb-cards) {flex-shrink:0}
+#ro-buff-design .rb-board-toolbar {min-height:32px;margin-bottom:12px;gap:8px 12px}
+#ro-buff-design .rb-toolbar-meta {display:flex;align-items:center;gap:7px;min-width:0;flex-wrap:wrap}
+#ro-buff-design .rb-toolbar-actions {display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap;margin-left:auto}
+#ro-buff-design .rb-app .rb-toolbar-actions button {font-size:var(--rb-small);min-height:30px;padding:5px 8px}
+#ro-buff-design .rb-app .rb-discovery-button {color:#bccbdb;background:#30313b;border-color:#42434f}
+#ro-buff-design .rb-discovery-button .rb-nav-count {background:#424055;color:var(--rb-mint);min-width:18px;text-align:center;border-radius:5px;line-height:18px}
+#ro-buff-design .rb-header-actions .rb-secondary {min-width:32px}
+#ro-buff-design .rb-app .rb-icon-button:hover {color:var(--rb-text);border-color:#3b4b60}
+#ro-buff-design .rb-app .rb-icon-button:empty {display:none}
+#ro-buff-design .rb-app input::placeholder {color:#75879e}
+#ro-buff-design .rb-app input[type="text"]:hover,#ro-buff-design .rb-app input[type="number"]:hover,#ro-buff-design .rb-app select:hover {border-color:#5c7089}
+#ro-buff-design .rb-app select {appearance:none;-webkit-appearance:none;padding-right:32px;background-image:linear-gradient(45deg,transparent 50%,#99adc3 50%),linear-gradient(135deg,#99adc3 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 12px) 50%;background-size:4px 4px;background-repeat:no-repeat;cursor:pointer}
+#ro-buff-design .rb-mode-picker {position:relative;flex:1;min-width:0}
+#ro-buff-design .rb-app .rb-mode-picker .rb-mode-select {width:100%;min-width:0;margin:0;padding:6px 29px 6px 9px;font-size:var(--rb-small);line-height:1.4;background-image:none;background-color:#30313a;border-color:#41434e;border-radius:6px;color:#e7e6ef;box-shadow:inset 0 1px 0 #ffffff05}
+#ro-buff-design .rb-mode-picker>svg {position:absolute;right:9px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:#a3b6ca;pointer-events:none}
+#ro-buff-design .rb-app .rb-buff:hover .rb-buff-name {color:#fff}
+#ro-buff-design .rb-app .rb-buff:focus-visible {outline-offset:-2px;border-radius:5px}
+#ro-buff-design .rb-app .rb-buff.rb-missing:hover {background:#49313b}
+#ro-buff-design .rb-buff-symbol {box-shadow:inset 0 0 0 1px #d6e5f408}
+#ro-buff-design .rb-time {color:#eeedf6}
+#ro-buff-design .rb-ending .rb-time {color:var(--rb-warn)}
+#ro-buff-design .rb-focused-cards .rb-card-head {background:#1c2b39}
+#ro-buff-design .rb-focused-cards .rb-character {border-color:#3b555b}
+#ro-buff-design .rb-app .rb-card-foot button:hover {color:var(--rb-mint);background:transparent}
+#ro-buff-design .rb-app .rb-resize-handle {border-top-left-radius:6px;background:#1b2735}
+#ro-buff-design .rb-app .rb-resize-handle:hover {background:#2b3c4f;color:var(--rb-mint)}
+#ro-buff-design .rb-dict-row:hover {background:#1b2533}
+#ro-buff-design .rb-dictionary {padding:0 12px;background:#282930;border:1px solid var(--rb-line);border-radius:10px;overflow:hidden}
+#ro-buff-design .rb-dict-row:last-child {border-bottom:0}
+#ro-buff-design .rb-dialog .rb-dictionary {padding:0;border:0;border-radius:0;background:transparent}
+#ro-buff-design .rb-discover {box-shadow:inset 0 1px 0 #ffffff04}
+#ro-buff-design .rb-dialog-actions {padding-top:16px;border-top:1px solid var(--rb-line);margin-top:20px}
+#ro-buff-design .rb-dialog-actions button:not(.rb-primary) {border-color:#35465b;background:#202d3d}
+#ro-buff-design .rb-volume {padding:16px;background:#292a32;border-color:#314158}
+#ro-buff-design .rb-volume-range {appearance:none;-webkit-appearance:none;background:transparent;cursor:pointer;outline-offset:4px}
+#ro-buff-design .rb-volume-range::-webkit-slider-runnable-track {height:5px;background:#3a4c62;border-radius:99px}
+#ro-buff-design .rb-volume-range::-webkit-slider-thumb {appearance:none;-webkit-appearance:none;width:16px;height:16px;border:3px solid #d9f8ed;border-radius:50%;background:var(--rb-mint);margin-top:-5.5px;box-shadow:0 2px 6px #0005}
+#ro-buff-design .rb-volume-range::-moz-range-track {height:5px;background:#3a4c62;border-radius:99px}
+#ro-buff-design .rb-volume-range::-moz-range-thumb {width:12px;height:12px;border:2px solid #d9f8ed;border-radius:50%;background:var(--rb-mint);box-shadow:0 2px 6px #0005}
+#ro-buff-design .rb-app * {scrollbar-width:thin;scrollbar-color:#3a4b60 transparent}
+#ro-buff-design .rb-app ::-webkit-scrollbar-thumb {border:2px solid transparent;background-clip:padding-box}
+#ro-buff-design .rb-app ::-webkit-scrollbar-thumb:hover {background-color:#657d98}
+@container rbwindow (max-width:800px) {
+ #ro-buff-design .rb-body {grid-template-columns:54px minmax(0,1fr)}
+ #ro-buff-design .rb-sidebar {padding:14px 6px 8px}
+ #ro-buff-design .rb-sidebar-label,#ro-buff-design .rb-nav-label,#ro-buff-design .rb-sidebar .rb-nav-count,#ro-buff-design .rb-sidebar-bottom {display:none}
+ #ro-buff-design .rb-app .rb-nav {justify-content:center;padding:9px}
+ #ro-buff-design .rb-page-scroll {padding:14px}
+}
+@container rbwindow (max-width:480px) {
+ #ro-buff-design .rb-body {grid-template-columns:1fr;grid-template-rows:44px minmax(0,1fr)}
+ #ro-buff-design .rb-sidebar {flex-direction:row;padding:4px 8px;border-right:0;border-bottom:1px solid var(--rb-line);justify-content:space-between;overflow:hidden}
+ #ro-buff-design .rb-app .rb-nav {width:auto;flex:1;padding:6px}
+ #ro-buff-design .rb-page-scroll {padding:10px}
+ #ro-buff-design .rb-heading {gap:8px;margin-bottom:10px}
+ #ro-buff-design .rb-header-actions {width:100%}
+ #ro-buff-design .rb-header-actions .rb-primary {margin-left:auto}
+ #ro-buff-design .rb-discovery-callout {padding:9px;gap:8px}
+ #ro-buff-design .rb-discovery-callout small,#ro-buff-design .rb-discovery-callout>.rb-avatar {display:none}
+ #ro-buff-design .rb-dict-row {grid-template-columns:28px minmax(0,1fr) 50px 28px;gap:8px}
+ #ro-buff-design .rb-dict-time {display:none}
+ #ro-buff-design .rb-window-dots {gap:10px;padding-right:90px}
+ #ro-buff-design .rb-preview {display:none}
+ #ro-buff-design .rb-toolbar {flex-wrap:wrap}
+ #ro-buff-design .rb-board-toolbar {gap:5px;margin-bottom:8px}
+ #ro-buff-design .rb-toolbar-actions {gap:4px}
+ #ro-buff-design .rb-toolbar-meta {font-size:var(--rb-small)}
+ #ro-buff-design .rb-app .rb-toolbar-actions button {padding:5px 6px}
+ #ro-buff-design .rb-card-head {padding:10px;gap:8px;min-height:58px}
+ #ro-buff-design .rb-mode-bar {padding:7px 10px;gap:7px}
+ #ro-buff-design .rb-buffs {padding-left:10px;padding-right:10px}
+ #ro-buff-design .rb-card-foot {padding-left:10px;padding-right:10px}
+ #ro-buff-design .rb-dialog {padding:16px}
+ #ro-buff-design .rb-background-tracking {font-size:var(--rb-small);gap:4px}
+ #ro-buff-design .rb-focus-toolbar {gap:6px;margin-bottom:8px}
+ #ro-buff-design .rb-app .rb-focus-toolbar .rb-back-board {padding:5px 0}
+ #ro-buff-design .rb-pick-area {gap:6px;padding:6px}
+ #ro-buff-design .rb-app-footer>span:last-child {display:none}
+ #ro-buff-design .rb-app[data-view="focus"] .rb-sub {display:none}
+}
+@container rbwindow (max-height:520px) {
+ #ro-buff-design .rb-page-scroll {padding-top:10px;padding-bottom:10px}
+ #ro-buff-design .rb-heading {margin-bottom:8px}
+ #ro-buff-design .rb-heading>.rb-sub,#ro-buff-design .rb-heading>div>.rb-sub {display:none}
+ #ro-buff-design .rb-card-head {min-height:54px;padding:9px 12px}
+ #ro-buff-design .rb-mode-bar {padding:6px 12px}
+ #ro-buff-design .rb-background-tracking {padding-top:6px}
+}
+@media(prefers-reduced-motion:reduce){#ro-buff-design .rb-app button {transition:none}}
+
+#ro-buff-design .rb-nav-label {white-space:nowrap}
+#ro-buff-design .rb-layout-tabs {display:flex;gap:3px;padding:3px;background:#25262d;border:1px solid var(--rb-line);border-radius:8px}
+#ro-buff-design .rb-app .rb-layout-tabs button {font-size:12px;padding:6px 9px;color:var(--rb-muted);white-space:nowrap}
+#ro-buff-design .rb-app .rb-layout-tabs button[aria-selected="true"] {background:#414056;color:var(--rb-mint);box-shadow:0 1px 3px #0002}
+#ro-buff-design .rb-board-toolbar {flex-wrap:wrap;flex-shrink:0}
+#ro-buff-design .rb-cards {display:flex;align-items:stretch;gap:12px}
+#ro-buff-design .rb-cards[data-arrangement="horizontal"] {flex-direction:row}
+#ro-buff-design .rb-cards[data-arrangement="horizontal"]>.rb-character {flex:1 0 264px;width:0;height:100%}
+#ro-buff-design .rb-cards[data-arrangement="vertical"] {flex-direction:column}
+#ro-buff-design .rb-cards[data-arrangement="vertical"]>.rb-character {flex:1 0 240px;width:100%;height:auto}
+#ro-buff-design .rb-cards[data-arrangement="vertical"] .rb-buffs {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));align-content:start;column-gap:20px}
+#ro-buff-design .rb-app .rb-fold-button {padding:5px;color:var(--rb-muted)}
+#ro-buff-design .rb-card-head>div:nth-child(2) {min-width:0}
+#ro-buff-design .rb-cards .rb-collapsed>.rb-mode-bar,#ro-buff-design .rb-cards .rb-collapsed>.rb-mode-hint,#ro-buff-design .rb-cards .rb-collapsed>.rb-buffs,#ro-buff-design .rb-cards .rb-collapsed>.rb-card-foot {display:none}
+#ro-buff-design .rb-cards[data-arrangement="horizontal"]>.rb-collapsed {flex:0 0 180px}
+#ro-buff-design .rb-cards[data-arrangement="horizontal"]>.rb-collapsed .rb-card-head {flex-wrap:wrap;align-content:flex-start;align-items:center;border-bottom:0}
+#ro-buff-design .rb-collapsed .rb-avatar {display:none}
+#ro-buff-design .rb-collapsed .rb-card-head {border-bottom:0}
+#ro-buff-design .rb-cards[data-arrangement="vertical"]>.rb-collapsed {flex:0 0 auto;min-height:0}
+#ro-buff-design .rb-app .rb-add-client {flex:0 0 136px;min-width:136px;flex-direction:column;gap:10px;border:1px dashed #454652;border-radius:12px;background:#25262d;color:var(--rb-muted);padding:14px;white-space:nowrap}
+#ro-buff-design .rb-app .rb-add-client:hover {background:#1b2b37;border-color:var(--rb-mint);color:var(--rb-mint)}
+#ro-buff-design .rb-add-client strong {font-size:14px;font-weight:500;color:var(--rb-text)}
+#ro-buff-design .rb-add-client>span:last-child {font-size:12px}
+#ro-buff-design .rb-add-symbol {display:grid;place-items:center;width:34px;height:34px;background:#3b394f;color:var(--rb-mint);border-radius:10px}
+#ro-buff-design .rb-cards[data-arrangement="vertical"]>.rb-add-client {flex:0 0 76px;min-height:76px;flex-direction:row}
+#ro-buff-design .rb-buff-view-bar {display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 14px;border-bottom:1px solid var(--rb-line);flex-shrink:0;color:var(--rb-muted);font-size:12px}
+#ro-buff-design .rb-buff-tabs {display:flex;gap:3px}
+#ro-buff-design .rb-app .rb-buff-tabs button {padding:5px;width:28px;height:26px;font-size:12px;gap:0;color:var(--rb-muted);white-space:nowrap;border-radius:5px}
+#ro-buff-design .rb-app .rb-buff-tabs button[aria-selected="true"] {color:var(--rb-mint);background:#414056}
+#ro-buff-design .rb-buff-tabs svg {width:14px;height:14px}
+#ro-buff-design .rb-cards .rb-collapsed>.rb-buff-view-bar {display:none}
+#ro-buff-design .rb-cards .rb-character[data-buff-layout="list"]>.rb-buffs {display:block}
+#ro-buff-design .rb-cards .rb-character[data-buff-layout="grid"]>.rb-buffs {display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,112px),1fr));align-content:start;gap:6px;padding:8px 10px;scrollbar-gutter:stable}
+#ro-buff-design .rb-app .rb-character[data-buff-layout="grid"] .rb-buff {grid-template-columns:22px minmax(0,1fr);grid-template-rows:18px 18px;column-gap:7px;row-gap:2px;align-content:center;align-items:center;min-height:56px;padding:7px 8px;border:1px solid #41424d;border-radius:6px;background:#30313b}
+#ro-buff-design .rb-character[data-buff-layout="grid"] .rb-buff-symbol {grid-row:1/3;width:22px;height:22px;border-radius:5px}
+#ro-buff-design .rb-character[data-buff-layout="grid"] .rb-buff>span:nth-child(2) {min-width:0}
+#ro-buff-design .rb-character[data-buff-layout="grid"] .rb-track {display:none}
+#ro-buff-design .rb-character[data-buff-layout="grid"] .rb-buff-name {font-size:12px;line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ro-buff-design .rb-app .rb-character[data-buff-layout="grid"] .rb-buff-name:after,#ro-buff-design .rb-character[data-buff-layout="grid"] .rb-buff-name .rb-chip {display:none}
+#ro-buff-design .rb-character[data-buff-layout="grid"] .rb-time {grid-column:2;grid-row:2;justify-self:start;padding:0;font-size:14px}
+#ro-buff-design .rb-character[data-buff-layout="grid"] .rb-time small {display:none}
+#ro-buff-design .rb-app .rb-character[data-buff-layout="grid"] .rb-missing {border-color:#b96973;background:#3c2a33;box-shadow:inset 2px 0 0 #f0a2ac;margin:0}
+#ro-buff-design .rb-character[data-buff-layout="grid"] .rb-group-label {padding:3px 0;min-width:0}
+#ro-buff-design .rb-cards .rb-character.rb-collapsed>.rb-buffs {display:none}
+#ro-buff-design .rb-app {width:420px;height:820px;margin-inline:auto;border-color:#484954;box-shadow:0 16px 48px #0b0b1430;--rb-radius:10px;--rb-gap:10px}
+#ro-buff-design .rb-heading {margin-bottom:12px;align-items:center;flex-wrap:nowrap}
+#ro-buff-design .rb-heading h2 {font-size:18px;letter-spacing:-.4px;font-weight:500;margin-bottom:2px}
+#ro-buff-design .rb-header-actions {width:auto;flex-wrap:nowrap}
+#ro-buff-design .rb-app .rb-header-actions button {background:transparent;border-color:transparent;padding:5px;min-height:28px}
+#ro-buff-design .rb-app .rb-header-actions button:hover {background:#363741}
+#ro-buff-design .rb-page-scroll {padding:14px}
+#ro-buff-design .rb-layout-tabs {border:0;background:transparent;padding:0;gap:3px}
+#ro-buff-design .rb-app .rb-layout-tabs button {padding:6px 8px}
+#ro-buff-design .rb-app .rb-layout-tabs button[aria-selected="true"] {background:#3c3a50;box-shadow:none}
+#ro-buff-design .rb-board-toolbar {margin-bottom:10px;min-height:28px}
+#ro-buff-design .rb-app .rb-discovery-button {border:0;background:transparent;padding:4px;color:var(--rb-muted)}
+#ro-buff-design .rb-character {box-shadow:0 2px 5px #11111816;border-color:#41424d}
+#ro-buff-design .rb-card-head {min-height:52px;padding:9px 12px;background:#2d2e37;gap:8px}
+#ro-buff-design .rb-avatar {width:28px;height:28px;border-radius:8px;background:#3b394f;color:#c1bcef}
+#ro-buff-design .rb-character-name {font-size:14px;font-weight:500}
+#ro-buff-design .rb-character-meta {font-size:12px;margin-top:1px}
+#ro-buff-design .rb-dot {background:#9dcab7;width:5px;height:5px}
+#ro-buff-design .rb-card-actions {gap:2px}
+#ro-buff-design .rb-app .rb-card-actions button {padding:4px;color:#aaaabc}
+#ro-buff-design .rb-card-controls {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;padding:9px 12px;border-bottom:1px solid #3a3b45;background:#292a32;flex-shrink:0}
+#ro-buff-design .rb-mode-bar,#ro-buff-design .rb-buff-view-bar {display:flex;flex-direction:column;align-items:stretch;gap:4px;border:0;background:transparent;padding:0;font-size:12px;justify-content:flex-start}
+#ro-buff-design .rb-mode-bar label {font-size:12px;color:#a4a5b5}
+#ro-buff-design .rb-mode-picker {flex:none}
+#ro-buff-design .rb-app .rb-mode-picker .rb-mode-select {background:#32333d;border:1px solid #454650;border-radius:5px;padding:4px 26px 4px 8px;height:28px;box-shadow:none}
+#ro-buff-design .rb-buff-tabs {height:28px;align-items:center;justify-content:flex-end;gap:4px}
+#ro-buff-design .rb-app .rb-buff-tabs button {width:29px;height:28px}
+#ro-buff-design .rb-buff-tabs svg {width:15px;height:15px}
+#ro-buff-design .rb-collapsed>.rb-card-controls {display:none}
+#ro-buff-design .rb-card-foot {min-height:28px;padding:4px 12px;background:#282930;border-top-color:#3a3b45}
+#ro-buff-design .rb-app .rb-card-foot button {font-size:12px}
+#ro-buff-design .rb-buffs {padding:3px 12px}
+#ro-buff-design .rb-app .rb-buff {min-height:48px;padding-block:8px;gap:8px}
+#ro-buff-design .rb-buff-symbol {width:26px;height:26px;border-radius:7px;background:#393a46;color:#d0cdeb;box-shadow:none}
+#ro-buff-design .rb-buff-name {font-size:14px}
+#ro-buff-design .rb-time {font-size:16px}
+#ro-buff-design .rb-track {height:3px;background:#41424e}
+#ro-buff-design .rb-track>span {background:#aaa4e9}
+#ro-buff-design .rb-group-label {color:#b3aff1;padding-top:8px;font-size:12px}
+#ro-buff-design .rb-cards[data-arrangement="vertical"]>.rb-character {flex:1 0 260px}
+#ro-buff-design .rb-cards[data-arrangement="vertical"]>.rb-collapsed {flex:0 0 auto}
+#ro-buff-design .rb-cards[data-arrangement="vertical"]>.rb-add-client {flex-basis:46px;min-height:46px;padding:6px 10px;gap:8px}
+#ro-buff-design .rb-add-symbol {width:24px;height:24px;border-radius:7px;background:#3b394f}
+#ro-buff-design .rb-add-client strong {font-size:12px}
+#ro-buff-design .rb-app .rb-add-client {border-color:#484955;background:#26272e}
+#ro-buff-design .rb-add-client>span:last-child {display:none}
+#ro-buff-design .rb-app-footer {gap:8px;font-size:12px;background:#24252b;padding-left:10px}
+#ro-buff-design .rb-app .rb-preview-play {font-size:12px;padding:0;gap:4px;color:#a4a5b5}
+#ro-buff-design .rb-preview-play svg {width:12px;height:12px}
+#ro-buff-design .rb-missing-description {display:none}
+#ro-buff-design .rb-app .rb-character[data-buff-layout="list"] .rb-buff.rb-missing {grid-template-columns:28px minmax(0,1fr) auto;min-height:64px;margin:6px 0;padding:10px 9px;background:#352c34;border:1px solid #69505d;border-radius:8px;box-shadow:inset 3px 0 0 #d598ab;gap:9px}
+#ro-buff-design .rb-character[data-buff-layout="list"] .rb-missing .rb-buff-symbol {background:#553c49;color:#efb6c7;border-radius:8px;width:28px;height:28px}
+#ro-buff-design .rb-character[data-buff-layout="list"] .rb-missing .rb-buff-name {color:#f4e6ec;font-weight:500}
+#ro-buff-design .rb-character[data-buff-layout="list"] .rb-missing .rb-missing-description {display:block;font-size:12px;color:#c4acb7;margin-top:2px}
+#ro-buff-design .rb-character[data-buff-layout="list"] .rb-missing .rb-time {font-size:12px;color:#ffd0dc;background:#5a3b49;border-radius:5px;padding:3px 6px;text-align:center}
+#ro-buff-design .rb-character[data-buff-layout="list"] .rb-missing .rb-time small {font-size:12px;color:#e0b7c4;text-align:center;margin-top:2px;font-weight:400}
+#ro-buff-design .rb-search {display:flex;align-items:center;gap:8px;position:relative;padding:0 10px;background:#2d2e37;border:1px solid #494a56;border-radius:7px;margin:12px 0 0;color:#aaa9bc}
+#ro-buff-design .rb-app .rb-search input {width:100%;min-width:0;border:0;background:transparent;padding:9px 0;font-size:14px;outline-offset:3px;box-shadow:none}
+#ro-buff-design .rb-search-summary {font-size:12px;color:#b7b2dc;min-height:8px;padding:3px 0 5px}
+#ro-buff-design [data-search-scope][hidden] {display:none!important}
+#ro-buff-design .rb-dictionary-page .rb-heading {margin-bottom:14px}
+#ro-buff-design .rb-dict-actions {display:flex;align-items:center;justify-content:space-between;gap:8px}
+#ro-buff-design .rb-app .rb-dict-actions button {font-size:12px;padding:6px 8px;color:#bbb8d1;white-space:nowrap;min-height:30px}
+#ro-buff-design .rb-app .rb-dict-actions .rb-secondary {background:#383545;border-color:#4b465e;color:#ded9f6}
+#ro-buff-design .rb-dictionary-page .rb-search {margin-top:14px}
+#ro-buff-design .rb-dict-list-label {display:flex;justify-content:space-between;padding:5px 40px 8px 12px;font-size:12px;color:#a4a5b5}
+#ro-buff-design .rb-catalog {padding:0 10px;border-color:#3d3e48;background:#292a31;border-radius:9px}
+#ro-buff-design .rb-catalog .rb-dict-row {grid-template-columns:30px minmax(0,1fr) 46px 26px;gap:9px;padding:12px 0;min-height:70px;border-bottom-color:#3b3c45}
+#ro-buff-design .rb-catalog .rb-dict-row:hover {background:#30313a}
+#ro-buff-design .rb-catalog .rb-buff-symbol {height:30px;width:30px;background:#3b394b}
+#ro-buff-design .rb-dict-details {min-width:0}
+#ro-buff-design .rb-catalog .rb-dict-name {font-size:14px;color:#eeedf4;line-height:1.45;overflow-wrap:anywhere}
+#ro-buff-design .rb-dict-meta {display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:12px;color:#a4a5b5;margin-top:3px;line-height:1.4}
+#ro-buff-design .rb-catalog .rb-dict-id {font-size:12px;color:#9e9dab;margin:0}
+#ro-buff-design .rb-dict-kind {color:#c0bbd9}
+#ro-buff-design .rb-dict-potion {color:#b5d6c9}
+#ro-buff-design .rb-dict-duration {font-size:14px;font-variant-numeric:tabular-nums;color:#dedce9;text-align:right;white-space:nowrap}
+#ro-buff-design .rb-dict-duration small {font-size:12px;color:#a4a5b5;margin-left:3px}
+#ro-buff-design .rb-app .rb-catalog .rb-icon-button {padding:5px;background:transparent;color:#aaa6bd;border:0}
+#ro-buff-design .rb-catalog .rb-icon-button svg {width:14px;height:14px}
+#ro-buff-design .rb-dict-note {font-size:12px;color:#a4a5b5;margin:12px 2px;line-height:1.5}
+#ro-buff-design .rb-app .rb-mode-picker .rb-mode-select {background-color:#303039;border-color:#41404c;border-radius:6px;padding:4px 26px 4px 9px;color:#dcd9e9;font-weight:400;box-shadow:none;transition:background-color .12s,border-color .12s}
+#ro-buff-design .rb-app .rb-mode-picker .rb-mode-select:hover {background-color:#383641;border-color:#5b556c}
+#ro-buff-design .rb-mode-picker>svg {width:12px;height:12px;color:#aaa3bd}
+#ro-buff-design .rb-app .rb-mode-select:focus:not(:focus-visible) {outline:none!important;box-shadow:none!important;background-color:#303039;border-color:#41404c}
+#ro-buff-design .rb-app .rb-mode-select:focus-visible {outline:2px solid #b3aff1;outline-offset:2px;box-shadow:none}
+#ro-buff-design .rb-page-scroll {scrollbar-gutter:stable}
+#ro-buff-design .rb-dialog {scrollbar-gutter:stable}
+#ro-buff-design .rb-cards .rb-character[data-buff-layout="grid"]>.rb-buffs {grid-template-columns:repeat(auto-fill,minmax(min(100%,92px),1fr));gap:6px}
+#ro-buff-design .rb-app .rb-character[data-buff-layout="grid"] .rb-buff {aspect-ratio:1;min-height:0;grid-template-columns:minmax(0,1fr);grid-template-rows:26px 18px 18px;justify-items:center;align-content:center;row-gap:4px;padding:7px 5px}
+#ro-buff-design .rb-character[data-buff-layout="grid"] .rb-buff-symbol {grid-column:1;grid-row:1;width:26px;height:26px}
+#ro-buff-design .rb-character[data-buff-layout="grid"] .rb-buff>span:nth-child(2) {grid-column:1;grid-row:2;max-width:100%}
+#ro-buff-design .rb-character[data-buff-layout="grid"] .rb-time {grid-column:1;grid-row:3;justify-self:center;font-size:14px}
+#ro-buff-design .rb-symbol-editor {margin:16px 0 0;border:1px solid #464450;border-radius:8px;padding:12px;min-width:0}
+#ro-buff-design .rb-symbol-editor legend {font-size:14px;padding:0 5px;color:#dedbea}
+#ro-buff-design .rb-symbol-mode {display:flex;gap:16px;align-items:center;font-size:14px}
+#ro-buff-design .rb-symbol-mode label {display:flex;gap:5px;align-items:center}
+#ro-buff-design [data-symbol-preview] {margin-left:auto}
+#ro-buff-design .rb-symbol-note {font-size:12px;color:#aaa5ba;line-height:1.5}
+#ro-buff-design .rb-symbol-icon-panel {display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;margin-top:12px}
+#ro-buff-design .rb-app .rb-symbol-icon-panel button {height:34px;padding:5px;background:#33313e;border:1px solid #494552}
+#ro-buff-design .rb-app .rb-symbol-icon-panel button[aria-pressed="true"] {background:#514964;border-color:#a69acb;color:#e4dcff}
+#ro-buff-design [data-symbol-mode="text"] .rb-symbol-icon-panel,#ro-buff-design [data-symbol-mode="icon"] .rb-symbol-text-panel {display:none}
+#ro-buff-design .rb-app .rb-character[data-buff-layout="grid"] .rb-buff {width:100%}
+#ro-buff-design .rb-required-toggle {grid-column:1/-1;display:flex;align-items:center;gap:7px;font-size:12px;color:#bcb8cd;position:relative;min-height:24px;margin-top:-7px}
+#ro-buff-design .rb-required-toggle>span:first-child {display:flex;align-items:center;gap:6px;margin-right:auto}
+#ro-buff-design .rb-required-toggle svg {height:14px;width:14px}
+#ro-buff-design .rb-required-toggle input {position:absolute;right:0;opacity:0;width:30px;height:20px;margin:0;z-index:1}
+#ro-buff-design .rb-switch-track {width:28px;height:16px;border-radius:12px;background:#4a4856;position:relative;flex-shrink:0}
+#ro-buff-design .rb-switch-track:after {content:'';position:absolute;left:3px;top:3px;width:10px;height:10px;background:#c1bdce;border-radius:50%}
+#ro-buff-design .rb-required-toggle input:checked+.rb-switch-track {background:#a59bd6}
+#ro-buff-design .rb-required-toggle input:checked+.rb-switch-track:after {transform:translateX(12px);background:#282333}
+#ro-buff-design .rb-required-toggle input:focus-visible+.rb-switch-track {outline:2px solid #c2b5f4;outline-offset:3px}
+#ro-buff-design .rb-search-empty {min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:9px;padding:24px 12px;color:#aaa6b8}
+#ro-buff-design .rb-search-empty[hidden] {display:none}
+#ro-buff-design .rb-search-empty>svg {width:26px;height:26px;color:#928ba9;margin-bottom:3px}
+#ro-buff-design .rb-search-empty strong {font-size:14px;font-weight:500;color:#dedbe8}
+#ro-buff-design .rb-search-empty span {font-size:12px;line-height:1.5}
+#ro-buff-design .rb-no-results .rb-dict-list-label,#ro-buff-design .rb-no-results .rb-dict-note {visibility:hidden}
+#ro-buff-design .rb-settings-block {border-top:1px solid #41404b;padding-top:18px;margin-top:22px}
+#ro-buff-design .rb-settings-block h3 {font-size:14px;font-weight:500;margin:0 0 7px}
+#ro-buff-design .rb-settings-block p {font-size:12px;color:#aaa6b8;line-height:1.65;margin:6px 0 12px}
+#ro-buff-design .rb-app .rb-reset-button {border:1px solid #6b4b5b;background:#3b2f39;color:#f0bfce;font-size:12px;padding:7px 10px}
+#ro-buff-design .rb-about>div {display:flex;align-items:center;gap:8px;color:#cbc2eb;margin-bottom:12px}
+#ro-buff-design .rb-about strong {font-weight:500;font-size:14px;letter-spacing:.3px}
+#ro-buff-design .rb-about>span {font-size:12px;color:#a4a0b1}
+#ro-buff-design .rb-about p {color:#d0cadc}
+#ro-buff-design .rb-dialog .rb-reset-description {margin-top:15px;line-height:1.7;font-size:14px;color:#c3bdcf}
+#ro-buff-design .rb-window-dots {padding-right:12px;gap:10px}
+#ro-buff-design .rb-app input:focus,#ro-buff-design .rb-app input:focus-visible,#ro-buff-design .rb-app textarea:focus,#ro-buff-design .rb-app select:focus {outline:none!important;box-shadow:none!important}
+#ro-buff-design .rb-search:focus-within {outline:none!important;box-shadow:none!important;border-color:#494a56}
+#ro-buff-design .rb-required-toggle input:focus-visible+.rb-switch-track {outline:none}
+#ro-buff-design .rb-settings-sections {display:flex;flex-direction:column;gap:22px;margin-top:18px}
+#ro-buff-design .rb-settings-section h3 {font-size:12px;font-weight:500;color:#b8b3c8;margin:0 0 8px;padding-left:2px}
+#ro-buff-design .rb-settings-panel {background:#292a32;border:1px solid #41404c;border-radius:8px;padding:0 12px;overflow:hidden}
+#ro-buff-design .rb-settings-panel>.rb-check {margin:0;padding:12px 0;min-height:54px;border-bottom:1px solid #3b3a45;font-size:14px}
+#ro-buff-design .rb-settings-panel>.rb-check:last-child {border-bottom:0}
+#ro-buff-design .rb-settings-panel .rb-check small {font-size:12px;color:#aaa5b8;line-height:1.5}
+#ro-buff-design .rb-settings-panel .rb-volume {margin:0;padding:12px 0;background:transparent;border:0;border-radius:0;border-bottom:1px solid #3b3a45}
+#ro-buff-design .rb-settings-row {padding:12px 0;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #3b3a45;flex-wrap:wrap}
+#ro-buff-design .rb-settings-row:last-child {border-bottom:0}
+#ro-buff-design .rb-settings-row strong {font-size:14px;font-weight:400;display:block}
+#ro-buff-design .rb-settings-row small {font-size:12px;display:block;line-height:1.5;color:#aaa5b8;margin-top:3px}
+#ro-buff-design .rb-data-actions {display:flex;gap:6px;width:100%;margin-top:2px}
+#ro-buff-design .rb-app .rb-settings-row button {font-size:12px;padding:6px 8px;border-radius:5px}
+#ro-buff-design .rb-settings-panel.rb-about {padding:14px 12px}
+#ro-buff-design .rb-about>div {margin-bottom:14px}
+#ro-buff-design .rb-about p {margin:4px 0 0;font-size:12px;line-height:1.65}
+#ro-buff-design .rb-transfer-options {margin-top:14px}
+#ro-buff-design .rb-dialog .rb-transfer-note {font-size:12px;line-height:1.7;margin-top:14px;color:#b8b0c8}
+#ro-buff-design .rb-app .rb-code-text {display:block;width:100%;min-width:0;height:112px;resize:vertical;margin-top:6px;border:1px solid #484550;border-radius:7px;background:#25242c;color:#d8d1ee;padding:10px;font:12px/1.55 ui-monospace,Consolas,monospace;overflow-wrap:anywhere;word-break:break-all}
+#ro-buff-design .rb-code-feedback {font-size:12px;color:#d5b9d3;line-height:1.6;margin-top:8px;overflow-wrap:anywhere}
+#ro-buff-design .rb-code-preview {margin-top:14px;padding:12px;border:1px solid #4b465b;background:#302d3c;border-radius:7px}
+#ro-buff-design .rb-code-preview strong {font-size:14px;font-weight:500}
+#ro-buff-design .rb-code-preview p {font-size:12px;color:#bdb4d0;line-height:1.6;margin-top:7px}
+#ro-buff-design .rb-code-preview .rb-field {margin-top:10px;font-size:12px}
+#ro-buff-design .rb-app .rb-drag-handle {padding:3px 0;margin-left:-5px;margin-right:-3px;width:16px;height:28px;flex-shrink:0;color:#928aa6;cursor:grab;touch-action:none;user-select:none;background:transparent;border:0}
+#ro-buff-design .rb-app .rb-drag-handle:active {cursor:grabbing}
+#ro-buff-design .rb-drag-handle svg {width:14px;height:16px}
+#ro-buff-design .rb-card-head>div {min-width:0}
+#ro-buff-design .rb-card-dragging {opacity:.5}
+#ro-buff-design .rb-drop-line {position:absolute;z-index:12;border-radius:3px;background:#c5b5f6;pointer-events:none;box-shadow:0 0 0 1px #292333}
+#ro-buff-design .rb-drop-line[hidden] {display:none}
+#ro-buff-design .rb-cards[data-arrangement="horizontal"]>.rb-collapsed {flex-basis:196px}
+#ro-buff-design .rb-bottom-status:has([data-action="undo-ignore"]) {pointer-events:auto;display:flex;align-items:center;gap:12px;background:#34303f;border-color:#635a75;width:max-content;max-width:94%}
+#ro-buff-design .rb-app [data-action="undo-ignore"] {font-size:12px;padding:4px 6px;color:#d2c4f4;white-space:nowrap;background:#494053}
+#ro-buff-design .rb-app>.rb-menu {position:absolute;right:auto;z-index:30;width:184px;max-width:calc(100% - 16px);overflow-y:auto;overscroll-behavior:contain;background:#34313f;border-color:#5b526b;box-shadow:0 12px 30px #11101980}
+#ro-buff-design .rb-app-footer>span:last-child {margin-left:auto}
+@container rbwindow (max-width:800px) {
+ #ro-buff-design .rb-body {grid-template-columns:1fr;grid-template-rows:38px minmax(0,1fr)}
+ #ro-buff-design .rb-sidebar {flex-direction:row;gap:6px;align-items:center;padding:4px 10px;border-right:0;border-bottom:1px solid #3a3b45;background:#24252c;overflow:hidden}
+ #ro-buff-design .rb-app .rb-nav {width:auto;flex:1;padding:5px;min-height:28px;border-radius:5px}
+ #ro-buff-design .rb-app .rb-nav[aria-current="page"] {background:#39364d;border:1px solid #4a455f;box-shadow:none}
+ #ro-buff-design .rb-page-scroll {padding:12px}
+ #ro-buff-design .rb-header-actions {width:auto}
+ #ro-buff-design .rb-card-head {padding:9px 12px;min-height:52px}
+}
+html,body{margin:0;height:100%;overflow:hidden;background:#202126;font-family:system-ui,'Segoe UI','Malgun Gothic',sans-serif}#ro-buff-design{height:100%;width:100%}#ro-buff-design .rb-app{width:100%!important;height:100%!important;min-width:0;min-height:0;border:0;border-radius:0;grid-template-rows:minmax(0,1fr) 28px;box-shadow:none}#ro-buff-design .rb-titlebar,#ro-buff-design .rb-resize-handle{display:none}#ro-buff-design .rb-live-status{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#302c3b;color:#c2b9d9;border-bottom:1px solid #454052;flex-shrink:0;font-size:12px}#ro-buff-design .rb-live-status>span{flex:1;min-width:0;overflow-wrap:anywhere;line-height:1.5}#ro-buff-design .rb-live-status button{font-size:12px;white-space:nowrap;flex-shrink:0}#ro-buff-design .rb-real-windows{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;max-height:230px;overflow:auto}#ro-buff-design .rb-app .rb-real-windows button{justify-content:flex-start;border:1px solid #45404f;background:#302d38;padding:10px}#ro-buff-design .rb-real-windows button[aria-pressed=true]{border-color:#ad9ed0;background:#443c58}#ro-buff-design .rb-real-windows small{display:block;font-size:12px;color:#aaa1bc;margin-top:3px}#ro-buff-design .rb-real-windows span{overflow-wrap:anywhere;min-width:0}</style><link rel="stylesheet" href="native.css">
+<script type="module">
+await window.roNative.ready;
+(()=>{
+ const root=document.getElementById('ro-buff-design');
+ const initialDefinitions=[
+  {id:10,name:'블레싱',kind:'skill',short:'축',total:240},
+  {id:12,name:'민첩성 증가',kind:'skill',short:'민',total:240},
+  {id:340,name:'엑스피아티오',kind:'skill',short:'엑',total:270},
+  {id:336,name:'레노바티오',kind:'skill',short:'레',total:180},
+  {id:19,name:'프라에파티오 · 상태 19',kind:'skill',short:'프',total:120},
+  {id:49,name:'프라에파티오 · 상태 49',kind:'skill',short:'프',total:120},
+  {id:9,name:'안젤루스',kind:'skill',short:'안',total:60},
+  {id:1121,name:'아숨프티오',kind:'skill',short:'아',total:100},
+  {id:1122,name:'바실리카',kind:'skill',short:'바',total:180},
+  {id:664,name:'레드부스터',kind:'potion',short:'물',total:600}
+ ];
+ const sampleCards=[
+  {id:'main',name:'메인 캐릭터',job:'주력 캐릭터',icon:'swords',connected:true,mode:'remember',buffs:[{id:10,left:222,remember:true},{id:12,left:215,remember:true},{id:340,left:193},{id:336,left:0,presence:'absent',remember:true},{id:1121,left:82},{id:664,left:498}]},
+  {id:'support',name:'카디널',collapsed:true,job:'지원 캐릭터',icon:'sparkles',connected:true,mode:'remaining',buffs:[{id:10,left:146},{id:12,left:139},{id:9,left:35},{id:1122,left:128}]}
+ ];
+ sampleCards.push({id:'performer',name:'연주',collapsed:true,job:'연주 캐릭터',icon:'music',connected:true,mode:'normal',buffs:[{id:10,left:180},{id:12,left:172}]});
+ const sampleDiscoveries=[{id:1207,total:180,count:3,time:'방금',name:''},{id:1268,total:60,count:1,time:'2분 전',name:''},{id:46,total:0.5,count:8,time:'3분 전',name:''}];
+ const clone=value=>JSON.parse(JSON.stringify(value));
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const icon=name=>`<i data-lucide="${name}" aria-hidden="true"></i>`;
+ const symbolIcons=['sparkles','shield','swords','heart','cross','sun','moon','flame','zap','wind','leaf','flask-conical'];
+ const firstChar=value=>Array.from(new Intl.Segmenter('ko',{granularity:'grapheme'}).segment(String(value).trim()))[0]?.segment||'';
+ const buffSymbol=d=>d.symbolMode==='icon'&&symbolIcons.includes(d.symbolIcon)?icon(d.symbolIcon):esc(firstChar(d.symbolText)||firstChar(d.name)||'?');
+ const format=s=>s<=0?'종료':`${String(Math.floor(s/60)).padStart(2,'0')}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+ const defaultPresets={"revision": 1, "source": "사용자 지정 이름 및 기존 실게임 등록 상태 ID. total은 관측값이며 실행 타이머는 수신값 사용.", "shared": [10, 12], "profiles": {"main": [10, 12], "support": [10, 12, 1228, 1227, 1200, 1199, 1198, 15, 20, 1121, 472, 21, 1197, 19, 49, 1122, 350, 340, 1201], "performer": [10, 12, 1262, 1263, 1261, 77, 78, 439]}, "definitions": [{"id": 10, "name": "블레싱", "total": 240}, {"id": 12, "name": "민첩성 증가", "total": 240}, {"id": 1228, "name": "베네딕툼", "total": 120}, {"id": 1227, "name": "렐리지오", "total": 120}, {"id": 1200, "name": "프레센스 아치에스", "total": 150}, {"id": 1199, "name": "아르구투스 텔룸", "total": 150}, {"id": 1198, "name": "아르구투스 비타", "total": 150}, {"id": 15, "name": "임포시티오 마누스", "total": 120}, {"id": 20, "name": "마니피캇", "total": 90}, {"id": 1121, "name": "아숨프티오", "total": 100}, {"id": 472, "name": "세크라멘트", "total": 60}, {"id": 21, "name": "글로리아", "total": 15}, {"id": 1197, "name": "메디알레보툼", "total": 80}, {"id": 19, "name": "프리에파티오A", "total": 120}, {"id": 49, "name": "프리에파티오B", "total": 120}, {"id": 1122, "name": "바실리카", "total": 180}, {"id": 350, "name": "듀플레라이트", "total": 210}, {"id": 340, "name": "엑스피아티오", "total": 270}, {"id": 1201, "name": "콤페텐티아", "total": 300}, {"id": 1262, "name": "저녁노을의세레나데", "total": 180}, {"id": 1263, "name": "프론테라행진곡", "total": 180}, {"id": 1261, "name": "뮤지컬인터루드", "total": 180}, {"id": 77, "name": "스윙댄스", "total": 180}, {"id": 78, "name": "김서방 돈벌었네", "total": 180}, {"id": 439, "name": "마나의 노래", "total": 120}]};
+ initialDefinitions.splice(0,initialDefinitions.length,...defaultPresets.definitions.map(d=>({...d,kind:'skill',short:d.name[0]})));
+ for(const c of sampleCards){c.connected=false;c.connectionText='게임 창 연결 대기';c.buffs=(defaultPresets.profiles[c.id]||defaultPresets.shared).map(id=>({id,left:0,presence:'unknown',alert:true,warning:10}));}
+ sampleDiscoveries.length=0;
+ const saved=window.openai?.widgetState;
+ const instances=[];
+ function persist(){
+  const content=instances.map(x=>({layout:'board',arrangement:x.state.arrangement,volume:x.state.volume,cards:x.state.cards.map(c=>({name:c.name,collapsed:!!c.collapsed,buffLayout:c.buffLayout,mode:c.mode,pinRequired:c.pinRequired,required:c.buffs.filter(b=>b.remember).map(b=>b.id),buffIds:c.buffs.filter(b=>!b.hidden).map(b=>b.id)})),registered:x.state.definitions.filter(d=>d.custom).map(d=>({id:d.id,name:d.name,kind:d.kind}))}));
+  const privateContent={version:1,variants:instances.map(x=>({layout:'board',state:{...x.state,focusedId:null,playing:false,modal:null,menu:null,notice:'',dragging:false}}))};
+  if(window.openai?.setWidgetState)window.openai.setWidgetState({modelContent:{designs:content},privateContent}).catch(()=>{});
+ }
+ for(const app of root.querySelectorAll('.rb-app')){
+  const layout=app.dataset.layout;
+  const restored=saved?.privateContent?.version===1?saved.privateContent.variants?.find(v=>v.layout===layout)?.state:null;
+  const state=restored?clone(restored):{page:'cards',cards:clone(sampleCards),definitions:clone(initialDefinitions),discoveries:clone(sampleDiscoveries),showShort:false,pin:false,sound:true,modal:null,menu:null,notice:'',dragging:false};
+  state.modal=null;state.menu=null;state.notice='';state.dragging=false;
+  function normalize(){
+   if(state.rosterRevision!==1){const main=state.cards.find(c=>c.id==='main'),support=state.cards.find(c=>c.id==='support');if(main)main.name='메인 캐릭터';if(support)support.name='카디널';if(main&&support&&!state.cards.some(c=>c.id==='performer'))state.cards.push(clone(sampleCards.find(c=>c.id==='performer')));const ranks={main:0,support:1,performer:2};state.cards.sort((a,b)=>(ranks[a.id]??3)-(ranks[b.id]??3));state.rosterRevision=1;}
+   if(state.presetRevision!==defaultPresets.revision){for(const d of initialDefinitions)if(!state.definitions.some(old=>old.id===d.id))state.definitions.push(clone(d));const kim=state.definitions.find(d=>d.id===78);if(kim&&kim.name==='김서방')kim.name='김서방 돈벌었네';for(const c of state.cards){const ids=defaultPresets.profiles[c.id];if(ids)for(const id of ids)if(!c.buffs.some(b=>b.id===id))c.buffs.push({id,left:0,presence:'unknown',alert:true,warning:10});}state.presetRevision=defaultPresets.revision;}
+   state.volume=Number.isFinite(state.volume)?Math.min(100,Math.max(0,state.volume)):65;
+   state.playing=false;
+   state.ignoredIds=[...new Set([...(state.ignoredIds||[]),...state.discoveries.filter(d=>d.ignored).map(d=>d.id)])].filter(id=>Number.isInteger(id)&&!state.definitions.some(d=>d.id===id));
+   state.discoveries=state.discoveries.filter(d=>!state.ignoredIds.includes(d.id)&&!state.definitions.some(known=>known.id===d.id));
+   for(const d of state.definitions){if(!d.symbolMode){d.symbolMode=d.kind==='potion'?'icon':'text';d.symbolText='';d.symbolIcon=d.kind==='potion'?'flask-conical':'sparkles';}}
+   state.focusedId=null;
+   if(state.designRevision!==2){state.windowSize={width:420,height:820};state.arrangement='vertical';state.designRevision=2;}
+   state.arrangement=state.arrangement==='vertical'?'vertical':'horizontal';
+   for(const card of state.cards){card.buffLayout=card.buffLayout==='grid'?'grid':'list';card.pinRequired=typeof card.pinRequired==='boolean'?card.pinRequired:card.mode==='remember';card.mode=card.mode==='remaining'?'remaining':'normal';card.buffs.forEach((b,i)=>{b.order=Number.isFinite(b.order)?b.order:i+1;b.pinOrder=b.pinOrder??b.order;b.presence=b.presence||(b.left>0?'active':'unknown');});}
+   state.sequence=Math.max(0,...state.cards.flatMap(c=>c.buffs.map(b=>b.order)))+1;
+   if(state.windowSize&&Number.isFinite(state.windowSize.width)&&Number.isFinite(state.windowSize.height)){
+    app.style.width=Math.max(280,state.windowSize.width)+'px';app.style.height=Math.max(400,state.windowSize.height)+'px';
+   }
+  }
+  normalize();
+  const instance={layout,state,normalize};instances.push(instance);
+  const def=id=>state.definitions.find(d=>d.id===id);
+  const count=()=>state.discoveries.filter(d=>!state.ignoredIds.includes(d.id)&&true).length;
+  let undoIgnore=null;
+  let toastTimer,lastModalKey='',lastViewKey='';
+  let modePointer=false;
+  let audioContext,volumePointer=false,volumeKeyboard=false,previewCount=0,resizeSession=null,pointerHeld=false;
+  const buffScroll=new Map();
+  const searches={dictionary:'',selection:''};
+  const searchKey=value=>String(value).toLocaleLowerCase().replace(/\s+/g,'');
+  function searchField(scope){return `<label class="rb-search">${icon('search')}<input type="search" data-search="${scope}" value="${esc(searches[scope]||'')}" placeholder="버프 이름 또는 상태 ID 검색" aria-label="버프 이름 또는 상태 ID 검색"></label><div class="rb-search-summary" data-search-summary="${scope}" role="status" aria-live="polite"></div>`;}
+  function filterSearch(scope){const query=searchKey(searches[scope]||'');const rows=app.querySelectorAll(`[data-search-scope="${scope}"]`);let found=0;rows.forEach(row=>{row.hidden=!searchKey(row.dataset.searchText).includes(query);if(!row.hidden)found++;});const summary=app.querySelector(`[data-search-summary="${scope}"]`);if(summary)summary.textContent=query&&found?`${found}개 검색 결과`:'';const empty=app.querySelector(`[data-search-empty="${scope}"]`);if(empty)empty.hidden=found!==0;const page=app.querySelector('.rb-dictionary-page');if(scope==='dictionary'&&page)page.classList.toggle('rb-no-results',found===0);}
+
+  function resizeWindow(width,height){
+   const available=root.getBoundingClientRect().width;
+   state.windowSize={width:Math.round(Math.max(280,Math.min(available,width))),height:Math.round(Math.max(400,height))};
+   app.style.width=state.windowSize.width+'px';app.style.height=state.windowSize.height+'px';
+  }
+  const modeName={remaining:'남은 시간 짧은 순',normal:'적용·갱신 오래된 순'};
+  const modeHint={remaining:'남은 시간이 짧은 버프부터 실시간 정렬',normal:'새로 적용되거나 갱신된 버프가 맨 아래로'};
+  function orderedBuffs(card){
+   const rows=card.buffs.filter(b=>!b.hidden||(card.pinRequired&&b.remember));
+   return rows.sort((a,b)=>{
+    if(card.pinRequired){const group=Number(!!b.remember)-Number(!!a.remember);if(group)return group;if(a.remember&&b.remember)return a.pinOrder-b.pinOrder;}
+    return card.mode==='remaining'?((a.presence==='unknown'?Infinity:a.left)-(b.presence==='unknown'?Infinity:b.left)||a.order-b.order):a.order-b.order;
+   });
+  }
+  function previewVolume(){
+   state.volume=Math.min(100,Math.max(0,Number(state.volume)||0));previewCount++;
+   const message=app.querySelector('[data-audio-status]');
+   app.dataset.audioPreviews=String(previewCount);app.dataset.lastAudioVolume=String(state.volume);
+   if(state.volume===0){if(message)message.textContent='0% · 무음으로 설정했습니다.';return;}
+   try{
+    const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)throw Error('unsupported');
+    audioContext??=new Audio();
+    const play=()=>{
+     const now=audioContext.currentTime;
+     for(const [frequency,delay] of [[660,0],[880,.11]]){
+      const oscillator=audioContext.createOscillator(),gain=audioContext.createGain();oscillator.type='sine';oscillator.frequency.value=frequency;
+      gain.gain.setValueAtTime(0,now+delay);gain.gain.linearRampToValueAtTime((state.volume/100)*.22,now+delay+.012);gain.gain.exponentialRampToValueAtTime(.0001,now+delay+.19);
+      oscillator.connect(gain);gain.connect(audioContext.destination);oscillator.start(now+delay);oscillator.stop(now+delay+.21);
+      oscillator.onended=()=>{oscillator.disconnect();gain.disconnect();};
+     }
+     if(message)message.textContent=`${state.volume}% 크기로 미리듣기를 재생했습니다.`;
+    };
+    if(audioContext.state==='suspended')audioContext.resume().then(play).catch(()=>{if(message)message.textContent='소리 재생을 허용한 뒤 다시 조절해주세요.';});else play();
+   }catch{if(message)message.textContent='이 환경에서는 미리듣기를 재생할 수 없습니다.';}
+  }
+  function volumePanel(){return `<div class="rb-volume"><div class="rb-volume-header"><span>${icon('volume-2')} 알림 음량</span><output class="rb-volume-value" data-volume-output>${state.volume}%</output></div><input type="range" class="rb-volume-range" min="0" max="100" step="1" value="${state.volume}" data-control="volume" aria-label="알림 소리 음량"><div class="rb-volume-scale"><span>무음</span><span>100%</span></div><div class="rb-volume-note" data-audio-status aria-live="polite">드래그를 놓을 때마다 이 크기로 한 번 미리듣기</div></div>`;}
+  function notify(text,undo=null){undoIgnore=undo;state.notice=text;render();clearTimeout(toastTimer);toastTimer=setTimeout(()=>{state.notice='';undoIgnore=null;render();},undo?8000:3500);}
+  function header(title,subtitle,action=''){return `<div class="rb-heading"><div><div class="rb-eyebrow">YOUR PERSONAL BUFF COMPANION</div><h2>${title}</h2><div class="rb-sub">${subtitle}</div></div><div class="rb-header-actions">${action}</div></div>`;}
+  function buffRow(card,b){
+   const d=def(b.id);if(!d)return '';const missing=b.presence==='absent',unknown=b.presence==='unknown',required=card.pinRequired&&b.remember,warning=!missing&&!unknown&&b.left>0&&b.left<=10;
+   return `<button type="button" class="rb-buff cursor-interaction ${d.kind==='potion'?'rb-potion':''} ${warning?'rb-ending':''} ${missing?'rb-missing':''} ${required?'rb-required':''}" data-action="buff" data-card="${card.id}" data-id="${b.id}" data-remaining="${b.left}" data-tooltip="${esc(d.name)}${d.kind==='potion'?' · 물약':''}" aria-label="${esc(d.name)}, ${missing?'버프 없음':unknown?'상태 확인 중':Math.ceil(b.left)+'초 남음'}, 표시와 알림 설정"><span class="rb-buff-symbol">${buffSymbol(d)}</span><span><span class="rb-buff-name">${esc(d.name)}${d.kind==='potion'?' <span class="rb-chip">물약</span>':''}</span><span class="rb-missing-description">효과가 종료되었습니다</span><span class="rb-track"><span style="width:${missing?100:Math.max(0,Math.min(100,b.left/d.total*100))}%"></span></span></span><span class="rb-time">${missing?'버프 없음':unknown?'확인 중':b.expiresAt===null?'시간 없음':b.left<=0?'만료 추정':format(Math.ceil(b.left))}${missing?'<small>재적용 필요</small>':warning?'<small>종료 임박</small>':''}</span></button>`;
+  }
+  function buffList(card,buffs){
+   let previous=false;
+   return buffs.map((b,i)=>{
+    let label='';
+    if(card.pinRequired){
+     if(i===0&&b.remember)label=`<div class="rb-group-label">${icon('bookmark-check')}필수 지정 버프</div>`;
+     if(!b.remember&&(i===0||previous))label='<div class="rb-group-label rb-other">다른 버프</div>';
+    }
+    previous=!!b.remember;return label+buffRow(card,b);
+   }).join('');
+  }
+  function cardView(card){const buffs=orderedBuffs(card),missing=buffs.filter(b=>b.remember&&b.presence==='absent').length;
+   return `<article class="rb-character ${card.collapsed?'rb-collapsed':''}" data-character="${card.id}" data-buff-layout="${card.buffLayout||'list'}"><header class="rb-card-head"><button type="button" class="rb-drag-handle" data-action="drag-client" data-card="${card.id}" aria-label="${esc(card.name)} 순서 이동: 드래그 또는 방향키" data-tooltip="드래그하여 순서 변경">${icon('grip-vertical')}</button><div class="rb-avatar">${icon(card.icon)}</div><div><div class="rb-character-name">${esc(card.name)}</div><div class="rb-character-meta"><span class="rb-online">${card.connected?'<span class="rb-dot"></span>':''}${card.connected?(card.collapsed?(missing?'필수 '+missing+'개 없음':buffs.length+'개 추적 중'):'연결됨'):(card.captureStats?.flows?'본인 확인 대기':'연결 대기')}</span></div></div><div class="rb-card-actions"><button type="button" class="rb-fold-button cursor-interaction" data-action="toggle-card" data-card="${card.id}" aria-expanded="${!card.collapsed}" aria-label="${esc(card.name)} ${card.collapsed?'펼치기':'접기'}" data-tooltip="${card.collapsed?'펼치기':'접기'}">${icon(card.collapsed?'chevron-down':'chevron-up')}</button><button type="button" class="rb-icon-button cursor-interaction" aria-label="${esc(card.name)} 카드 메뉴" data-action="menu" data-card="${card.id}">${icon('ellipsis')}</button></div>${state.menu===card.id?`<div class="rb-menu"><button type="button" class="cursor-interaction" data-action="move-client" data-step="-1" data-card="${card.id}" ${state.cards[0].id===card.id?'disabled':''}>${icon('arrow-up')}앞으로 이동</button><button type="button" class="cursor-interaction" data-action="move-client" data-step="1" data-card="${card.id}" ${state.cards.at(-1).id===card.id?'disabled':''}>${icon('arrow-down')}뒤로 이동</button><button type="button" class="cursor-interaction" data-action="rename" data-card="${card.id}">${icon('pencil')}이름 변경</button><button type="button" class="cursor-interaction" data-action="card-settings" data-card="${card.id}">${icon('sliders-horizontal')}표시할 버프</button><button type="button" class="cursor-interaction" data-action="reconnect" data-card="${card.id}">${icon('crosshair')}게임 창 다시 지정</button><button type="button" class="cursor-interaction" data-action="disconnect-client" data-card="${card.id}">${icon('unplug')}연결 해제</button><button type="button" class="cursor-interaction" data-action="remove" data-card="${card.id}">${icon('trash-2')}카드 제거</button></div>`:''}</header>${!card.connected&&!card.captureStats?.flows?`<div class="rb-live-status"><span>${esc(card.connectionText||'게임 창 연결 대기')}${card.candidate?' · 후보 ID '+card.candidate:''}</span><button type="button" class="rb-secondary cursor-interaction" data-action="${card.captureStats?.flows?'start-calibration':'reconnect'}" data-card="${card.id}">${card.captureStats?.flows?'본인 확인 시작':'창 연결'}</button></div>`:''}${nativeDiagnostics(card)}<div class="rb-card-controls"><div class="rb-mode-bar"><label for="rb-mode-${layout}-${card.id}">정렬</label><div class="rb-mode-picker"><select id="rb-mode-${layout}-${card.id}" class="rb-mode-select" data-control="mode" data-card="${card.id}">${Object.entries(modeName).map(([value,name])=>`<option value="${value}" ${card.mode===value?'selected':''}>${name}</option>`).join('')}</select>${icon('chevron-down')}</div></div><div class="rb-mode-hint">${modeHint[card.mode]}</div><div class="rb-buff-view-bar"><span>버프 표시 방법</span><div class="rb-buff-tabs" role="tablist" aria-label="${esc(card.name)} 버프 레이아웃">${[['list','1열 목록','list'],['grid','그리드','grid-2x2']].map(([value,label,ico])=>`<button type="button" role="tab" id="rb-buff-tab-${card.id}-${value}" aria-controls="rb-buff-panel-${card.id}" aria-selected="${(card.buffLayout||'list')===value}" data-action="buff-layout" data-card="${card.id}" data-buff-layout="${value}" aria-label="${label}" data-tooltip="${label}" class="cursor-interaction">${icon(ico)}</button>`).join('')}</div></div><label class="rb-required-toggle"><span>${icon('bookmark-check')}필수 버프 상단 고정</span><input type="checkbox" role="switch" data-control="pin-required" data-card="${card.id}" ${card.pinRequired?'checked':''}><span class="rb-switch-track" aria-hidden="true"></span></label></div><div class="rb-buffs" id="rb-buff-panel-${card.id}" role="tabpanel" aria-labelledby="rb-buff-tab-${card.id}-${card.buffLayout||'list'}">${card.connected?buffList(card,buffs)||'<div class="rb-empty">현재 표시할 버프가 없습니다.</div>':'<div class="rb-empty">다른 카드로 자동 전환하지 않습니다.<br>이 카드에 연결할 게임 창을 지정해주세요.</div>'}</div><footer class="rb-card-foot"><span class="${card.pinRequired&&missing?'rb-missing-summary':''}">${!card.connected?'연결할 때까지 상태 확인 불가':card.pinRequired&&missing?`필수 버프 ${missing}개 없음`:`${buffs.length}개 버프 추적 중`}</span><button type="button" class="cursor-interaction" data-action="card-settings" data-card="${card.id}">${icon('sliders-horizontal')}설정</button></footer></article>`;
+  }
+  function cardsPage(){
+   const commonActions=`<button type="button" class="rb-secondary cursor-interaction" data-action="audio" aria-label="알림 음량 설정">${icon(state.volume===0?'volume-x':'volume-2')}<span data-volume-chip>${state.volume}%</span></button>`;
+   const timeButton=`<button type="button" class="cursor-interaction" data-action="play" aria-pressed="${state.playing}">${icon(state.playing?'pause':'play')}${state.playing?'시안 시간 멈춤':'시안 시간 재생'}</button>`;
+   const tabs=`<div class="rb-layout-tabs" role="tablist" aria-label="클라이언트 배치">${[['horizontal','가로 배치','columns-2'],['vertical','세로 배치','rows-2']].map(([value,label,ico])=>`<button type="button" role="tab" id="rb-layout-${value}" aria-controls="rb-client-panels" aria-selected="${state.arrangement===value}" data-action="arrange" data-arrangement="${value}" class="cursor-interaction">${icon(ico)}${label}</button>`).join('')}</div>`;
+   return header('버프 모니터',`${state.cards.length}개 클라이언트 · 바포메트`,commonActions)+`<div class="rb-toolbar rb-board-toolbar">${tabs}<div class="rb-toolbar-actions"><button type="button" class="rb-discovery-button cursor-interaction" data-action="page" data-page="discover">${icon('scan-line')}새로 발견 <span class="rb-nav-count">${count()}</span></button></div></div><div class="rb-cards" id="rb-client-panels" role="tabpanel" aria-labelledby="rb-layout-${state.arrangement}" data-arrangement="${state.arrangement}">${state.cards.map(cardView).join('')}<button type="button" class="rb-add-client cursor-interaction" data-action="add"><span class="rb-add-symbol">${icon('plus')}</span><strong>클라이언트 추가</strong><span>추적할 게임 창 연결</span></button></div>`;
+  }
+  function dictionaryPage(){return managementDictionaryPage();}
+  function discoveryPage(){return managementDiscoveryPage();}
+  function settingsPage(){return header('환경 설정','알림, 데이터, 프로그램 정보를 관리합니다.')+`<div class="rb-settings-sections"><section class="rb-settings-section"><h3>알림과 표시</h3><div class="rb-settings-panel"><label class="rb-check"><input type="checkbox" data-control="sound" ${state.sound?'checked':''}><span>알림 소리<small>버프 종료와 종료 임박 알림</small></span></label>${volumePanel()}<label class="rb-check"><input type="checkbox" data-control="pin" ${state.pin?'checked':''}><span>항상 위에 표시<small>다른 창 위에 모니터 표시</small></span></label></div></section><section class="rb-settings-section"><h3>데이터 관리</h3><div class="rb-settings-panel"><div class="rb-settings-row"><div><strong>버프 사전·클라이언트</strong><small>이름, 아이콘, 클라이언트별 버프 설정</small></div><div class="rb-data-actions"><button type="button" class="rb-secondary cursor-interaction" data-action="export">${icon('copy')}코드 만들기</button><button type="button" class="rb-secondary cursor-interaction" data-action="import">${icon('clipboard-paste')}코드 가져오기</button></div></div><div class="rb-settings-row"><div><strong>무시한 상태 전체 해제</strong><small>다시 감지되는 상태를 발견 목록에 표시</small></div><button type="button" class="rb-secondary cursor-interaction" data-action="restore">전체 해제</button></div><div class="rb-settings-row"><div><strong>버프 사전·설정 초기화</strong><small>직접 등록한 데이터와 설정 삭제</small></div><button type="button" class="rb-reset-button cursor-interaction" data-action="reset-data">초기화</button></div></div></section><section class="rb-settings-section"><h3>프로그램 정보</h3><div class="rb-settings-panel rb-about"><div>${icon('cloud')}<strong>RO CLOUD BUFF</strong></div><p>버전 0.1.0-alpha.27 · 실게임 테스트</p><span>프로그램 제작자</span><p>라그나로크 온라인 - 바포메트 - 구름장수</p></div></section></div>`;}
+  function symbolEditor(m){return `<fieldset class="rb-symbol-editor" data-symbol-mode="${m.symbolMode||'text'}"><legend>버프 표시</legend><div class="rb-symbol-mode"><label><input type="radio" name="rb-symbol-mode" data-input="symbol-mode" value="text" ${(m.symbolMode||'text')==='text'?'checked':''}>글자</label><label><input type="radio" name="rb-symbol-mode" data-input="symbol-mode" value="icon" ${m.symbolMode==='icon'?'checked':''}>아이콘</label><span class="rb-buff-symbol" data-symbol-preview>${buffSymbol({name:m.name||'버프',symbolMode:m.symbolMode,symbolText:m.symbolText,symbolIcon:m.symbolIcon})}</span></div><div class="rb-symbol-text-panel"><label class="rb-field">표시 글자<input type="text" data-input="symbol-text" value="${esc(m.symbolText||'')}" placeholder="비워두면 이름 첫 글자" aria-label="표시 글자 한 자"></label><p class="rb-symbol-note">한 글자만 표시합니다. 비우면 버프 이름의 첫 글자를 사용합니다.</p></div><div class="rb-symbol-icon-panel">${symbolIcons.map(name=>`<button type="button" data-action="choose-symbol" data-symbol="${name}" class="cursor-interaction" aria-label="${name} 아이콘" aria-pressed="${(m.symbolIcon||'sparkles')===name}">${icon(name)}</button>`).join('')}</div></fieldset>`;}
+  function updateSymbolPreview(){const m=state.modal;if(!m)return;const mode=app.querySelector('[data-input="symbol-mode"]:checked')?.value||'text',text=app.querySelector('[data-input="symbol-text"]')?.value||'',name=app.querySelector('[data-input="definition-name"]')?.value||m.name||'버프';app.querySelector('.rb-symbol-editor')?.setAttribute('data-symbol-mode',mode);const preview=app.querySelector('[data-symbol-preview]');if(preview){preview.innerHTML=buffSymbol({name,symbolMode:mode,symbolText:text,symbolIcon:m.symbolIcon||'sparkles'});window.lucide?.createIcons({attrs:{width:16,height:16}});}}
+  function shareDefinition(d){return {id:d.id,name:d.name,kind:d.kind,total:d.total,symbolMode:d.symbolMode,symbolText:d.symbolText||'',symbolIcon:d.symbolIcon||'sparkles'};}
+  function shareClient(c){return {name:c.name,icon:c.icon,mode:c.mode,pinRequired:!!c.pinRequired,buffLayout:c.buffLayout||'list',buffs:c.buffs.map(b=>({id:b.id,remember:!!b.remember,hidden:!!b.hidden,alert:b.alert!==false,warning:b.warning??10}))};}
+  function codeChecksum(bytes){let n=2166136261;for(const b of bytes)n=Math.imul(n^b,16777619)>>>0;return n.toString(16).padStart(8,'0');}
+  async function encodeSettings(data){const raw=new TextEncoder().encode(JSON.stringify(data));const compressed=new Uint8Array(await new Response(new Blob([raw]).stream().pipeThrough(new CompressionStream('deflate'))).arrayBuffer());let binary='';for(const b of compressed)binary+=String.fromCharCode(b);return 'ROCB1:'+btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')+'.'+codeChecksum(compressed);}
+  async function decodeSettings(code){const match=code.replace(/\s+/g,'').match(/^ROCB1:([A-Za-z0-9_-]+)\.([a-f0-9]{8})$/);if(!match||match[1].length>100000)throw Error('RO CLOUD BUFF 설정 코드인지 확인해주세요.');const binary=atob(match[1].replace(/-/g,'+').replace(/_/g,'/'));const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));if(codeChecksum(bytes)!==match[2])throw Error('코드가 손상되었습니다. 전체 코드를 다시 복사해주세요.');const reader=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate')).getReader();let chunks=[],length=0;while(true){const {done,value}=await reader.read();if(done)break;length+=value.length;if(length>512000){await reader.cancel();throw Error('설정 데이터가 너무 큽니다.');}chunks.push(value);}const raw=new Uint8Array(length);let offset=0;for(const part of chunks){raw.set(part,offset);offset+=part.length;}return validateSettings(JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(raw)));}
+  function validateSettings(data){
+   const bad=()=>{throw Error('지원하지 않거나 올바르지 않은 설정 데이터입니다.');};
+   const text=v=>{if(typeof v!=='string'||!v.trim()||v.length>80)bad();return v.trim();};
+   const id=v=>{if(!Number.isInteger(v)||v<1||v>65535)bad();return v;};
+   const bool=v=>{if(typeof v!=='boolean')bad();return v;};
+   if(!data||data.app!=='RO CLOUD BUFF'||data.version!==1)bad();
+   function definitions(list){if(!Array.isArray(list)||list.length>500)bad();const seen=new Set();return list.map(d=>{if(!d||seen.has(id(d.id)))bad();seen.add(d.id);if(!['skill','potion','other'].includes(d.kind)||!Number.isFinite(d.total)||d.total<0||d.total>864000||!['text','icon'].includes(d.symbolMode)||typeof d.symbolText!=='string'||d.symbolText.length>12||!symbolIcons.includes(d.symbolIcon))bad();return {id:d.id,name:text(d.name),kind:d.kind,total:d.total,symbolMode:d.symbolMode,symbolText:firstChar(d.symbolText),symbolIcon:d.symbolIcon,custom:true};});}
+   const result={app:data.app,version:1};if(data.dictionary!==undefined)result.dictionary=definitions(data.dictionary);if(data.dependencies!==undefined)result.dependencies=definitions(data.dependencies);
+   if(data.clients!==undefined){if(!Array.isArray(data.clients))bad();result.clients=data.clients.map(c=>{const name=text(c.name);if(!['normal','remaining'].includes(c.mode)||!['list','grid'].includes(c.buffLayout)||!['swords','sparkles','music'].includes(c.icon)||!Array.isArray(c.buffs)||c.buffs.length>500)bad();const ids=new Set();return {name,icon:c.icon,mode:c.mode,buffLayout:c.buffLayout,pinRequired:bool(c.pinRequired),buffs:c.buffs.map(b=>{if(ids.has(id(b.id))||!Number.isFinite(b.warning)||b.warning<0||b.warning>3600)bad();ids.add(b.id);return {id:b.id,remember:bool(b.remember),hidden:bool(b.hidden),alert:bool(b.alert),warning:b.warning};})};});}
+   if(!result.dictionary&&!result.clients)bad();const known=new Set([...(result.dictionary||result.dependencies||[]),...state.definitions].map(d=>d.id));if(result.clients?.some(c=>c.buffs.some(b=>!known.has(b.id))))bad();return result;
+  }
+  function codeDialog(m,close){const importing=m.type==='import',data=m.parsed,defs=data?.dictionary||data?.dependencies||[],conflicts=defs.filter(d=>state.definitions.some(old=>old.id===d.id)).length;return `<div class="rb-dialog-top"><div><h3>설정 코드 ${importing?'가져오기':'만들기'}</h3><p>${importing?'코드를 붙여넣고 적용할 내용을 확인하세요.':'공유할 데이터를 선택하세요.'}</p></div>${close}</div>${!importing?`<div class="rb-transfer-options"><label class="rb-check"><input type="checkbox" data-code-scope="dictionary" ${m.dictionary!==false?'checked':''}><span>버프 사전<small>이름·상태 ID·종류·표시 아이콘</small></span></label><label class="rb-check"><input type="checkbox" data-code-scope="clients" ${m.clients!==false?'checked':''}><span>클라이언트 설정<small>카드 이름·정렬·필수 지정·표시·알림</small></span></label></div>`:''}<label class="rb-field">설정 코드<textarea class="rb-code-text" data-code-input ${importing?'':'readonly'} placeholder="${importing?'ROCB1: 으로 시작하는 코드 붙여넣기':'코드 만들기를 누르면 여기에 표시됩니다.'}" spellcheck="false" aria-label="설정 코드">${esc(importing?m.input||'':m.code||'')}</textarea></label><div class="rb-code-feedback" role="status" aria-live="polite">${esc(m.error||m.message||'')}</div>${data?`<div class="rb-code-preview"><strong>가져올 내용</strong><p>버프 ${defs.length}개 · 클라이언트 ${data.clients?.length||0}개</p><p>상태 ID 중복 ${conflicts}개 · 신규 버프 ${defs.length-conflicts}개</p><label class="rb-field">중복 버프 처리<select data-code-conflict><option value="keep">기존 값 유지</option><option value="replace">가져온 값으로 교체</option></select></label>${data.clients?.length?'<p>이름이 같아도 모든 클라이언트를 새 연결 대기 카드로 추가합니다. 기존 카드는 유지됩니다.</p>':''}</div>`:''}<p class="rb-transfer-note">남은 시간과 실행 중인 게임 창 연결은 공유하지 않습니다.${!importing?' 클라이언트만 공유해도 참조하는 버프 정보는 함께 포함됩니다.':''}</p><div class="rb-dialog-actions"><button type="button" class="cursor-interaction" data-action="close">닫기</button>${importing?`<button type="button" class="rb-secondary cursor-interaction" data-action="inspect-code">내용 확인</button><button type="button" class="rb-primary cursor-interaction" data-action="apply-code" ${data?'':'disabled'}>적용</button>`:`<button type="button" class="rb-secondary cursor-interaction" data-action="generate-code">코드 만들기</button><button type="button" class="rb-primary cursor-interaction" data-action="copy-code" ${m.code?'':'disabled'}>${icon('copy')}복사</button>`}</div>`;}
+  async function codeAction(action){const m=state.modal;if(!m)return;
+   if(action==='generate-code'){m.dictionary=app.querySelector('[data-code-scope="dictionary"]').checked;m.clients=app.querySelector('[data-code-scope="clients"]').checked;m.error='';if(!m.dictionary&&!m.clients){m.error='공유할 데이터를 하나 이상 선택해주세요.';render();return;}const data={app:'RO CLOUD BUFF',version:1};if(m.dictionary)data.dictionary=state.definitions.map(shareDefinition);if(m.clients){data.clients=state.cards.map(shareClient);if(!m.dictionary){const ids=new Set(data.clients.flatMap(c=>c.buffs.map(b=>b.id)));data.dependencies=state.definitions.filter(d=>ids.has(d.id)).map(shareDefinition);}}try{m.code=await encodeSettings(validateSettings(data));m.message='코드를 복사해 보관하거나 공유하세요.';}catch{m.error='코드를 만들지 못했습니다.';}if(state.modal===m)render();return;}
+   if(action==='copy-code'){try{await navigator.clipboard.writeText(m.code);m.message='설정 코드를 복사했습니다.';}catch{const field=app.querySelector('[data-code-input]');field.focus();field.select();m.message='코드가 선택되었습니다. Ctrl+C로 복사해주세요.';const message=app.querySelector('.rb-code-feedback');message.textContent=m.message;return;}render();return;}
+   if(action==='inspect-code'){m.input=app.querySelector('[data-code-input]').value;m.parsed=null;m.error='';try{m.parsed=await decodeSettings(m.input);}catch(error){m.error=error.message?.includes('코드')||error.message?.includes('데이터')?error.message:'코드를 읽지 못했습니다. 전체 코드를 확인해주세요.';}if(state.modal===m)render();return;}
+   if(action==='apply-code'){if(!m.parsed)return;const data=m.parsed,replace=app.querySelector('[data-code-conflict]').value==='replace';const defs=data.dictionary||data.dependencies||[];for(const d of defs){const index=state.definitions.findIndex(old=>old.id===d.id);if(index<0)state.definitions.push(clone(d));else if(replace)state.definitions[index]=clone(d);}for(const incoming of data.clients||[]){const c={id:'import-'+crypto.randomUUID(),name:incoming.name,connected:false,collapsed:false};state.cards.push(c);Object.assign(c,{icon:incoming.icon,mode:incoming.mode,pinRequired:incoming.pinRequired,buffLayout:incoming.buffLayout});c.buffs=incoming.buffs.map(b=>{return {...b,left:0,presence:'unknown',order:state.sequence++,pinOrder:state.sequence};});}state.ignoredIds=state.ignoredIds.filter(n=>!state.definitions.some(d=>d.id===n));state.modal=null;searches.dictionary='';searches.selection='';notify('설정 코드를 적용했습니다. 새 클라이언트의 게임 창을 연결해주세요.');persist();}
+  }
+
+  function modal(){const m=state.modal;if(!m)return '';let inside='';const close=`<button type="button" class="rb-icon-button rb-close cursor-interaction" data-action="close" aria-label="닫기">${icon('x')}</button>`;
+   if(m.type==='reset'){
+    inside=`<div class="rb-dialog-top"><h3>버프 사전·설정 초기화</h3>${close}</div><p class="rb-reset-description">직접 등록한 버프와 이름·아이콘 변경을 지우고 기본 사전으로 되돌립니다. 클라이언트별 필수 지정·표시·알림 설정과 전체 알림 설정도 초기화됩니다.</p><p class="rb-reset-description">연결된 클라이언트와 창 크기는 유지됩니다. 초기화한 데이터는 되돌릴 수 없습니다.</p><div class="rb-dialog-actions"><button type="button" class="cursor-interaction" data-action="close">취소</button><button type="button" class="rb-reset-button cursor-interaction" data-action="confirm-reset">초기화</button></div>`;
+   }else if(m.type==='audio'){
+    inside=`<div class="rb-dialog-top"><div><h3>알림 소리</h3><p>선택한 음량으로 직접 들어보고 정하세요.</p></div>${close}</div>${volumePanel()}<div class="rb-dialog-actions"><button type="button" class="rb-primary cursor-interaction" data-action="close">완료</button></div>`;
+   }else if(m.type==='connect'){
+    inside=nativeConnectDialog(m,close);
+   }else if(m.type==='unused-mock-connect'){
+    const names=['메인 캐릭터 클라이언트','카디널 클라이언트','연주 클라이언트'];
+    inside=`<div class="rb-dialog-top"><div><h3>추적할 게임 창 지정</h3><p>과녁을 원하는 창에 끌어놓으세요.</p></div>${close}</div><div class="rb-target-launch"><button type="button" class="rb-crosshair" aria-label="과녁을 아래 게임 창으로 드래그" data-action="target-handle">${icon('crosshair')}</button><div><div style="font-size:12px">가리키고, 놓으면 끝.</div><div class="rb-sub">창을 선택해도 같은 흐름으로 진행됩니다.</div></div></div><div class="rb-pick-area">${names.map((name,i)=>`<button type="button" class="rb-window-target cursor-interaction ${m.selected===i?'rb-target-selected':''}" data-action="target" data-target="${i}" aria-pressed="${m.selected===i}"><span class="rb-mini-title">RAGNAROK ONLINE</span><span class="rb-window-symbol">${icon(i===0?'swords':i===1?'sparkles':'music')}</span><span>${name}</span></button>`).join('')}</div><div class="rb-pick-hint">시안에서는 위의 예시 창을 지정합니다. 실제 게임에는 연결하지 않습니다.</div><label class="rb-field">카드 이름<input type="text" data-input="card-name" value="${esc(m.name||'')}" placeholder="예: 메인 캐릭터, 카디널"></label><div class="rb-inline-message" aria-live="polite">${m.selected==null?'대상 창을 지정해주세요.':`${names[m.selected]} 선택됨 · 이 대상으로 고정 추적`}</div><div class="rb-dialog-actions"><button type="button" class="cursor-interaction" data-action="close">취소</button><button type="button" class="rb-primary cursor-interaction" data-action="connect" ${m.selected==null?'disabled':''}>${icon('link')}이 창 연결</button></div>`;
+   }else if(m.type==='buff'){
+    const c=state.cards.find(c=>c.id===m.card),d=def(m.id);const b=c?.buffs.find(b=>b.id===m.id);if(!c||!d||!b)return '';
+    inside=`<div class="rb-dialog-top"><div><div class="rb-eyebrow">${esc(c.name)} · 버프 설정</div><h3>${esc(d.name)}</h3><p>다른 캐릭터의 설정에는 영향을 주지 않습니다.</p></div>${close}</div><label class="rb-check"><input type="checkbox" data-input="remember" ${m.remember?'checked':''}><span>필수 지정 버프<small>상단 고정을 켜면 종료 후에도 ‘버프 없음’으로 표시</small></span></label><label class="rb-check"><input type="checkbox" data-input="visible" ${m.visible?'checked':''}><span>이 카드에 표시<small>상단 고정을 켠 필수 버프는 항상 표시됩니다.</small></span></label><label class="rb-check"><input type="checkbox" data-input="alert" ${m.alert?'checked':''}><span>종료 알림<small>갱신 시 발생하는 짧은 해제 신호는 알리지 않음</small></span></label><label class="rb-field">종료 임박 알림 · 초<input type="number" min="0" max="3600" data-input="warning" value="${m.warning}"></label><div class="rb-sub" style="margin-top:18px">${d.kind==='potion'?'물약':'스킬'} · 상태 ID ${d.id} · 최근 관측 ${d.total}초</div><div class="rb-dialog-actions"><button type="button" class="cursor-interaction" data-action="close">취소</button><button type="button" class="rb-primary cursor-interaction" data-action="save-buff">설정 저장</button></div>`;
+   }else if(m.type==='register'||m.type==='definition'){
+    const item=m.type==='register'?state.discoveries.find(d=>d.id===m.id):def(m.id);if(!item)return '';
+    inside=`<div class="rb-dialog-top"><div><div class="rb-eyebrow">상태 ID ${m.id}</div><h3>${m.type==='register'?'내 버프 사전에 추가':'버프 이름과 종류'}</h3><p>이름과 종류는 등록한 모든 캐릭터에 공통 적용됩니다.</p></div>${close}</div><label class="rb-field">버프 이름<input type="text" data-input="definition-name" value="${esc(m.name||'')}" placeholder="사용한 스킬이나 물약 이름"></label><label class="rb-field">종류<select data-input="kind"><option value="skill" ${m.kind==='skill'?'selected':''}>스킬</option><option value="potion" ${m.kind==='potion'?'selected':''}>물약</option><option value="other" ${m.kind==='other'?'selected':''}>기타</option></select></label>${symbolEditor(m)}${m.type==='register'?`<label class="rb-check"><input type="checkbox" data-input="add-to-card" checked><span>발견한 클라이언트에도 표시</span></label>`:''}<div class="rb-inline-message" data-message="validation" role="status"></div><div class="rb-dialog-actions"><button type="button" class="cursor-interaction" data-action="close">취소</button><button type="button" class="rb-primary cursor-interaction" data-action="save-definition">${m.type==='register'?'사전에 추가':'변경 저장'}</button></div>`;
+   }else if(m.type==='card-settings'){
+    const c=state.cards.find(c=>c.id===m.card);if(!c)return '';
+    inside=`<div class="rb-dialog-top"><div><h3>${esc(c.name)} · 표시할 버프</h3><p>개별 버프를 누르면 알림과 표시를 설정할 수 있습니다.</p></div>${close}</div>${searchField('selection')}<div class="rb-dictionary">${state.definitions.map(d=>{const b=c.buffs.find(b=>b.id===d.id);return `<label class="rb-check" data-search-scope="selection" data-search-text="${esc(d.name)} ${d.id}"><input type="checkbox" data-toggle-buff="${d.id}" ${b&&!b.hidden?'checked':''}><span>${esc(d.name)}${d.kind==='potion'?' · 물약':''}</span></label>`;}).join('')}</div><div class="rb-dialog-actions"><button type="button" class="rb-primary cursor-interaction" data-action="save-card">적용</button></div>`;
+   }else if(m.type==='rename'){
+    inside=`<div class="rb-dialog-top"><h3>카드 이름 변경</h3>${close}</div><label class="rb-field">이름표<input type="text" data-input="card-name" value="${esc(m.name)}"></label><div class="rb-dialog-actions"><button type="button" class="rb-primary cursor-interaction" data-action="save-name">저장</button></div>`;
+   }else if(m.type==='export'||m.type==='import'){
+    inside=codeDialog(m,close);
+
+   }
+   return `<div class="rb-overlay"><section class="rb-dialog" role="dialog" aria-modal="true" aria-label="${m.type==='connect'?'게임 창 지정':'상세 설정'}">${inside}</section></div>`;
+  }
+  function positionCardMenu(){const menu=app.querySelector('.rb-menu');if(!menu||!state.menu)return;const anchor=app.querySelector(`[data-action="menu"][data-card="${state.menu}"]`);if(!anchor)return;const shell=app.getBoundingClientRect(),button=anchor.getBoundingClientRect(),board=app.querySelector('.rb-cards')?.getBoundingClientRect();if(board&&(button.bottom<board.top||button.top>board.bottom||button.right<board.left||button.left>board.right)){menu.remove();state.menu=null;return;}if(menu.parentElement!==app)app.append(menu);menu.style.maxHeight=Math.max(80,shell.height-90)+'px';const rect=menu.getBoundingClientRect(),padding=8,minY=42,maxY=shell.height-36;const left=Math.max(padding,Math.min(shell.width-rect.width-padding,button.right-shell.left));let top=button.bottom-shell.top+5;if(top+rect.height>maxY)top=button.top-shell.top-rect.height-5;top=Math.max(minY,Math.min(maxY-rect.height,top));menu.style.left=Math.max(padding,Math.min(shell.width-rect.width-padding,button.right-shell.left-rect.width))+'px';menu.style.top=top+'px';}
+  app.addEventListener('scroll',()=>positionCardMenu(),true);
+  new ResizeObserver(()=>positionCardMenu()).observe(app);
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&state.menu){state.menu=null;render();}});
+  function render(){
+   if(nativeDeferRender())return;
+   const viewKey=state.page+':'+(state.focusedId||'board');
+   const pageScroll=lastViewKey===viewKey?(app.querySelector('.rb-page-scroll')?.scrollTop||0):0;
+   app.querySelectorAll('[data-character]').forEach(card=>buffScroll.set(card.dataset.character,card.querySelector('.rb-buffs')?.scrollTop||0));
+   const setupViews=new Map([...app.querySelectorAll('[data-character]')].map(card=>[card.dataset.character,{top:card.querySelector('.rb-setup')?.scrollTop||0,details:!!card.querySelector('.rb-setup-details')?.open}]));
+   const oldBoard=app.querySelector('.rb-cards'),boardScroll=oldBoard?{arrangement:oldBoard.dataset.arrangement,left:oldBoard.scrollLeft,top:oldBoard.scrollTop}:null;
+   const dialogScroll=app.querySelector('.rb-dialog')?.scrollTop||0;
+   lastViewKey=viewKey;
+   if(state.focusedId&&!state.cards.some(c=>c.id===state.focusedId))state.focusedId=null;
+   const focusedView=state.page==='cards'&&!!state.focusedId;
+   app.dataset.view=focusedView?'focus':'board';
+   const modalKey=state.modal?`${state.modal.type}:${state.modal.id||''}:${state.modal.card||''}`:'';
+   const focusModal=!!modalKey&&modalKey!==lastModalKey;lastModalKey=modalKey;
+   const navs=[['cards','캐릭터','panels-top-left'],['dictionary','버프 사전','book-open'],['discover','새로 발견','scan-line'],['settings','설정','sliders-horizontal']];
+   app.innerHTML=`<div class="rb-titlebar"><span class="rb-brand-mark"></span><span>RO CLOUD BUFF</span><span class="rb-preview">UI 시안</span><span class="rb-window-dots" aria-hidden="true">− <span>□</span> ×</span></div><div class="rb-body"><nav class="rb-sidebar" aria-label="메인 메뉴"><div class="rb-sidebar-label">워크스페이스</div>${navs.map(([key,name,ico])=>`<button type="button" class="rb-nav cursor-interaction" data-action="page" data-page="${key}" aria-label="${name}" ${state.page===key?'aria-current="page"':''}>${icon(ico)}<span class="rb-nav-label">${name}</span>${key==='discover'?`<span class="rb-nav-count">${count()}</span>`:''}</button>`).join('')}<div class="rb-sidebar-bottom"><span class="rb-online"><span class="rb-dot"></span>로컬 저장</span><div style="margin-top:5px">나만의 버프 사전</div></div></nav><main class="rb-main"><div class="rb-page-scroll">${state.page==='cards'?cardsPage():state.page==='dictionary'?dictionaryPage():state.page==='discover'?discoveryPage():settingsPage()}</div></main></div><footer class="rb-app-footer"><span>v0.1.0-alpha.27</span><span>추적 중 ${state.cards.filter(c=>c.connected).length}/${state.cards.length}</span></footer>${modal()}${state.notice?`<div class="rb-bottom-status" role="status" aria-live="polite">${esc(state.notice)}${undoIgnore?'<button type="button" class="cursor-interaction" data-action="undo-ignore">실행 취소</button>':''}</div>`:''}<button type="button" class="rb-resize-handle" data-action="resize-window" aria-label="창 크기 조절: 드래그 또는 방향키" data-tooltip="드래그하여 창 크기 조절">${icon('move-diagonal-2')}</button>`;
+   if(globalThis.lucide)lucide.createIcons({attrs:{width:16,height:16}});
+   app.querySelector('.rb-page-scroll').scrollTop=pageScroll;
+   const newBoard=app.querySelector('.rb-cards');if(boardScroll&&newBoard?.dataset.arrangement===boardScroll.arrangement){newBoard.scrollLeft=boardScroll.left;newBoard.scrollTop=boardScroll.top;}
+   app.querySelectorAll('[data-character]').forEach(card=>{const view=setupViews.get(card.dataset.character),panel=card.querySelector('.rb-setup');if(view&&panel){const details=panel.querySelector('.rb-setup-details');if(details)details.open=view.details;panel.scrollTop=view.top;}});
+   app.querySelectorAll('[data-character]').forEach(card=>{card.querySelector('.rb-buffs').scrollTop=buffScroll.get(card.dataset.character)||0;});
+   positionCardMenu();
+   filterSearch('dictionary');filterSearch('selection');filterSearch('discover');managementPaintSelection();
+   if(!focusModal&&app.querySelector('.rb-dialog'))app.querySelector('.rb-dialog').scrollTop=dialogScroll;
+   if(focusModal)queueMicrotask(()=>{const input=app.querySelector('.rb-dialog input[type="text"],.rb-dialog input[type="number"],.rb-dialog button');input?.focus();});
+  }
+  let cardDrag=null,cardDragFrame=0;
+  function moveClient(id,delta){const from=state.cards.findIndex(c=>c.id===id),to=from+delta;if(from<0||to<0||to>=state.cards.length)return;const [card]=state.cards.splice(from,1);state.cards.splice(to,0,card);state.menu=null;render();persist();}
+  function clearCardDrag(){cancelAnimationFrame(cardDragFrame);app.querySelector('.rb-drop-line')?.remove();app.querySelectorAll('.rb-card-dragging').forEach(el=>el.classList.remove('rb-card-dragging'));cardDrag=null;pointerHeld=false;}
+  function updateCardDrop(){const drag=cardDrag;if(!drag)return;const board=app.querySelector('.rb-cards');if(!board)return;const rect=board.getBoundingClientRect(),vertical=state.arrangement==='vertical';drag.inside=drag.x>=rect.left&&drag.x<=rect.right&&drag.y>=rect.top&&drag.y<=rect.bottom;const line=app.querySelector('.rb-drop-line');if(!drag.active||!drag.inside){if(line)line.hidden=true;return;}const point=vertical?drag.y:drag.x,low=vertical?rect.top:rect.left,high=vertical?rect.bottom:rect.right;const speed=point<low+32?-8:point>high-32?8:0;if(speed){if(vertical)board.scrollTop+=speed;else board.scrollLeft+=speed;}
+   const cards=[...board.querySelectorAll('.rb-character')].filter(el=>el.dataset.character!==drag.id);let index=cards.findIndex(el=>{const r=el.getBoundingClientRect();return point<(vertical?(r.top+r.bottom)/2:(r.left+r.right)/2);});if(index<0)index=cards.length;drag.index=index;const target=cards[index]||cards.at(-1);if(!target)return;const r=target.getBoundingClientRect(),origin=app.getBoundingClientRect();const marker=line||Object.assign(document.createElement('div'),{className:'rb-drop-line'});if(!line){marker.setAttribute('aria-hidden','true');app.append(marker);}marker.hidden=false;const edge=index<cards.length?(vertical?r.top:r.left):(vertical?r.bottom:r.right);if(vertical){marker.style.cssText=`left:${rect.left-origin.left+3}px;top:${Math.max(rect.top,Math.min(rect.bottom-3,edge))-origin.top}px;width:${rect.width-6}px;height:3px;`;}else marker.style.cssText=`left:${Math.max(rect.left,Math.min(rect.right-3,edge))-origin.left}px;top:${rect.top-origin.top+3}px;width:3px;height:${rect.height-6}px;`;
+  }
+  function tickCardDrag(){if(!cardDrag)return;updateCardDrop();cardDragFrame=requestAnimationFrame(tickCardDrag);}
+
+  app.addEventListener('click',async event=>{
+   instance.interacted=true;
+   const button=event.target.closest('button[data-action]');if(!button)return;const action=button.dataset.action,id=Number(button.dataset.id),card=state.cards.find(c=>c.id===button.dataset.card);
+   if(action==='resize-window'||action==='drag-client')return;
+   if(await nativeUiAction(action,button,card))return;
+   if(action==='move-client'){moveClient(button.dataset.card,Number(button.dataset.step));return;}
+   if(['generate-code','copy-code','inspect-code','apply-code'].includes(action)){await codeAction(action);return;}
+   if(action==='page'){state.page=button.dataset.page;state.menu=null;if(state.page==='cards')state.focusedId=null;}
+   else if(action==='buff-layout'){if(!card)return;card.buffLayout=button.dataset.buffLayout;}
+   else if(action==='toggle-card'){if(!card)return;card.collapsed=!card.collapsed;state.menu=null;}
+   else if(action==='arrange'){state.arrangement=button.dataset.arrangement;state.menu=null;}
+   else if(action==='back-board'){state.focusedId=null;state.menu=null;}
+   else if(action==='pin'){state.pin=!state.pin;roNative.call('pin',{enabled:state.pin}).catch(e=>notify(e.message));notify(state.pin?'항상 위 표시를 켰습니다.':'항상 위 표시를 껐습니다.');persist();return;}
+   else if(action==='audio'){state.modal={type:'audio'};}
+   else if(action==='play'){state.playing=!state.playing;}
+   else if(action==='menu'){state.menu=state.menu===button.dataset.card?null:button.dataset.card;}
+   else if(action==='add'||action==='reconnect'){state.menu=null;state.modal={type:'connect',selected:null,name:card?.name||'',card:card?.id};}
+   else if(action==='close'){state.modal=null;}
+   else if(action==='target'){selectTarget(Number(button.dataset.target));return;}
+   else if(action==='connect'){
+    const m=state.modal;if(m.selected==null)return;const name=app.querySelector('[data-input="card-name"]').value.trim()||['메인 캐릭터','카디널','연주'][m.selected];
+    const existing=state.cards.find(c=>c.id===m.card);
+    if(existing){existing.name=name;existing.connected=true;}else state.cards.push({id:'card-'+Date.now(),name,job:'직접 등록',icon:['swords','sparkles','music'][m.selected],connected:true,mode:'normal',buffs:[{id:10,left:240,presence:'active',order:state.sequence++},{id:12,left:240,presence:'active',order:state.sequence++}]});
+    state.ignoredIds=state.ignoredIds.filter(n=>!state.definitions.some(d=>d.id===n));state.modal=null;notify(`${name} 카드를 고정 대상으로 연결했습니다. (시안)`);persist();return;
+   }
+   else if(action==='buff'){const b=card.buffs.find(b=>b.id===id);state.modal={type:'buff',id,card:card.id,visible:!b.hidden,remember:!!b.remember,alert:b.alert!==false,warning:b.warning??10};}
+   else if(action==='demo-refresh'||action==='demo-end'){
+    const m=state.modal,c=state.cards.find(c=>c.id===m.card),b=c.buffs.find(b=>b.id===m.id);
+    b.left=action==='demo-refresh'?def(b.id).total:0;b.presence=action==='demo-refresh'?'active':'absent';
+    if(action==='demo-refresh')b.order=state.sequence++;
+    state.modal=null;notify(`${def(b.id).name} ${action==='demo-refresh'?'적용·갱신':'종료'} 상태를 시안에 반영했습니다.`);persist();return;
+   }
+   else if(action==='save-buff'){
+    const m=state.modal,c=state.cards.find(c=>c.id===m.card),b=c.buffs.find(b=>b.id===m.id);const warning=Number(app.querySelector('[data-input="warning"]').value);
+    if(!Number.isFinite(warning)||warning<0||warning>3600){notify('알림 시간은 0~3600초로 입력해주세요.');return;}
+    b.hidden=!app.querySelector('[data-input="visible"]').checked;b.remember=app.querySelector('[data-input="remember"]').checked;b.pinOrder=b.pinOrder??state.sequence++;b.alert=app.querySelector('[data-input="alert"]').checked;b.warning=warning;state.modal=null;notify(`${c.name}의 버프 설정을 저장했습니다.`);persist();return;
+   }
+   else if(action==='rename'){state.menu=null;state.modal={type:'rename',card:card.id,name:card.name};}
+   else if(action==='save-name'){const name=app.querySelector('[data-input="card-name"]').value.trim();if(!name)return;state.cards.find(c=>c.id===state.modal.card).name=name;state.modal=null;}
+   else if(action==='remove'){state.cards=state.cards.filter(c=>c.id!==card.id);state.menu=null;notify('추적 카드를 제거했습니다. 사전은 유지됩니다.');persist();return;}
+   else if(action==='card-settings'){state.menu=null;state.modal={type:'card-settings',card:card.id};}
+   else if(action==='save-card'){
+    const c=state.cards.find(c=>c.id===state.modal.card);for(const input of app.querySelectorAll('[data-toggle-buff]')){const n=Number(input.dataset.toggleBuff);let b=c.buffs.find(b=>b.id===n);if(!b&&input.checked){b={id:n,left:0,presence:'unknown',order:state.sequence++};c.buffs.push(b);}if(b)b.hidden=!input.checked;}
+    state.modal=null;for(const b of c.buffs)if(!b.hidden)nativeRestoreObservation(b.id);notify('이 카드의 표시 목록을 저장했습니다.');persist();return;
+   }
+   else if(action==='ignore'){const index=state.discoveries.findIndex(d=>d.id===id);if(index<0)return;const entry=state.discoveries[index];state.ignoredIds=[...new Set([...state.ignoredIds,id])];state.discoveries=state.discoveries.filter(d=>d.id!==id);notify(`상태 ${id}를 앞으로 숨깁니다.`,{entry,index});persist();return;}
+   else if(action==='undo-ignore'){if(!undoIgnore)return;const {entry,index}=undoIgnore;state.ignoredIds=state.ignoredIds.filter(n=>n!==entry.id);if(!state.definitions.some(d=>d.id===entry.id)&&!state.discoveries.some(d=>d.id===entry.id))state.discoveries.splice(Math.min(index,state.discoveries.length),0,entry);notify('무시를 취소했습니다.');persist();return;}
+   else if(action==='reset-data'){state.modal={type:'reset'};}
+   else if(action==='confirm-reset'){state.definitions=clone(initialDefinitions);state.discoveries=[];state.ignoredIds=[];state.showShort=false;state.volume=65;state.sound=true;state.pin=false;state.playing=false;for(const c of state.cards){c.mode='normal';c.pinRequired=false;c.buffs=c.buffs.filter(b=>state.definitions.some(d=>d.id===b.id)).map(b=>({id:b.id,left:b.left,presence:b.presence,order:b.order,remember:false,hidden:false,alert:true,warning:10}));}searches.dictionary='';searches.selection='';state.modal=null;state.menu=null;normalize();notify('버프 사전과 설정을 초기화했습니다.');persist();return;}
+   else if(action==='restore'){state.ignoredIds=[];notify('무시를 모두 해제했습니다. 다시 감지되면 발견 목록에 표시됩니다.');persist();return;}
+   else if(action==='register'){state.modal={type:'register',id,name:'',kind:'skill'};}
+   else if(action==='choose-symbol'){state.modal.symbolIcon=button.dataset.symbol;app.querySelectorAll('[data-action="choose-symbol"]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));updateSymbolPreview();return;}
+   else if(action==='definition'){const d=def(id);state.modal={type:'definition',id,name:d.name,kind:d.kind,symbolMode:d.symbolMode,symbolText:d.symbolText||'',symbolIcon:d.symbolIcon||'sparkles'};}
+   else if(action==='save-definition'){
+    const name=app.querySelector('[data-input="definition-name"]').value.trim(),kind=app.querySelector('[data-input="kind"]').value,m=state.modal;
+    const symbolMode=app.querySelector('[data-input="symbol-mode"]:checked')?.value||'text',symbolText=firstChar(app.querySelector('[data-input="symbol-text"]')?.value||''),symbolIcon=m.symbolIcon||'sparkles';
+    if(!name){app.querySelector('[data-message="validation"]').textContent='버프 이름을 입력해주세요.';return;}
+    if(m.type==='register'){
+     const found=state.discoveries.find(d=>d.id===m.id);state.definitions.push({id:m.id,name,kind,short:firstChar(name),symbolMode,symbolText,symbolIcon,total:found.total,custom:true});state.discoveries=state.discoveries.filter(d=>d.id!==m.id);
+     if(app.querySelector('[data-input="add-to-card"]').checked){const target=state.cards.find(c=>c.id===found.cardId);if(target&&!target.buffs.some(b=>b.id===m.id))target.buffs.push({id:m.id,left:0,presence:'unknown',order:state.sequence++});}
+    }else{const d=def(m.id);d.name=name;d.kind=kind;d.short=firstChar(name);Object.assign(d,{symbolMode,symbolText,symbolIcon});}
+    state.ignoredIds=state.ignoredIds.filter(n=>!state.definitions.some(d=>d.id===n));state.modal=null;nativeRestoreObservation(m.id);notify(`${name}을(를) 사전에 저장했습니다.`);persist();return;
+   }
+   else if(action==='export'||action==='import'){state.modal={type:action};}
+   else if(action==='transfer-preview'){const chosen=[...app.querySelectorAll('[data-transfer]:checked')];if(!chosen.length){notify('데이터를 하나 이상 선택해주세요.');return;}state.modal=null;notify('선택한 데이터의 백업 흐름을 확인했습니다. 실제 파일 작업은 실행하지 않습니다.');return;}
+   else if(action==='export-done'){state.modal=null;notify('내보내기 흐름을 확인했습니다. 실제 파일은 생성하지 않습니다.');return;}
+   else if(action==='target-handle')return;
+   render();persist();
+  });
+  function selectTarget(index){
+   const current=app.querySelector('[data-input="card-name"]')?.value||state.modal.name;
+   state.modal.selected=index;state.modal.name=current||['메인 캐릭터','카디널','연주'][index];render();
+  }
+  app.addEventListener('change',event=>{
+   if(event.target.matches('[data-code-scope]')){state.modal[event.target.dataset.codeScope]=event.target.checked;state.modal.code='';state.modal.message='';render();return;}
+   if(event.target.matches('[data-input="symbol-mode"]')){updateSymbolPreview();return;}
+   instance.interacted=true;
+   const control=event.target.dataset.control;if(!control)return;
+   if(control==='volume'){
+    state.volume=Number(event.target.value);
+    if(!volumePointer&&!volumeKeyboard){previewVolume();persist();}return;
+   }
+   if(control==='mode'){const cardId=event.target.dataset.card;state.cards.find(c=>c.id===cardId).mode=event.target.value;if(modePointer)event.target.blur();render();if(!modePointer)app.querySelector(`[data-control="mode"][data-card="${cardId}"]`)?.focus({preventScroll:true});persist();return;}
+   if(control==='pin-required')state.cards.find(c=>c.id===event.target.dataset.card).pinRequired=event.target.checked;
+   if(control==='short')state.showShort=event.target.checked;
+   if(control==='sound')state.sound=event.target.checked;
+   if(control==='pin'){state.pin=event.target.checked;roNative.call('pin',{enabled:state.pin}).catch(e=>notify(e.message));}
+   render();persist();
+  });
+  app.addEventListener('pointerdown',event=>{
+   instance.interacted=true;
+   if(state.menu&&!event.target.closest('.rb-menu,[data-action="menu"]')){state.menu=null;app.querySelector('.rb-menu')?.remove();}
+   pointerHeld=true;
+   const dragHandle=event.target.closest('[data-action="drag-client"]');if(dragHandle){cardDrag={id:dragHandle.dataset.card,startX:event.clientX,startY:event.clientY,x:event.clientX,y:event.clientY,active:false,index:0,inside:false};dragHandle.setPointerCapture(event.pointerId);event.preventDefault();tickCardDrag();return;}
+   if(event.target.matches('[data-control="mode"]'))modePointer=true;
+   const grip=event.target.closest('[data-action="resize-window"]');
+   if(grip){const rect=app.getBoundingClientRect();resizeSession={x:event.clientX,y:event.clientY,width:rect.width,height:rect.height};grip.setPointerCapture(event.pointerId);event.preventDefault();return;}
+   if(event.target.matches('[data-control="volume"]')){volumePointer=true;volumeKeyboard=false;return;}
+   if(!event.target.closest('[data-action="target-handle"]'))return;
+   nativeCrosshair=true;app.classList.add('rb-crosshair-active');roNative.call('crosshairStart').catch(e=>notify(e.message));event.target.closest('button').setPointerCapture(event.pointerId);event.preventDefault();return;
+   state.dragging=true;event.preventDefault();
+  });
+  app.addEventListener('pointermove',event=>{
+   if(cardDrag){cardDrag.x=event.clientX;cardDrag.y=event.clientY;if(!cardDrag.active&&Math.hypot(cardDrag.x-cardDrag.startX,cardDrag.y-cardDrag.startY)>=5){cardDrag.active=true;app.querySelector(`[data-character="${cardDrag.id}"]`)?.classList.add('rb-card-dragging');}updateCardDrop();return;}
+   if(resizeSession){resizeWindow(resizeSession.width+event.clientX-resizeSession.x,resizeSession.height+event.clientY-resizeSession.y);return;}
+   if(!state.dragging)return;
+   const target=document.elementFromPoint(event.clientX,event.clientY)?.closest('[data-target]');
+   app.querySelectorAll('[data-target]').forEach(el=>el.classList.toggle('rb-target-selected',el===target));
+  });
+  document.addEventListener('pointerup',async event=>{
+   if(nativeCrosshair){nativeCrosshair=false;app.classList.remove('rb-crosshair-active');roNative.call('crosshairStop').catch(()=>{});pointerHeld=false;const m=state.modal;if(m?.type!=='connect')return;m.name=app.querySelector('[data-input="card-name"]')?.value||m.name;try{const found=await roNative.call('pointWindow');m.windows=[...(m.windows||[]).filter(w=>w.pid!==found.pid),found];m.selected=found.token;m.error='';}catch(error){m.error=error.message;}render();return;}
+   pointerHeld=false;
+   if(cardDrag){updateCardDrop();const drag=cardDrag;clearCardDrag();if(drag.active&&drag.inside){const from=state.cards.findIndex(c=>c.id===drag.id),[card]=state.cards.splice(from,1);state.cards.splice(drag.index,0,card);state.menu=null;render();persist();}return;}
+   if(resizeSession){resizeSession=null;persist();return;}
+   if(volumePointer){volumePointer=false;previewVolume();persist();}
+   if(!state.dragging)return;state.dragging=false;
+   const target=document.elementFromPoint(event.clientX,event.clientY)?.closest('[data-target]');if(target&&app.contains(target))selectTarget(Number(target.dataset.target));else render();
+  });
+  app.addEventListener('keydown',event=>{
+   instance.interacted=true;
+   const reorderHandle=event.target.closest('[data-action="drag-client"]');if(reorderHandle&&['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(event.key)){event.preventDefault();const id=reorderHandle.dataset.card;moveClient(id,['ArrowUp','ArrowLeft'].includes(event.key)?-1:1);app.querySelector(`[data-action="drag-client"][data-card="${id}"]`)?.focus();return;}
+   if(event.key==='Escape'&&cardDrag){clearCardDrag();return;}
+   if(event.target.closest('[data-action="resize-window"]')&&['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key)){
+    event.preventDefault();const rect=app.getBoundingClientRect(),step=event.shiftKey?48:16;
+    resizeWindow(rect.width+(event.key==='ArrowRight'?step:event.key==='ArrowLeft'?-step:0),rect.height+(event.key==='ArrowDown'?step:event.key==='ArrowUp'?-step:0));persist();return;
+   }
+   if(event.target.matches('[data-control="volume"]')&&['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End','PageUp','PageDown'].includes(event.key))volumeKeyboard=true;
+   if(event.key==='Escape'&&state.menu){state.menu=null;render();return;}
+   if(event.key==='Escape'&&state.modal){state.modal=null;render();return;}
+   if(event.key==='Tab'&&state.modal){
+    const list=[...app.querySelectorAll('.rb-dialog button:not(:disabled),.rb-dialog input,.rb-dialog select')];
+    if(event.shiftKey&&document.activeElement===list[0]){event.preventDefault();list.at(-1)?.focus();}
+    else if(!event.shiftKey&&document.activeElement===list.at(-1)){event.preventDefault();list[0]?.focus();}
+   }
+  });
+  app.addEventListener('compositionend',event=>{if(event.target.matches('[data-input="symbol-text"]')){event.target.value=firstChar(event.target.value);updateSymbolPreview();}});
+  app.addEventListener('input',event=>{
+   if(event.target.matches('[data-code-input]')){state.modal.input=event.target.value;state.modal.parsed=null;state.modal.error='';app.querySelector('[data-action="apply-code"]')?.setAttribute('disabled','');app.querySelector('.rb-code-preview')?.remove();const feedback=app.querySelector('.rb-code-feedback');if(feedback)feedback.textContent='';return;}
+   if(event.target.matches('[data-input="symbol-text"],[data-input="definition-name"]')){if(event.target.matches('[data-input="symbol-text"]')&&!event.isComposing)event.target.value=firstChar(event.target.value);updateSymbolPreview();return;}
+   if(event.target.matches('[data-search]')){searches[event.target.dataset.search]=event.target.value;filterSearch(event.target.dataset.search);return;}
+   if(!event.target.matches('[data-control="volume"]'))return;
+   instance.interacted=true;state.volume=Number(event.target.value);
+   app.querySelectorAll('[data-volume-output],[data-volume-chip]').forEach(el=>el.textContent=state.volume+'%');
+  });
+  app.addEventListener('keydown',event=>{if(event.target.matches('[data-control="mode"]'))modePointer=false;});
+  app.addEventListener('keyup',event=>{
+   if(volumeKeyboard&&event.target.matches('[data-control="volume"]')){volumeKeyboard=false;previewVolume();persist();}
+  });
+  document.addEventListener('pointercancel',()=>{if(nativeCrosshair)roNative.call('crosshairStop').catch(()=>{});nativeCrosshair=false;app.classList.remove('rb-crosshair-active');if(cardDrag)clearCardDrag();volumePointer=false;state.dragging=false;pointerHeld=false;if(resizeSession){resizeSession=null;persist();}});
+  let lastTick=performance.now();
+  setInterval(()=>{
+   const now=performance.now(),delta=Math.min(2,(now-lastTick)/1000);lastTick=now;
+   if(window.roNative||!state.playing||app.closest('[data-variant]')?.hidden||!app.isConnected)return;
+   for(const c of state.cards)for(const b of c.buffs)if(b.presence==='active'){b.left=Math.max(0,b.left-delta);if(b.left===0)b.presence='absent';}
+   if(state.page==='cards'&&!state.modal&&!state.menu&&!pointerHeld&&!app.contains(document.activeElement))render();
+   else if(state.page==='cards'&&!state.modal&&!state.menu&&!pointerHeld&&!['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))render();
+  },500);
+  let managementSort='first',managementIgnored=false,managementEdit=null,managementDelete=[],managementUndo=null,managementMessage='';
+  const managementSelected=new Set(),sessionDiscoveryCounts=new Map();
+  state.ignoredEntries=(state.ignoredEntries||[]).filter(d=>state.ignoredIds.includes(d.id));
+  for(const d of state.discoveries)d.count=0;
+  function managementItems(){const items=managementIgnored?state.ignoredIds.map(id=>state.ignoredEntries.find(d=>d.id===id)||{id,total:0,count:0}):state.discoveries.filter(d=>!state.ignoredIds.includes(d.id));return [...items].sort((a,b)=>managementSort==='id'?a.id-b.id:managementSort==='recent'?(b.lastReceivedAt||0)-(a.lastReceivedAt||0):(b.firstReceivedAt||0)-(a.firstReceivedAt||0));}
+  function managementBackup(){managementUndo=clone({definitions:state.definitions,discoveries:state.discoveries,ignoredIds:state.ignoredIds,ignoredEntries:state.ignoredEntries,cards:state.cards.map(c=>({id:c.id,buffs:c.buffs}))});}
+  function managementFeedback(){return managementMessage?`<div class="rb-manage-feedback" role="status">${esc(managementMessage)}${managementUndo?'<button type="button" data-action="manage-undo" class="cursor-interaction">실행 취소</button>':''}</div>`:'';}
+  function managementToolbar(dictionary=false){const n=managementSelected.size;return `<div class="rb-manage-toolbar"><label><input type="checkbox" data-manage-all ${n?'checked':''}><span data-manage-selection-label>${n?n+'개 선택':'전체 선택'}</span></label><div>${dictionary?`<button type="button" data-action="manage-delete-selected" ${n?'':'disabled'} class="cursor-interaction">선택 삭제</button>`:managementIgnored?`<button type="button" data-action="manage-restore-selected" ${n?'':'disabled'} class="cursor-interaction">선택 복구</button>`:`<button type="button" data-action="manage-ignore-selected" ${n?'':'disabled'} class="cursor-interaction">선택 무시</button>`}</div></div>`;}
+  function managementRegisterForm(d){return `<div class="rb-inline-register"><div class="rb-register-heading"><strong>버프 사전에 추가</strong><span>상태 ID ${d.id}</span></div><div class="rb-register-fields"><label class="rb-register-field"><span>버프 이름</span><input data-input="definition-name" required maxlength="100" placeholder="스킬 또는 물약 이름" aria-label="버프 이름"></label><label class="rb-register-field"><span>종류</span><select data-input="kind"><option value="skill">스킬</option><option value="potion">물약</option><option value="other">기타</option></select></label></div><div class="rb-register-footer"><label class="rb-register-option"><input type="checkbox" data-input="add-to-card" checked><span>발견한 카드에 표시</span></label><div><button type="button" data-action="manage-cancel-register" class="cursor-interaction">취소</button><button type="button" data-action="manage-register" data-id="${d.id}" class="rb-primary cursor-interaction">등록</button></div></div></div>`;}
+  function managementPaintSelection(){const rows=[...app.querySelectorAll('[data-manage-select]')];for(const node of rows){node.checked=managementSelected.has(Number(node.dataset.manageSelect));node.closest('.rb-managed-entry,.rb-managed-dictionary')?.classList.toggle('rb-is-selected',node.checked);}const visible=rows.filter(node=>!node.closest('[data-search-scope]').hidden),selected=visible.filter(node=>node.checked).length,all=app.querySelector('[data-manage-all]');if(all){all.checked=visible.length>0&&selected===visible.length;all.indeterminate=selected>0&&selected<visible.length;}const label=app.querySelector('[data-manage-selection-label]');if(label)label.textContent=managementSelected.size?managementSelected.size+'개 선택':'전체 선택';app.querySelectorAll('.rb-manage-toolbar button').forEach(button=>button.disabled=managementSelected.size===0);}
+  function managementDiscoveryPage(){const items=managementItems();return header('새로 발견',managementIgnored?'무시한 상태는 수신 횟수를 집계하지 않습니다.':'미등록 상태에 이름을 붙이거나 앞으로 무시할 수 있습니다.')+`<div class="rb-manage-topbar"><div class="rb-manage-tabs" role="tablist" aria-label="발견 상태 분류"><button type="button" role="tab" aria-selected="${!managementIgnored}" data-action="manage-view-discover" class="cursor-interaction">새로 발견 <span>${state.discoveries.filter(d=>!state.ignoredIds.includes(d.id)).length}</span></button><button type="button" role="tab" aria-selected="${managementIgnored}" data-action="manage-view-ignored" class="cursor-interaction">무시한 항목 <span>${state.ignoredIds.length}</span></button></div><label class="rb-manage-sort"><span>정렬</span><span class="rb-sort-control"><select data-manage-sort aria-label="발견 정렬"><option value="first" ${managementSort==='first'?'selected':''}>최근 발견순</option><option value="recent" ${managementSort==='recent'?'selected':''}>최근 수신순</option><option value="id" ${managementSort==='id'?'selected':''}>상태 ID순</option></select>${icon('chevron-down')}</span></label></div>${searchField('discover')}${managementToolbar()}${managementFeedback()}<div class="rb-discover-list">${items.map(d=>{const client=state.cards.find(c=>c.id===d.cardId)?.name||'클라이언트 기록 없음';return `<article class="rb-discover rb-managed-entry" data-search-scope="discover" data-search-text="${d.id} ${esc(d.name||'')} ${esc(client)}"><div class="rb-managed-summary"><input type="checkbox" data-manage-select="${d.id}" ${managementSelected.has(d.id)?'checked':''} aria-label="상태 ID ${d.id} 선택"><div class="rb-discover-info"><strong>${esc(d.name||'미등록 버프')} <span class="rb-discovery-id">상태 ID ${d.id}</span></strong><small>${esc(client)} · ${d.total||0}초 · ${discoveryTime(d)}</small><details class="rb-discovery-details"><summary>상세 정보</summary><span>이번 실행 중 ${d.count>=100?'99+':d.count||0}회 발견</span><span>최초 발견 ${Number.isFinite(d.firstReceivedAt)?esc(new Date(d.firstReceivedAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul',hour12:false})):'기록 없음'}</span></details></div><div class="rb-managed-actions">${managementIgnored?`<button type="button" data-action="manage-restore" data-id="${d.id}" class="cursor-interaction">복구</button>`:`<button type="button" data-action="ignore" data-id="${d.id}" class="cursor-interaction">무시</button><button type="button" data-action="register" data-id="${d.id}" class="rb-secondary cursor-interaction">이름 붙이기</button>`}</div></div>${managementEdit===d.id?managementRegisterForm(d):''}</article>`;}).join('')||'<div class="rb-empty">표시할 항목이 없습니다.</div>'}<div class="rb-search-empty" data-search-empty="discover" hidden>검색 결과가 없습니다.</div></div>`;}
+  function managementDictionaryPage(){return `<section class="rb-dictionary-page">${header('버프 사전',`${state.definitions.length}개 등록 · 편집과 삭제`)}${searchField('dictionary')}${managementToolbar(true)}${managementFeedback()}<div class="rb-dictionary rb-catalog">${state.definitions.map(d=>`<div class="rb-dict-row rb-managed-dictionary" data-search-scope="dictionary" data-search-text="${esc(d.name)} ${d.id}"><input type="checkbox" data-manage-select="${d.id}" ${managementSelected.has(d.id)?'checked':''} aria-label="${esc(d.name)} 선택"><span class="rb-buff-symbol">${buffSymbol(d)}</span><div class="rb-dict-details"><div class="rb-dict-name">${esc(d.name)}</div><div class="rb-dict-meta">${d.kind==='potion'?'물약':d.kind==='other'?'기타':'스킬'} · 상태 ID ${d.id}</div></div><span class="rb-dict-duration">${d.total}<small>초</small></span><button type="button" data-action="definition" data-id="${d.id}" class="rb-icon-button cursor-interaction" aria-label="${esc(d.name)} 편집">${icon('pencil')}</button><button type="button" data-action="manage-delete" data-id="${d.id}" class="rb-icon-button cursor-interaction" aria-label="${esc(d.name)} 삭제">${icon('trash-2')}</button></div>`).join('')}<div class="rb-search-empty" data-search-empty="dictionary" hidden>검색 결과가 없습니다.</div></div>${managementDelete.length?`<div class="rb-delete-confirm" role="dialog" aria-label="버프 사전 삭제 확인"><strong>${managementDelete.length}개 버프를 사전에서 삭제할까요?</strong><p>모든 카드의 해당 버프 설정도 삭제됩니다. 다음에 수신하면 ‘새로 발견’에 표시됩니다.</p><button type="button" data-action="manage-cancel-delete" class="cursor-interaction">취소</button><button type="button" data-action="manage-confirm-delete" class="cursor-interaction">사전에서 삭제</button></div>`:''}</section>`;}
+  function managementIgnore(ids){managementBackup();for(const id of ids){const item=state.discoveries.find(d=>d.id===id);if(!item||def(id))continue;state.ignoredEntries=state.ignoredEntries.filter(d=>d.id!==id);state.ignoredEntries.push({...item,count:0});state.ignoredIds=[...new Set([...state.ignoredIds,id])];state.discoveries=state.discoveries.filter(d=>d.id!==id);sessionDiscoveryCounts.delete(id);}managementSelected.clear();managementEdit=null;managementMessage='선택한 상태를 무시했습니다.';}
+  function managementRestore(ids){managementBackup();for(const id of ids){if(!state.ignoredIds.includes(id))continue;const item=state.ignoredEntries.find(d=>d.id===id);state.ignoredIds=state.ignoredIds.filter(n=>n!==id);state.ignoredEntries=state.ignoredEntries.filter(d=>d.id!==id);if(item&&!def(id)&&!state.discoveries.some(d=>d.id===id))state.discoveries.push({...item,count:0});}managementSelected.clear();managementMessage='선택한 상태를 복구했습니다.';}
+  function managementAction(action,button){const id=Number(button.dataset.id);if(action==='restore'){managementRestore([...state.ignoredIds]);render();persist();return true;}if(action==='confirm-reset'){state.ignoredEntries=[];managementSelected.clear();managementUndo=null;managementMessage='';}if(action==='page'){managementSelected.clear();managementEdit=null;managementDelete=[];return false;}
+   if(action==='manage-view-discover'||action==='manage-view-ignored'){managementIgnored=action==='manage-view-ignored';managementSelected.clear();managementEdit=null;render();return true;}
+   if(action==='register'){managementEdit=managementEdit===id?null:id;render();return true;}
+   if(action==='ignore')managementIgnore([id]);
+   else if(action==='manage-ignore-selected')managementIgnore([...managementSelected]);
+   else if(action==='manage-restore'||action==='manage-restore-selected')managementRestore(action==='manage-restore'?[id]:[...managementSelected]);
+   else if(action==='manage-cancel-register')managementEdit=null;
+   else if(action==='manage-register'){const row=button.closest('.rb-managed-entry'),name=row.querySelector('[data-input="definition-name"]').value.trim(),item=state.discoveries.find(d=>d.id===id);if(!name){row.querySelector('[data-input="definition-name"]').reportValidity();row.querySelector('[data-input="definition-name"]').focus();return true;}if(!item||def(id))return true;managementBackup();state.definitions.push({id,name,kind:row.querySelector('[data-input="kind"]').value,short:firstChar(name),symbolMode:'text',symbolText:'',symbolIcon:'sparkles',total:item.total,custom:true});if(row.querySelector('[data-input="add-to-card"]').checked){const card=state.cards.find(c=>c.id===item.cardId);if(card&&!card.buffs.some(b=>b.id===id))card.buffs.push({id,left:0,presence:'unknown',order:state.sequence++,alert:true});}state.discoveries=state.discoveries.filter(d=>d.id!==id);sessionDiscoveryCounts.delete(id);managementSelected.delete(id);managementEdit=null;nativeRestoreObservation(id);managementMessage=`${name}을(를) 등록했습니다.`;}
+   else if(action==='manage-delete'||action==='manage-delete-selected'){managementDelete=(action==='manage-delete'?[id]:[...managementSelected]).filter(id=>def(id));}
+   else if(action==='manage-cancel-delete')managementDelete=[];
+   else if(action==='manage-confirm-delete'){managementBackup();const ids=new Set(managementDelete);for(const id of ids)sessionDiscoveryCounts.delete(id);state.definitions=state.definitions.filter(d=>!ids.has(d.id));for(const c of state.cards)c.buffs=c.buffs.filter(b=>!ids.has(b.id));managementMessage=`${ids.size}개 버프를 삭제했습니다. 다음 수신 때 다시 발견됩니다.`;managementDelete=[];managementSelected.clear();}
+   else if(action==='manage-undo'&&managementUndo){Object.assign(state,{definitions:managementUndo.definitions,discoveries:managementUndo.discoveries,ignoredIds:managementUndo.ignoredIds,ignoredEntries:managementUndo.ignoredEntries});for(const c of state.cards){const old=managementUndo.cards.find(v=>v.id===c.id);if(old)c.buffs=old.buffs;}managementUndo=null;managementMessage='변경을 되돌렸습니다.';managementSelected.clear();}
+   else return false;render();persist();return true;
+  }
+  app.addEventListener('change',event=>{const node=event.target;if(node.matches('[data-manage-sort]')){managementSort=node.value;}else if(node.matches('[data-manage-ignored]')){managementIgnored=node.checked;managementSelected.clear();managementEdit=null;}else if(node.matches('[data-manage-select]')){const id=Number(node.dataset.manageSelect);if(node.checked)managementSelected.add(id);else managementSelected.delete(id);}else if(node.matches('[data-manage-all]')){managementSelected.clear();if(node.checked)for(const row of app.querySelectorAll('[data-search-scope]')){if(row.hidden||getComputedStyle(row).display==='none')continue;const id=Number(row.querySelector('[data-manage-select]')?.dataset.manageSelect);if(Number.isInteger(id))managementSelected.add(id);}}else return;if(node.matches('[data-manage-select],[data-manage-all]'))managementPaintSelection();else render();});
+
+  let nativeCrosshair=false,nativeDirty=false,saveLiveTimer;
+  // Session-only observations include unknown statuses, so naming a buff never loses its timer.
+  const nativeObserved=new Map();
+  function playBuffAlert(b){if(state.sound&&b.alert!==false&&state.volume>0)roNative.call('sound',{volume:state.volume}).catch(error=>notify('알림 소리 재생 실패: '+error.message));}
+  function relativeReceivedTime(time){if(!Number.isFinite(time))return '시각 기록 없음';const seconds=Math.max(0,Math.floor((Date.now()-time)/1000));return seconds<60?seconds+'초 전':seconds<3600?Math.floor(seconds/60)+'분 전':seconds<86400?Math.floor(seconds/3600)+'시간 전':Math.floor(seconds/86400)+'일 전';}
+  function discoveryTime(item){const time=item.lastReceivedAt;if(!Number.isFinite(time))return '시각 기록 없음';const clock=new Date(time).toLocaleTimeString('ko-KR',{timeZone:'Asia/Seoul',hour12:false});return `<span data-discovered-at="${time}" title="${esc(new Date(time).toLocaleString('ko-KR',{timeZone:'Asia/Seoul',hour12:false}))}">${relativeReceivedTime(time)}</span> · 마지막 수신 ${esc(clock)}`;}
+  setInterval(()=>app.querySelectorAll('[data-discovered-at]').forEach(node=>{node.textContent=relativeReceivedTime(Number(node.dataset.discoveredAt));}),1000);
+  function nativeRestoreObservation(statusId){for(const card of state.cards){if(!card.connected||!card.buffs.some(b=>b.id===statusId&&b.presence==='unknown'))continue;const data=nativeObserved.get(card.id)?.get(statusId);if(data)window.dispatchEvent(new CustomEvent('ro-native',{detail:{type:'buff',data}}));}}
+  let scrollBusyUntil=0,scrollFlush,deferredUiRender=false,scrollbarDragging=false;
+  function flushScrollRender(){if(scrollbarDragging||Date.now()<scrollBusyUntil){scrollFlush=setTimeout(flushScrollRender,100);return;}if(deferredUiRender){deferredUiRender=false;render();nativeDirty=false;}else if(nativeDirty)nativeRefresh();}
+  function holdScroll(){scrollBusyUntil=Date.now()+250;clearTimeout(scrollFlush);scrollFlush=setTimeout(flushScrollRender,270);}
+  function nativeDeferRender(){if(scrollbarDragging||Date.now()<scrollBusyUntil){deferredUiRender=true;return true;}return false;}
+  function nativePaintNav(){app.querySelectorAll('.rb-discovery-button .rb-nav-count,.rb-nav[data-page="discover"] .rb-nav-count').forEach(node=>{node.textContent=count();});}
+  function nativePaintDiscovery(id){const item=state.discoveries.find(d=>d.id===id),row=app.querySelector(`[data-action="register"][data-id="${id}"]`)?.closest('.rb-discover');if(!item||!row)return false;const details=row.querySelector('.rb-discover-info small'),client=state.cards.find(c=>c.id===item.cardId)?.name||'클라이언트 기록 없음';if(details)details.innerHTML=`${esc(client)} · ${item.total}초 · ${discoveryTime(item)}`;const count=row.querySelector('.rb-discovery-details span');if(count)count.textContent=`이번 실행 중 ${item.count>=100?'99+':item.count||0}회 발견`;return true;}
+  function nativePaintCardBuff(c,id){
+   if(state.page!=='cards'||scrollbarDragging||Date.now()<scrollBusyUntil)return false;
+   const card=app.querySelector(`[data-character="${CSS.escape(c.id)}"]`),panel=card?.querySelector('.rb-buffs');if(!panel||!c.connected)return false;
+   const rows=orderedBuffs(c),b=rows.find(v=>v.id===id);let current=panel.querySelector(`.rb-buff[data-id="${id}"]`);
+   if(b){const template=document.createElement('template');template.innerHTML=buffRow(c,b);const replacement=template.content.firstElementChild;if(current)current.replaceWith(replacement);else panel.append(replacement);}else current?.remove();
+   const labels=new Map([...panel.querySelectorAll('.rb-group-label')].map(node=>[node.classList.contains('rb-other')?'other':'required',node]));const desired=[];let previous=false;
+   for(let i=0;i<rows.length;i++){const buff=rows[i];let key=c.pinRequired?(buff.remember&&i===0?'required':!buff.remember&&(i===0||previous)?'other':null):null;if(key){let label=labels.get(key);if(!label){label=document.createElement('div');label.className='rb-group-label'+(key==='other'?' rb-other':'');label.textContent=key==='other'?'다른 버프':'필수 지정 버프';}desired.push(label);}const node=panel.querySelector(`.rb-buff[data-id="${buff.id}"]`);if(node)desired.push(node);previous=!!buff.remember;}
+   let anchor=panel.firstElementChild;for(const node of desired){if(node===anchor)anchor=anchor.nextElementSibling;else panel.insertBefore(node,anchor);}while(anchor){const next=anchor.nextElementSibling;anchor.remove();anchor=next;}
+   if(!rows.length){const empty=document.createElement('div');empty.className='rb-empty';empty.textContent='현재 표시할 버프가 없습니다.';panel.append(empty);}
+   const missing=rows.filter(v=>v.remember&&v.presence==='absent').length,summary=card.querySelector('.rb-card-foot>span');if(summary){summary.textContent=c.pinRequired&&missing?`필수 버프 ${missing}개 없음`:`${rows.length}개 버프 추적 중`;summary.classList.toggle('rb-missing-summary',!!(c.pinRequired&&missing));}
+   if(panel.querySelector('[data-lucide]'))globalThis.lucide?.createIcons({attrs:{width:16,height:16}});return true;
+  }
+  app.addEventListener('wheel',holdScroll,{passive:true,capture:true});
+  app.addEventListener('scroll',holdScroll,{passive:true,capture:true});
+  app.addEventListener('pointerdown',event=>{const node=event.target;if(!(node instanceof Element))return;const r=node.getBoundingClientRect();if((node.scrollHeight>node.clientHeight&&event.clientX>=r.left+node.clientWidth)||(node.scrollWidth>node.clientWidth&&event.clientY>=r.top+node.clientHeight)){scrollbarDragging=true;holdScroll();}},{capture:true,passive:true});
+  document.addEventListener('pointerup',()=>{if(scrollbarDragging){scrollbarDragging=false;holdScroll();}},{capture:true,passive:true});
+  document.addEventListener('pointercancel',()=>{if(nativeCrosshair)roNative.call('crosshairStop').catch(()=>{});nativeCrosshair=false;app.classList.remove('rb-crosshair-active');if(scrollbarDragging){scrollbarDragging=false;holdScroll();}},{capture:true,passive:true});
+  function nativeRefresh(){nativeDirty=true;if(Date.now()<scrollBusyUntil)return;if(!state.modal&&!state.menu&&!pointerHeld&&!['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName)){render();nativeDirty=false;}}
+  function nativePaintTimers(){if(state.page!=='cards')return;for(const c of state.cards){if(!c.connected)continue;const card=app.querySelector(`[data-character="${CSS.escape(c.id)}"]`);if(!card)continue;for(const b of c.buffs){if(b.presence!=='active')continue;const row=card.querySelector(`.rb-buff[data-id="${b.id}"]`);if(!row)continue;row.dataset.remaining=b.left;const warning=b.left>0&&b.left<=10;row.classList.toggle('rb-ending',warning);const time=row.querySelector('.rb-time');if(time){const value=b.expiresAt===null?'시간 없음':b.left<=0?'만료 추정':format(Math.ceil(b.left));if(time.firstChild?.nodeType===Node.TEXT_NODE){if(time.firstChild.nodeValue!==value)time.firstChild.nodeValue=value;}else time.prepend(document.createTextNode(value));let note=time.querySelector('small');if(warning&&!note){note=document.createElement('small');note.textContent='종료 임박';time.append(note);}if(!warning&&note)note.remove();}const bar=row.querySelector('.rb-track>span');if(bar)bar.style.width=Math.max(0,Math.min(100,b.left/(def(b.id)?.total||1)*100))+'%';}}}
+  function saveLive(){if(saveLiveTimer)return;saveLiveTimer=setTimeout(()=>{saveLiveTimer=null;persist();},5000);}
+  function nativeConnectDialog(m,close){return `<div class="rb-dialog-top"><div><h3>게임 창 연결</h3><p>실행 중인 라그나로크 클라이언트를 선택하세요.</p></div>${close}</div><div class="rb-target-launch"><button type="button" class="rb-crosshair" data-action="target-handle" aria-label="과녁을 게임 창으로 끌어 놓기">${icon('crosshair')}</button><span class="rb-sub">과녁을 게임 창 위에 끌어 놓아도 됩니다.</span></div><div class="rb-crosshair-feedback" role="status" aria-live="polite">과녁을 누른 채 게임 창으로 이동하면 대상이 표시됩니다.</div><div class="rb-real-windows">${m.loading?'<p class="rb-sub">게임 창을 확인하는 중…</p>':(m.windows||[]).map(w=>`<button type="button" data-action="target" data-token="${esc(w.token)}" class="cursor-interaction" aria-pressed="${m.selected===w.token}">${icon('app-window')}<span>${esc(w.title||w.process)}<small>PID ${w.pid}</small></span></button>`).join('')||'<p class="rb-sub">실행 중인 게임 창이 없습니다. 게임에 접속한 뒤 새로고침해주세요.</p>'}</div><button type="button" class="rb-secondary cursor-interaction" data-action="refresh-windows">${icon('refresh-cw')}목록 새로고침</button><label class="rb-field">클라이언트 이름<input type="text" data-input="card-name" value="${esc(m.name||'')}" placeholder="메인 캐릭터"></label><p class="rb-code-feedback">${esc(m.error||'')}</p><div class="rb-dialog-actions"><button type="button" class="cursor-interaction" data-action="close">취소</button><button type="button" class="rb-primary cursor-interaction" data-action="connect" ${m.selected?'':'disabled'}>선택한 창 연결</button></div>`;}
+  function nativeDiagnostics(card){
+   const d=card.captureStats;if(!d||card.connected)return '';const candidates=card.observedCandidates||[],has=candidates.length>0;
+   return `<div class="rb-setup"><span class="rb-setup-step">${has?'마지막 단계':'연결 중 · 2 / 3'}</span><h4>${has?'방금 사용한 버프인가요?':'게임에서 버프를 하나 사용해주세요'}</h4><p>${has?'본인에게 적용한 버프가 맞으면 연결 완료를 누르세요.':'이 캐릭터 자신에게 적용되는 스킬이나 버프 아이템이면 됩니다. 기존 버프를 다시 사용해도 괜찮습니다.'}</p>${has?`<div class="rb-actor-candidates">${candidates.map((c,i)=>`<div class="rb-setup-candidate"><span><strong>${esc(def(c.statusId)?.name||('이름을 모르는 버프 · ID '+c.statusId))}</strong><small>${c.leftMs!=null&&c.leftMs!==4294967295?Math.ceil(c.leftMs/1000)+'초 지속':'시간 정보 없음'}${candidates.length>1?' · 후보 '+(i+1):''}</small></span><button type="button" class="rb-primary cursor-interaction" data-action="finish-setup" data-card="${card.id}" data-actor="${c.actorId}">연결 완료</button></div>`).join('')}</div>${candidates.length>1?`<p class="rb-sub">어느 버프인지 모르겠다면 한 번 더 사용해주세요.</p><button type="button" class="rb-secondary cursor-interaction" data-action="narrow-calibration" data-card="${card.id}">다시 사용해서 찾기</button>`:''}`:d.calibrating?'<div class="rb-setup-wait">버프를 기다리고 있습니다…</div>':`<button type="button" class="rb-secondary cursor-interaction" data-action="start-calibration" data-card="${card.id}">다시 기다리기</button>`}<details class="rb-setup-details"><summary>연결 진단</summary><span>캡처 ${d.packets}개 · 수신 ${d.incomingBytes}B · 버프 ${d.statuses}개</span>${candidates.map(c=>`<span>상태 ${c.statusId} · 대상 ${c.actorId}</span>`).join('')}</details></div>`;
+  }
+  async function refreshNativeWindows(){const m=state.modal;if(m?.type!=='connect')return;m.name=app.querySelector('[data-input="card-name"]')?.value||m.name;m.loading=true;render();try{const result=await roNative.call('windows');if(state.modal!==m)return;m.windows=result;m.selected=null;m.error='';}catch(error){m.error=error.message;}if(state.modal===m){m.loading=false;render();}}
+  async function nativeUiAction(action,button,card){
+   if(managementAction(action,button))return true;
+   if(action==='disconnect-client'){try{await roNative.call('unbind',{cardId:card.id});nativeObserved.delete(card.id);card.connected=false;card.candidate=null;card.selectedActor=null;card.captureStats=null;card.observedCandidates=[];card.actorId=null;card.connectionText='게임 창 연결 대기';for(const b of card.buffs){b.presence='unknown';b.left=0;delete b.expiresAt;delete b.warned;delete b.expiryNotified;}state.menu=null;notify('연결을 해제했습니다. 카드와 버프 설정은 유지됩니다.');persist();}catch(error){notify(error.message);}return true;}
+   if(action==='add'||action==='reconnect'){state.menu=null;state.modal={type:'connect',name:card?.name||'',card:card?.id,windows:[]};await refreshNativeWindows();return true;}
+   if(action==='refresh-windows'){await refreshNativeWindows();return true;}
+   if(action==='target'){state.modal.name=app.querySelector('[data-input="card-name"]').value;state.modal.selected=button.dataset.token;render();return true;}
+   if(action==='connect'){const m=state.modal;if(!m.selected)return true;let c=state.cards.find(c=>c.id===m.card),added=false;if(!c){c={id:'client-'+Date.now(),name:'',icon:'swords',connected:false,mode:'normal',pinRequired:false,buffLayout:'list',buffs:state.definitions.map(d=>({id:d.id,left:0,presence:'unknown',order:state.sequence++}))};state.cards.push(c);added=true;}c.name=app.querySelector('[data-input="card-name"]').value.trim()||'클라이언트 '+state.cards.length;try{await roNative.call('bind',{cardId:c.id,token:m.selected});c.connected=false;c.candidate=null;c.captureStats=null;c.observedCandidates=[];c.selectedActor=null;c.connectionText='게임에서 자신에게 버프를 하나 사용해주세요';state.modal=null;render();persist();}catch(error){if(added)state.cards=state.cards.filter(old=>old!==c);m.error=error.message;render();}return true;}
+   if(action==='start-calibration'||action==='narrow-calibration'){try{await roNative.call('calibrate',{cardId:card.id,narrow:action==='narrow-calibration'});card.selectedActor=null;card.observedCandidates=[];if(card.captureStats){card.captureStats.calibrating=true;card.captureStats.calibrationUntil=Date.now()+90000;}card.connectionText='게임에서 자신에게 버프를 하나 사용해주세요';render();}catch(error){notify(error.message);}return true;}
+   if(action==='finish-setup'){card.selectedActor=Number(button.dataset.actor);action='confirm-actor';}
+   if(action==='select-actor'){card.selectedActor=Number(button.dataset.actor);render();return true;}
+   if(action==='confirm-actor'){try{await roNative.call('confirm',{cardId:card.id,actorId:card.selectedActor});card.connected=true;card.candidate=null;card.selectedActor=null;card.observedCandidates=[];notify('본인 확인 완료. 이 클라이언트의 버프를 추적합니다.');persist();}catch(error){notify(error.message);}return true;}
+   return false;
+  }
+  window.addEventListener('ro-native',event=>{
+   const {type,data}=event.detail;if(type==='windowPin'){state.pin=!!data.enabled;render();persist();return;}if(type==='crosshair'){const hint=app.querySelector('.rb-crosshair-feedback');if(hint)hint.textContent=data.label;return;}const c=state.cards.find(c=>c.id===data?.cardId);if(!c)return;
+   if(type==='diagnostics'){c.captureStats=data;const candidateKey=v=>v.actorId+":"+v.statusId;const incoming=data.candidates||[],current=new Map(incoming.map(v=>[candidateKey(v),v]));c.observedCandidates=[...(c.observedCandidates||[]).filter(v=>current.has(candidateKey(v))).map(v=>current.get(candidateKey(v))),...incoming.filter(v=>!(c.observedCandidates||[]).some(old=>candidateKey(old)===candidateKey(v)))];if(c.selectedActor&&!c.observedCandidates.some(v=>v.actorId===c.selectedActor))c.selectedActor=null;if(!c.connected&&state.page==='cards')nativeRefresh();return;}
+   if(type==='status'){c.connected=data.connected;c.connectionText=data.status;if(data.reset){nativeObserved.delete(c.id);c.candidate=null;c.observedCandidates=[];c.selectedActor=null;for(const b of c.buffs){b.presence='unknown';b.left=0;delete b.expiresAt;}c.actorId=null;}if(data.actorId)c.actorId=data.actorId;nativeRefresh();return;}
+   if(type==='candidate'){c.candidate=data.actorId;c.connectionText='방금 이 캐릭터 자신에게 버프를 사용했다면 본인 확인';nativeRefresh();return;}
+   if(type==='buff'){
+    if(!nativeObserved.has(c.id))nativeObserved.set(c.id,new Map());nativeObserved.get(c.id).set(data.statusId,{...data});
+    let d=def(data.statusId);if(!d&&!state.ignoredIds.includes(data.statusId)&&data.active){let found=state.discoveries.find(v=>v.id===data.statusId);if(!found){found={id:data.statusId,total:0,count:0,time:'방금'};state.discoveries.push(found);}found.total=(data.totalMs??data.leftMs??0)/1000;const count=Math.min(100,(sessionDiscoveryCounts.get(data.statusId)||0)+1);sessionDiscoveryCounts.set(data.statusId,count);found.count=count;found.cardId=c.id;found.firstReceivedAt??=data.time;found.lastReceivedAt=data.time;saveLive();}
+    if(d){if(data.totalMs!=null&&data.totalMs!==4294967295&&data.totalMs>0)d.total=data.totalMs/1000;let b=c.buffs.find(b=>b.id===data.statusId);if(!b){b={id:data.statusId,hidden:false,alert:true,remember:false,warning:10};c.buffs.push(b);}if(data.active){b.expiryNotified=false;b.presence='active';b.left=data.leftMs!=null&&data.leftMs!==4294967295?data.leftMs/1000:0;b.expiresAt=data.leftMs!=null&&data.leftMs!==4294967295?data.time+data.leftMs:null;b.order=state.sequence++;b.warned=false;if(b.expiresAt&&b.expiresAt<=Date.now())b.expiryNotified=true;}else{const wasActive=b.presence==='active';b.presence='absent';b.left=0;b.expiresAt=null;if(wasActive&&!b.expiryNotified)playBuffAlert(b);b.expiryNotified=true;}saveLive();}
+    nativePaintNav();
+    if(d){if(state.page==='cards'&&!nativePaintCardBuff(c,data.statusId))nativeRefresh();else if(state.page==='dictionary'){const duration=app.querySelector(`[data-action="definition"][data-id="${data.statusId}"]`)?.closest('.rb-dict-row')?.querySelector('.rb-dict-duration');if(duration?.firstChild?.nodeType===Node.TEXT_NODE)duration.firstChild.nodeValue=d.total;}}
+    else if(state.page==='discover'&&!managementIgnored&&!state.ignoredIds.includes(data.statusId)&&data.active&&!nativePaintDiscovery(data.statusId))nativeRefresh();
+   }
+  });
+  setInterval(()=>{let timing=false;for(const c of state.cards){if(!c.connected)continue;for(const b of c.buffs){if(b.presence!=='active'||!b.expiresAt)continue;timing=true;b.left=Math.max(0,(b.expiresAt-Date.now())/1000);if(b.left===0&&!b.expiryNotified){b.expiryNotified=true;playBuffAlert(b);}if(!b.warned&&b.left>0&&b.left<=(b.warning??10)){b.warned=true;playBuffAlert(b);}}}if(timing)nativePaintTimers();if(nativeDirty)nativeRefresh();},500);
+  roNative.call('pin',{enabled:!!state.pin}).catch(()=>{});queueMicrotask(()=>persist());
+
+  queueMicrotask(()=>roNative.call('uiReady').catch(()=>{}));
+  app.addEventListener('wheel',event=>{
+   if(event.ctrlKey||event.defaultPrevented||Math.abs(event.deltaX)>Math.abs(event.deltaY))return;
+   const board=event.target.closest('.rb-cards[data-arrangement="horizontal"]');
+   if(!board||board.scrollWidth<=board.clientWidth||!event.deltaY)return;
+   for(let node=event.target;node&&node!==board;node=node.parentElement){
+    const overflow=getComputedStyle(node).overflowY;
+    if(/auto|scroll/.test(overflow)&&node.scrollHeight>node.clientHeight+1&&
+      (event.deltaY>0?node.scrollTop+node.clientHeight<node.scrollHeight-1:node.scrollTop>1))return;
+   }
+   const step=event.deltaMode===1?32:event.deltaMode===2?board.clientWidth:1;
+   board.scrollLeft+=event.deltaY*step;event.preventDefault();
+  },{passive:false});
+
+  instance.render=render;
+  render();
+  if(globalThis.Tweak){
+   const design={radius:12,gap:16};
+   const tweak=new Tweak({container:app,onChange:()=>{app.style.setProperty('--rb-radius',design.radius+'px');app.style.setProperty('--rb-gap',design.gap+'px');}});
+   tweak.addSlider(design,'radius',{label:'카드 모서리',min:6,max:24,unit:'px'});
+   tweak.addSlider(design,'gap',{label:'카드 사이 간격',min:12,max:28,unit:'px'});
+  }
+ }
+ window.addEventListener('openai:set_globals',event=>{
+  const snapshot=event.detail?.globals?.widgetState;
+  if(snapshot?.privateContent?.version!==1)return;
+  for(const instance of instances){
+   if(instance.interacted)continue;
+   const restored=snapshot.privateContent.variants?.find(v=>v.layout===instance.layout)?.state;
+   if(!restored)continue;
+   Object.assign(instance.state,clone(restored),{modal:null,menu:null,notice:'',dragging:false});instance.normalize();instance.render();
+  }
+ });
+})();
+</script>
+</body></html>

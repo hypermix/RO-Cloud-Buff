@@ -1,0 +1,59 @@
+from pathlib import Path
+import re
+import json
+root=Path(__file__).parent
+source=(root/'design-source.html').read_text(encoding='utf-8')
+presets=json.loads((root/'default-presets.json').read_text(encoding='utf-8'))
+preset_js=" const defaultPresets="+json.dumps(presets,ensure_ascii=False)+";\n"
+preset_js+=" initialDefinitions.splice(0,initialDefinitions.length,...defaultPresets.definitions.map(d=>({...d,kind:'skill',short:d.name[0]})));\n for(const c of sampleCards){c.connected=false;c.connectionText='게임 창 연결 대기';c.buffs=(defaultPresets.profiles[c.id]||defaultPresets.shared).map(id=>({id,left:0,presence:'unknown',alert:true,warning:10}));}\n sampleDiscoveries.length=0;\n const saved=window.openai?.widgetState;"
+source=source.replace(' const saved=window.openai?.widgetState;',preset_js)
+source=source.replace("   state.volume=Number.isFinite(state.volume)", "   if(state.presetRevision!==defaultPresets.revision){for(const d of initialDefinitions)if(!state.definitions.some(old=>old.id===d.id))state.definitions.push(clone(d));const kim=state.definitions.find(d=>d.id===78);if(kim&&kim.name==='김서방')kim.name='김서방 돈벌었네';for(const c of state.cards){const ids=defaultPresets.profiles[c.id];if(ids)for(const id of ids)if(!c.buffs.some(b=>b.id===id))c.buffs.push({id,left:0,presence:'unknown',alert:true,warning:10});}state.presetRevision=defaultPresets.revision;}\n   state.volume=Number.isFinite(state.volume)")
+# OS owns the actual resizable window; never resize it in response to content.
+source=source.replace('<script>\n(()=>{','<script type="module">\nawait window.roNative.ready;\n(()=>{')
+source=source.replace('const commonActions=', 'const commonActions=')
+source=source.replace('(state.showShort||d.total>=2)', 'true')
+source=source.replace("filterSearch('dictionary');filterSearch('selection');filterSearch('discover');", "filterSearch('dictionary');filterSearch('selection');filterSearch('discover');managementPaintSelection();")
+source=re.sub(r'  function discoveryPage\(\).*?\n', '  function discoveryPage(){return managementDiscoveryPage();}\n', source)
+source=re.sub(r'  function dictionaryPage\(\).*?\n', '  function dictionaryPage(){return managementDictionaryPage();}\n', source)
+source=source.replace("filterSearch('dictionary');filterSearch('selection');", "filterSearch('dictionary');filterSearch('selection');filterSearch('discover');")
+source=source.replace('  function render(){', '  function render(){\n   if(nativeDeferRender())return;')
+source=source.replace("let nativeCrosshair", "let nativeCrosshair")
+pos=source.index('  instance.render=render;')
+source=source[:pos]+(root/'src'/'Web'/'management-ui.js').read_text(encoding='utf-8')+'\n'+(root/'src'/'Web'/'live-ui.js').read_text(encoding='utf-8')+'\n'+source[pos:]
+source=source.replace("   }else if(m.type==='connect'){", "   }else if(m.type==='connect'){\n    inside=nativeConnectDialog(m,close);\n   }else if(m.type==='unused-mock-connect'){")
+source=source.replace("   if(action==='resize-window'||action==='drag-client')return;", "   if(action==='resize-window'||action==='drag-client')return;\n   if(await nativeUiAction(action,button,card))return;")
+source=source.replace("   else if(action==='pin'){state.pin=!state.pin;", "   else if(action==='pin'){state.pin=!state.pin;roNative.call('pin',{enabled:state.pin}).catch(e=>notify(e.message));")
+source=source.replace("   if(control==='pin')state.pin=event.target.checked;", "   if(control==='pin'){state.pin=event.target.checked;roNative.call('pin',{enabled:state.pin}).catch(e=>notify(e.message));}")
+source=source.replace("   if(!event.target.closest('[data-action=\"target-handle\"]'))return;", "   if(!event.target.closest('[data-action=\"target-handle\"]'))return;\n   nativeCrosshair=true;app.classList.add('rb-crosshair-active');roNative.call('crosshairStart').catch(e=>notify(e.message));event.target.closest('button').setPointerCapture(event.pointerId);event.preventDefault();return;")
+source=source.replace("document.addEventListener('pointerup',event=>{", "document.addEventListener('pointerup',async event=>{\n   if(nativeCrosshair){nativeCrosshair=false;app.classList.remove('rb-crosshair-active');roNative.call('crosshairStop').catch(()=>{});pointerHeld=false;const m=state.modal;if(m?.type!=='connect')return;m.name=app.querySelector('[data-input=\"card-name\"]')?.value||m.name;try{const found=await roNative.call('pointWindow');m.windows=[...(m.windows||[]).filter(w=>w.pid!==found.pid),found];m.selected=found.token;m.error='';}catch(error){m.error=error.message;}render();return;}")
+source=source.replace("document.addEventListener('pointercancel',()=>{", "document.addEventListener('pointercancel',()=>{if(nativeCrosshair)roNative.call('crosshairStop').catch(()=>{});nativeCrosshair=false;app.classList.remove('rb-crosshair-active');")
+# Live confirmation and connection messages remain visible even on folded cards.
+needle='</header><div class="rb-card-controls">'
+source=source.replace(needle, '''</header>${!card.connected&&!card.captureStats?.flows?`<div class="rb-live-status"><span>${esc(card.connectionText||'게임 창 연결 대기')}${card.candidate?' · 후보 ID '+card.candidate:''}</span><button type="button" class="rb-secondary cursor-interaction" data-action="${card.captureStats?.flows?'start-calibration':'reconnect'}" data-card="${card.id}">${card.captureStats?.flows?'본인 확인 시작':'창 연결'}</button></div>`:''}${nativeDiagnostics(card)}<div class="rb-card-controls">''')
+source=source.replace("${card.connected?(card.collapsed?(missing?'필수 '+missing+'개 없음':buffs.length+'개 추적 중'):'연결됨'):'게임 창 연결 대기'}", "${card.connected?(card.collapsed?(missing?'필수 '+missing+'개 없음':buffs.length+'개 추적 중'):'연결됨'):(card.captureStats?.flows?'본인 확인 대기':'연결 대기')}")
+source=re.sub(r'<div class="rb-replay-actions">.*?</div>','',source)
+source=source.replace("${missing?'버프 없음':unknown?'확인 중':format(Math.ceil(b.left))}","${missing?'버프 없음':unknown?'확인 중':b.expiresAt===null?'시간 없음':b.left<=0?'만료 추정':format(Math.ceil(b.left))}")
+start=source.index('<footer class="rb-app-footer">')
+end=source.index('</footer>',start)+len('</footer>')
+source=source[:start]+'''<footer class="rb-app-footer"><span>v0.1.0-alpha.27</span><span>추적 중 ${state.cards.filter(c=>c.connected).length}/${state.cards.length}</span></footer>'''+source[end:]
+source=source.replace('<strong>RO CLOUD BUFF</strong></div><span>프로그램 제작자','<strong>RO CLOUD BUFF</strong></div><p>버전 0.1.0-alpha.27 · 실게임 테스트</p><span>프로그램 제작자')
+source=source.replace("   if(!state.playing||", "   if(window.roNative||!state.playing||")
+source=source.replace("    if(existing){existing.name=name;existing.connected=true;}","    if(existing){existing.name=name;existing.connected=true;}")
+source=source.replace('첫 번째 클라이언트에도 표시','발견한 클라이언트에도 표시')
+source=source.replace("${icon('crosshair')}게임 창 다시 지정</button>", "${icon('crosshair')}게임 창 다시 지정</button><button type=\"button\" class=\"cursor-interaction\" data-action=\"disconnect-client\" data-card=\"${card.id}\">${icon('unplug')}연결 해제</button>")
+source=re.sub(r'<button[^>]*data-action="pin"[^>]*>.*?</button>', '', source)
+source=source.replace('${d.count}회 발견 · ${d.time}', '${d.count}회 발견 · ${discoveryTime(d)}')
+source=source.replace('<strong>미등록 상태 ${d.id}</strong>', '<strong>미등록 버프 <span class="rb-discovery-id">상태 ID ${d.id}</span></strong>')
+source=source.replace('   const dialogScroll=', "   const setupViews=new Map([...app.querySelectorAll('[data-character]')].map(card=>[card.dataset.character,{top:card.querySelector('.rb-setup')?.scrollTop||0,details:!!card.querySelector('.rb-setup-details')?.open}]));\n   const dialogScroll=")
+source=source.replace("   app.querySelector('.rb-page-scroll').scrollTop=pageScroll;", "   app.querySelector('.rb-page-scroll').scrollTop=pageScroll;\n   app.querySelectorAll('[data-character]').forEach(card=>{const view=setupViews.get(card.dataset.character),panel=card.querySelector('.rb-setup');if(view&&panel){const details=panel.querySelector('.rb-setup-details');if(details)details.open=view.details;panel.scrollTop=view.top;}});")
+source=source.replace('   const dialogScroll=', "   const oldBoard=app.querySelector('.rb-cards'),boardScroll=oldBoard?{arrangement:oldBoard.dataset.arrangement,left:oldBoard.scrollLeft,top:oldBoard.scrollTop}:null;\n   const dialogScroll=")
+source=source.replace('   app.querySelector(\'.rb-page-scroll\').scrollTop=pageScroll;', "   app.querySelector('.rb-page-scroll').scrollTop=pageScroll;\n   const newBoard=app.querySelector('.rb-cards');if(boardScroll&&newBoard?.dataset.arrangement===boardScroll.arrangement){newBoard.scrollLeft=boardScroll.left;newBoard.scrollTop=boardScroll.top;}")
+source=source.replace("const rows=card.buffs.filter(b=>(!b.hidden||(card.pinRequired&&b.remember))&&(b.presence!=='absent'||(card.pinRequired&&b.remember)));", "const rows=card.buffs.filter(b=>!b.hidden||(card.pinRequired&&b.remember));")
+source=source.replace('state.modal=null;notify(`${name}을(를) 사전에 저장했습니다.`);persist();return;', 'state.modal=null;nativeRestoreObservation(m.id);notify(`${name}을(를) 사전에 저장했습니다.`);persist();return;')
+source=source.replace("state.modal=null;notify('이 카드의 표시 목록을 저장했습니다.');persist();return;", "state.modal=null;for(const b of c.buffs)if(!b.hidden)nativeRestoreObservation(b.id);notify('이 카드의 표시 목록을 저장했습니다.');persist();return;")
+source=source.replace("if(app.querySelector('[data-input=\"add-to-card\"]').checked&&state.cards[0])state.cards[0].buffs.push({id:m.id,left:found.total,presence:'active',order:state.sequence++});", "if(app.querySelector('[data-input=\"add-to-card\"]').checked){const target=state.cards.find(c=>c.id===found.cardId);if(target&&!target.buffs.some(b=>b.id===m.id))target.buffs.push({id:m.id,left:0,presence:'unknown',order:state.sequence++});}")
+extra='''html,body{margin:0;height:100%;overflow:hidden;background:#202126;font-family:system-ui,'Segoe UI','Malgun Gothic',sans-serif}#ro-buff-design{height:100%;width:100%}#ro-buff-design .rb-app{width:100%!important;height:100%!important;min-width:0;min-height:0;border:0;border-radius:0;grid-template-rows:minmax(0,1fr) 28px;box-shadow:none}#ro-buff-design .rb-titlebar,#ro-buff-design .rb-resize-handle{display:none}#ro-buff-design .rb-live-status{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#302c3b;color:#c2b9d9;border-bottom:1px solid #454052;flex-shrink:0;font-size:12px}#ro-buff-design .rb-live-status>span{flex:1;min-width:0;overflow-wrap:anywhere;line-height:1.5}#ro-buff-design .rb-live-status button{font-size:12px;white-space:nowrap;flex-shrink:0}#ro-buff-design .rb-real-windows{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;max-height:230px;overflow:auto}#ro-buff-design .rb-app .rb-real-windows button{justify-content:flex-start;border:1px solid #45404f;background:#302d38;padding:10px}#ro-buff-design .rb-real-windows button[aria-pressed=true]{border-color:#ad9ed0;background:#443c58}#ro-buff-design .rb-real-windows small{display:block;font-size:12px;color:#aaa1bc;margin-top:3px}#ro-buff-design .rb-real-windows span{overflow-wrap:anywhere;min-width:0}'''
+source=source.replace('</style>',extra+'</style><link rel="stylesheet" href="native.css">')
+source=source.replace("filterSearch('dictionary');filterSearch('selection');filterSearch('discover');", "filterSearch('dictionary');filterSearch('selection');filterSearch('discover');managementPaintSelection();")
+html='''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'"><title>RO CLOUD BUFF</title><script src="lucide.js"></script><script src="native.js"></script></head><body>'''+source+'</body></html>'
+(root/'src'/'Web'/'index.html').write_text(html,encoding='utf-8')
