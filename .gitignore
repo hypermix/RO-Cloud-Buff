@@ -35,3 +35,8 @@ Thumbs.db
 
 # Local upload preparation notes
 /GIT-UPLOAD-CHECKLIST.md
+
+# UI regression tooling
+**/node_modules/
+/test-results/
+/playwright-report/

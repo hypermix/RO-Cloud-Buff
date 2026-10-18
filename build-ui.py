@@ -35,8 +35,8 @@ source=re.sub(r'<div class="rb-replay-actions">.*?</div>','',source)
 source=source.replace("${missing?'버프 없음':unknown?'확인 중':format(Math.ceil(b.left))}","${missing?'버프 없음':unknown?'확인 중':b.expiresAt===null?'시간 없음':b.left<=0?'만료 추정':format(Math.ceil(b.left))}")
 start=source.index('<footer class="rb-app-footer">')
 end=source.index('</footer>',start)+len('</footer>')
-source=source[:start]+'''<footer class="rb-app-footer"><span>v0.1.0-alpha.28</span><span>추적 중 ${state.cards.filter(c=>c.connected).length}/${state.cards.length}</span></footer>'''+source[end:]
-source=source.replace('<strong>RO CLOUD BUFF</strong></div><span>프로그램 제작자','<strong>RO CLOUD BUFF</strong></div><p>버전 0.1.0-alpha.28 · 실게임 테스트</p><span>프로그램 제작자')
+source=source[:start]+'''<footer class="rb-app-footer"><span>v0.1.0-alpha.32</span><span>추적 중 ${state.cards.filter(c=>c.connected).length}/${state.cards.length}</span></footer>'''+source[end:]
+source=source.replace('<strong>RO CLOUD BUFF</strong></div><span>프로그램 제작자','<strong>RO CLOUD BUFF</strong></div><p>버전 0.1.0-alpha.32 · 실게임 테스트</p><span>프로그램 제작자')
 source=source.replace("   if(!state.playing||", "   if(window.roNative||!state.playing||")
 source=source.replace("    if(existing){existing.name=name;existing.connected=true;}","    if(existing){existing.name=name;existing.connected=true;}")
 source=source.replace('첫 번째 클라이언트에도 표시','발견한 클라이언트에도 표시')
@@ -55,5 +55,19 @@ source=source.replace("if(app.querySelector('[data-input=\"add-to-card\"]').chec
 extra='''html,body{margin:0;height:100%;overflow:hidden;background:#202126;font-family:system-ui,'Segoe UI','Malgun Gothic',sans-serif}#ro-buff-design{height:100%;width:100%}#ro-buff-design .rb-app{width:100%!important;height:100%!important;min-width:0;min-height:0;border:0;border-radius:0;grid-template-rows:minmax(0,1fr) 28px;box-shadow:none}#ro-buff-design .rb-titlebar,#ro-buff-design .rb-resize-handle{display:none}#ro-buff-design .rb-live-status{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#302c3b;color:#c2b9d9;border-bottom:1px solid #454052;flex-shrink:0;font-size:12px}#ro-buff-design .rb-live-status>span{flex:1;min-width:0;overflow-wrap:anywhere;line-height:1.5}#ro-buff-design .rb-live-status button{font-size:12px;white-space:nowrap;flex-shrink:0}#ro-buff-design .rb-real-windows{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;max-height:230px;overflow:auto}#ro-buff-design .rb-app .rb-real-windows button{justify-content:flex-start;border:1px solid #45404f;background:#302d38;padding:10px}#ro-buff-design .rb-real-windows button[aria-pressed=true]{border-color:#ad9ed0;background:#443c58}#ro-buff-design .rb-real-windows small{display:block;font-size:12px;color:#aaa1bc;margin-top:3px}#ro-buff-design .rb-real-windows span{overflow-wrap:anywhere;min-width:0}'''
 source=source.replace('</style>',extra+'</style><link rel="stylesheet" href="native.css">')
 source=source.replace("filterSearch('dictionary');filterSearch('selection');filterSearch('discover');", "filterSearch('dictionary');filterSearch('selection');filterSearch('discover');managementPaintSelection();")
+# Character profiles may be stored without disconnecting their live session.
+source=source.replace('${state.cards.length}개 클라이언트 · 바포메트','${nativeBoardCards().length}개 표시 · ${state.cards.length}개 캐릭터')
+source=re.sub(r'<button type="button" class="rb-add-client.*?</button>','',source)
+source=source.replace('<button type="button" class="rb-fold-button', '<button type="button" class="rb-icon-button cursor-interaction" data-action="store-card" data-card="${card.id}" aria-label="${esc(card.name)} 보관함에 넣기" data-tooltip="보관함에 넣기">${icon("archive")}</button><button type="button" class="rb-fold-button')
+source=source.replace('state.cards[0].id===card.id','nativeBoardCards()[0]?.id===card.id').replace('state.cards.at(-1).id===card.id','nativeBoardCards().at(-1)?.id===card.id')
+source=re.sub(r'  function moveClient\(id,delta\).*?\n','  function moveClient(id,delta){nativeMoveBoardCard(id,delta); }\n',source)
+source=source.replace('const from=state.cards.findIndex(c=>c.id===drag.id),[card]=state.cards.splice(from,1);state.cards.splice(drag.index,0,card);','nativeReorderBoardCard(drag.id,drag.index);')
+# The desktop renderer mounts a persistent shell and updates keyed regions.
+source=source.replace('  function cardsPage(){','  function cardsPage(cardRenderer=cardView){').replace('state.cards.map(cardView)','state.cards.map(cardRenderer)')
+render_start=source.index('  function render(){')
+render_end=source.index('  let cardDrag=',render_start)
+source=source[:render_start]+source[render_end:]
+render_pos=source.index('  instance.render=render;')
+source=source[:render_pos]+(root/'src'/'Web'/'storage-ui.js').read_text(encoding='utf-8')+'\n'+(root/'src'/'Web'/'incremental-ui.js').read_text(encoding='utf-8')+'\n'+source[render_pos:]
 html='''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'"><title>RO CLOUD BUFF</title><script src="lucide.js"></script><script src="native.js"></script></head><body>'''+source+'</body></html>'
 (root/'src'/'Web'/'index.html').write_text(html,encoding='utf-8')
