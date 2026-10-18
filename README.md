@@ -30,7 +30,7 @@ Windows 11의 일반적인 환경에서는 Npcap만 별도로 설치하면 됩�
 
 ## 실행 방법
 
-배포 파일이 게시되면 [Releases](https://github.com/hypermix/RO-Cloud-Buff/releases)에서 ZIP을 내려받을 수 있습니다.
+[Releases](https://github.com/hypermix/RO-Cloud-Buff/releases)에서 최신 배포 ZIP을 내려받을 수 있습니다.
 
 1. 배포 ZIP의 압축을 풉니다.
 2. `ROCloudBuff.exe`를 실행합니다.
@@ -77,7 +77,7 @@ Windows 11의 일반적인 환경에서는 Npcap만 별도로 설치하면 됩�
 - 실행 중인 게임 창 연결과 버프 남은 시간은 공유하지 않습니다.
 - 일반 환경설정과 새로 발견·무시 기록은 설정 코드에 포함하지 않습니다.
 
-이 안내는 현재 저장소 소스 기준입니다. 이전 alpha.27 배포본에는 공백 없는 설정 경로, 클라이언트 수 제한 해제와 항상 새 카드로 가져오기 변경이 포함되어 있지 않습니다.
+alpha.28부터 공백 없는 설정 경로, 클라이언트 수 제한 해제와 항상 새 카드로 가져오기가 적용됩니다.
 
 ## 개발 및 빌드
 

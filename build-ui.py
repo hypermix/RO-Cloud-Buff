@@ -35,8 +35,8 @@ source=re.sub(r'<div class="rb-replay-actions">.*?</div>','',source)
 source=source.replace("${missing?'버프 없음':unknown?'확인 중':format(Math.ceil(b.left))}","${missing?'버프 없음':unknown?'확인 중':b.expiresAt===null?'시간 없음':b.left<=0?'만료 추정':format(Math.ceil(b.left))}")
 start=source.index('<footer class="rb-app-footer">')
 end=source.index('</footer>',start)+len('</footer>')
-source=source[:start]+'''<footer class="rb-app-footer"><span>v0.1.0-alpha.27</span><span>추적 중 ${state.cards.filter(c=>c.connected).length}/${state.cards.length}</span></footer>'''+source[end:]
-source=source.replace('<strong>RO CLOUD BUFF</strong></div><span>프로그램 제작자','<strong>RO CLOUD BUFF</strong></div><p>버전 0.1.0-alpha.27 · 실게임 테스트</p><span>프로그램 제작자')
+source=source[:start]+'''<footer class="rb-app-footer"><span>v0.1.0-alpha.28</span><span>추적 중 ${state.cards.filter(c=>c.connected).length}/${state.cards.length}</span></footer>'''+source[end:]
+source=source.replace('<strong>RO CLOUD BUFF</strong></div><span>프로그램 제작자','<strong>RO CLOUD BUFF</strong></div><p>버전 0.1.0-alpha.28 · 실게임 테스트</p><span>프로그램 제작자')
 source=source.replace("   if(!state.playing||", "   if(window.roNative||!state.playing||")
 source=source.replace("    if(existing){existing.name=name;existing.connected=true;}","    if(existing){existing.name=name;existing.connected=true;}")
 source=source.replace('첫 번째 클라이언트에도 표시','발견한 클라이언트에도 표시')

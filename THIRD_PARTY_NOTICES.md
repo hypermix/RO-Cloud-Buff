@@ -14,3 +14,7 @@ Package dependency information can be regenerated from the included project file
 Additional UI dependencies:
 - Microsoft.Web.WebView2 1.0.4258.31: package license and Microsoft notices apply; Runtime installed separately.
 - Lucide: ISC license, included at src/Web/lucide-LICENSE.txt (Web/lucide-LICENSE.txt in binary distribution).
+
+- PacketDotNet 1.4.8 — MPL-2.0, included unmodified. Corresponding source: https://github.com/dotpcap/packetnet/tree/690707ce56d6e9c266daf6236c4f76ac5035334c
+
+Binary distributions include additional package license files and metadata in licenses/.

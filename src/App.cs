@@ -61,7 +61,7 @@ public sealed partial class CloudWindow:Window
     async void Message(object? sender,CoreWebView2WebMessageReceivedEventArgs e){int id=0;try{if(!e.Source.StartsWith("https://rocloud.local/",StringComparison.Ordinal))return;var data=JsonNode.Parse(e.WebMessageAsJson)!.AsObject();id=data["id"]!.GetValue<int>();var args=data["args"]?.AsObject()??new JsonObject();object? result=null;switch(data["method"]?.GetValue<string>()){
         case "sound":PlayAlert(args["volume"]?.GetValue<int>()??0);break;
         case "uiReady":ShowApp();break;
-        case "load":result=new{state=saved,version="0.1.0-alpha.27",dataFolder=folder};break;
+        case "load":result=new{state=saved,version="0.1.0-alpha.28",dataFolder=folder};break;
         case "save":Save(args["state"]!.AsObject());break;
         case "windows":result=ListWindows();break;
         case "pointWindow":GetCursorPos(out var point);var handle=GetAncestor(WindowFromPoint(point),2);result=Remember(WindowsInterop.Inspect(handle));break;
