@@ -6,17 +6,37 @@
 
 ## 사용법 영상
 
-직접 촬영한 사용 예시입니다. 미리보기 이미지나 제목을 누르면 압축된 MP4 영상을 열거나 내려받을 수 있습니다.
+아래 재생 버튼을 눌러 README 안에서 바로 볼 수 있습니다. 영상은 1080p·30fps와 소리를 유지하며, 5개 합계 약 21MB로 압축했습니다.
 
-1080p·30fps와 소리를 유지하며, 5개 영상의 합계 용량을 약 432MB에서 21MB로 줄였습니다.
+### 1. 클라이언트 연결
 
-| 순서 | 영상 미리보기 | 안내 |
-|:---:|:---:|---|
-| 1 | <a href="https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-01-client-connection.mp4"><img src="docs/images/tutorial-01.jpg" alt="클라이언트 연결 영상 보기" width="240"></a> | [클라이언트 연결](https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-01-client-connection.mp4)<br>게임 창 지정과 본인 확인 과정<br>0:36 · 3.5MB |
-| 2 | <a href="https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-02-buff-detection.mp4"><img src="docs/images/tutorial-02.jpg" alt="버프 감지 영상 보기" width="240"></a> | [버프 감지](https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-02-buff-detection.mp4)<br>적용·갱신된 버프와 남은 시간 확인<br>0:26 · 2.9MB |
-| 3 | <a href="https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-03-buff-registration.mp4"><img src="docs/images/tutorial-03.jpg" alt="버프 등록 영상 보기" width="240"></a> | [버프 등록](https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-03-buff-registration.mp4)<br>새로 발견한 상태에 이름을 붙여 사전에 등록<br>0:36 · 3.8MB |
-| 4 | <a href="https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-04-display-buffs.mp4"><img src="docs/images/tutorial-04.jpg" alt="표시할 버프 관리 영상 보기" width="240"></a> | [표시할 버프 관리](https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-04-display-buffs.mp4)<br>캐릭터 카드에 표시할 버프 선택<br>0:51 · 6.7MB |
-| 5 | <a href="https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-05-additional-client.mp4"><img src="docs/images/tutorial-05.jpg" alt="추가 클라이언트 연결 영상 보기" width="240"></a> | [추가 클라이언트 연결](https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-05-additional-client.mp4)<br>다른 게임 창을 추가 카드에 연결<br>0:34 · 4.2MB |
+게임 창 지정과 본인 확인 과정입니다.
+
+https://github.com/user-attachments/assets/da429724-57ac-40a2-975d-c3d624bb6eee
+
+### 2. 버프 감지
+
+적용·갱신된 버프와 남은 시간을 확인합니다.
+
+https://github.com/user-attachments/assets/9365f370-5cf0-4a13-a970-f18c576d4d61
+
+### 3. 버프 등록
+
+새로 발견한 상태에 이름을 붙여 사전에 등록합니다.
+
+https://github.com/user-attachments/assets/b01555c2-f7e8-4f1c-890d-673747f493aa
+
+### 4. 표시할 버프 관리
+
+캐릭터 카드에 표시할 버프를 선택합니다.
+
+https://github.com/user-attachments/assets/3fdb9163-9198-4337-8cea-41b25876f6e4
+
+### 5. 추가 클라이언트 연결
+
+다른 게임 창을 추가 카드에 연결합니다.
+
+https://github.com/user-attachments/assets/bf7776f6-745f-4701-982f-a8ce48279672
 
 ## 화면 미리보기
 
