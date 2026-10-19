@@ -5,7 +5,7 @@ root=Path(__file__).parent
 source=(root/'design-source.html').read_text(encoding='utf-8')
 presets=json.loads((root/'default-presets.json').read_text(encoding='utf-8'))
 preset_js=" const defaultPresets="+json.dumps(presets,ensure_ascii=False)+";\n"
-preset_js+=" initialDefinitions.splice(0,initialDefinitions.length,...defaultPresets.definitions.map(d=>({...d,kind:'skill',short:d.name[0]})));\n for(const c of sampleCards){c.connected=false;c.connectionText='게임 창 연결 대기';c.buffs=(defaultPresets.profiles[c.id]||defaultPresets.shared).map(id=>({id,left:0,presence:'unknown',alert:true,warning:10}));}\n sampleDiscoveries.length=0;\n const saved=window.openai?.widgetState;"
+preset_js+=" initialDefinitions.splice(0,initialDefinitions.length,...defaultPresets.definitions.map(d=>({...d,kind:d.kind||'skill',short:d.name[0]})));\n for(const c of sampleCards){c.connected=false;c.connectionText='게임 창 연결 대기';c.buffs=(defaultPresets.profiles[c.id]||defaultPresets.shared).map(id=>({id,left:0,presence:'unknown',alert:true,warning:10}));}\n sampleDiscoveries.length=0;\n const saved=window.openai?.widgetState;"
 source=source.replace(' const saved=window.openai?.widgetState;',preset_js)
 source=source.replace("   state.volume=Number.isFinite(state.volume)", "   if(state.presetRevision!==defaultPresets.revision){for(const d of initialDefinitions)if(!state.definitions.some(old=>old.id===d.id))state.definitions.push(clone(d));const kim=state.definitions.find(d=>d.id===78);if(kim&&kim.name==='김서방')kim.name='김서방 돈벌었네';for(const c of state.cards){const ids=defaultPresets.profiles[c.id];if(ids)for(const id of ids)if(!c.buffs.some(b=>b.id===id))c.buffs.push({id,left:0,presence:'unknown',alert:true,warning:10});}state.presetRevision=defaultPresets.revision;}\n   state.volume=Number.isFinite(state.volume)")
 # OS owns the actual resizable window; never resize it in response to content.
@@ -35,8 +35,8 @@ source=re.sub(r'<div class="rb-replay-actions">.*?</div>','',source)
 source=source.replace("${missing?'버프 없음':unknown?'확인 중':format(Math.ceil(b.left))}","${missing?'버프 없음':unknown?'확인 중':b.expiresAt===null?'시간 없음':b.left<=0?'만료 추정':format(Math.ceil(b.left))}")
 start=source.index('<footer class="rb-app-footer">')
 end=source.index('</footer>',start)+len('</footer>')
-source=source[:start]+'''<footer class="rb-app-footer"><span>v0.1.0-alpha.32</span><span>추적 중 ${state.cards.filter(c=>c.connected).length}/${state.cards.length}</span></footer>'''+source[end:]
-source=source.replace('<strong>RO CLOUD BUFF</strong></div><span>프로그램 제작자','<strong>RO CLOUD BUFF</strong></div><p>버전 0.1.0-alpha.32 · 실게임 테스트</p><span>프로그램 제작자')
+source=source[:start]+'''<footer class="rb-app-footer"><span>v0.1.0-alpha.33</span><span>추적 중 ${state.cards.filter(c=>c.connected).length}/${state.cards.length}</span></footer>'''+source[end:]
+source=source.replace('<strong>RO CLOUD BUFF</strong></div><span>프로그램 제작자','<strong>RO CLOUD BUFF</strong></div><p>버전 0.1.0-alpha.33 · 실게임 테스트</p><span>프로그램 제작자')
 source=source.replace("   if(!state.playing||", "   if(window.roNative||!state.playing||")
 source=source.replace("    if(existing){existing.name=name;existing.connected=true;}","    if(existing){existing.name=name;existing.connected=true;}")
 source=source.replace('첫 번째 클라이언트에도 표시','발견한 클라이언트에도 표시')

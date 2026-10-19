@@ -2,7 +2,7 @@
   "name": "ro-cloud-buff-ui-tests",
   "private": true,
   "scripts": {
-    "test": "node rendering.cjs && node discovery-sort.cjs && node registration-feedback.cjs && node scroll.cjs && node storage.cjs && node alerts.cjs && node selection-dialog.cjs"
+    "test": "node rendering.cjs && node discovery-sort.cjs && node registration-feedback.cjs && node scroll.cjs && node storage.cjs && node alerts.cjs && node selection-dialog.cjs && node unselected-alerts.cjs && node defaults.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

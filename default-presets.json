@@ -1,5 +1,5 @@
 {
-  "revision": 1,
+  "revision": 2,
   "source": "사용자 지정 이름 및 기존 실게임 등록 상태 ID. total은 관측값이며 실행 타이머는 수신값 사용.",
   "shared": [10, 12],
   "profiles": {
@@ -32,6 +32,7 @@
     {"id":1261,"name":"뮤지컬인터루드","total":180},
     {"id":77,"name":"스윙댄스","total":180},
     {"id":78,"name":"김서방 돈벌었네","total":180},
-    {"id":439,"name":"마나의 노래","total":120}
+    {"id":439,"name":"마나의 노래","total":120},
+    {"id":622,"name":"앉기","kind":"other","total":0}
   ]
 }

@@ -40,3 +40,5 @@ No new native executable is produced by these UI tests. Profiling during a futur
 ## Alert evidence
 
 Alerts require a current-session active observation for the selected card/status and a connected card. Successful rebind, reset and unbind clear live timers and observation evidence. Repeated active messages with expiry timestamps within one second preserve warning/expiry deduplication. Confirmed map-connection transitions preserve evidence. Settings shows up to 30 session-only alert records (card, status, cause, stored state). This identifies alert origin; it does not establish that every decoded protocol event is correct. `tests/alerts.cjs` covers unobserved timers, warning deduplication and rebind followed by idle time.
+
+Deselected buff rules (`hidden: true`) never emit warning, expiry or removal sounds even when their saved alert preference is true. This is independent of profile storage: an entire stored profile still alerts for its selected buffs. `tests/unselected-alerts.cjs` covers the distinction and reselecting a buff.
