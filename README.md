@@ -4,6 +4,20 @@
 
 현재 **한국 공식 라그나로크 온라인에서 테스트 중인 알파 버전**입니다.
 
+## 사용법 영상
+
+직접 촬영한 사용 예시입니다. 미리보기 이미지나 제목을 누르면 압축된 MP4 영상을 열거나 내려받을 수 있습니다.
+
+1080p·30fps와 소리를 유지하며, 5개 영상의 합계 용량을 약 432MB에서 21MB로 줄였습니다.
+
+| 순서 | 영상 미리보기 | 안내 |
+|:---:|:---:|---|
+| 1 | <a href="https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-01-client-connection.mp4"><img src="docs/images/tutorial-01.jpg" alt="클라이언트 연결 영상 보기" width="240"></a> | [클라이언트 연결](https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-01-client-connection.mp4)<br>게임 창 지정과 본인 확인 과정<br>0:36 · 3.5MB |
+| 2 | <a href="https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-02-buff-detection.mp4"><img src="docs/images/tutorial-02.jpg" alt="버프 감지 영상 보기" width="240"></a> | [버프 감지](https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-02-buff-detection.mp4)<br>적용·갱신된 버프와 남은 시간 확인<br>0:26 · 2.9MB |
+| 3 | <a href="https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-03-buff-registration.mp4"><img src="docs/images/tutorial-03.jpg" alt="버프 등록 영상 보기" width="240"></a> | [버프 등록](https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-03-buff-registration.mp4)<br>새로 발견한 상태에 이름을 붙여 사전에 등록<br>0:36 · 3.8MB |
+| 4 | <a href="https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-04-display-buffs.mp4"><img src="docs/images/tutorial-04.jpg" alt="표시할 버프 관리 영상 보기" width="240"></a> | [표시할 버프 관리](https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-04-display-buffs.mp4)<br>캐릭터 카드에 표시할 버프 선택<br>0:51 · 6.7MB |
+| 5 | <a href="https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-05-additional-client.mp4"><img src="docs/images/tutorial-05.jpg" alt="추가 클라이언트 연결 영상 보기" width="240"></a> | [추가 클라이언트 연결](https://github.com/hypermix/RO-Cloud-Buff/releases/download/v0.1.0-alpha.32/tutorial-05-additional-client.mp4)<br>다른 게임 창을 추가 카드에 연결<br>0:34 · 4.2MB |
+
 ## 화면 미리보기
 
 실제 alpha.32 UI에 설명용 예시 데이터를 넣어 촬영한 화면입니다. 버프 이름·남은 시간·미등록 ID는 사용 예시입니다.
